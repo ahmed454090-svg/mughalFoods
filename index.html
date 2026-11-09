@@ -164,8 +164,7 @@
             </div>
         </div>
     </div>
-
-    <!-- Admin Authentication Modal (Ultra-Professional Pop-up) -->
+      <!-- Admin Authentication Modal -->
     <div id="adminAuthModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md transition-opacity duration-300 opacity-0 pointer-events-none">
         <div class="w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden transform scale-95 transition-transform duration-300" id="adminAuthCard">
             <div class="p-8 space-y-6 text-center">
@@ -253,279 +252,279 @@
 
     <!-- Application Script -->
     <script>
-        const defaultItems = [
-            { id: '1', name: 'Zinger Burger', category: 'Burgers', price: 380, desc: 'Crispy fried chicken thigh with spicy mayo & lettuce', img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80' },
-            { id: '2', name: 'Beef Smash Burger', category: 'Burgers', price: 550, desc: 'Double juicy beef patty topped with melted cheese', img: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=500&q=80' },
-            { id: '3', name: 'Crispy Fried Fish (500g)', category: 'Fish', price: 1200, desc: 'Fresh Lahori style spicy fried fish with tartar dip', img: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=500&q=80' },
-            { id: '4', name: 'Loaded Fries', category: 'Fries', price: 320, desc: 'Golden fries topped with melted cheese & jalapenos', img: 'https://images.unsplash.com/photo-1576107232684-1279f3908594?auto=format&fit=crop&w=500&q=80' },
-            { id: '5', name: 'Chicken Cheese Roll', category: 'Roll', price: 280, desc: 'Grilled chicken wrapped in crispy paratha', img: 'https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=500&q=80' },
-            { id: '6', name: 'Zinger Roll Paratha', category: 'Roll Paratha', price: 350, desc: 'Crispy zinger strip rolled with garlic sauce', img: 'https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=500&q=80' },
-            { id: '7', name: 'Aloo Samosa (Plate of 2)', category: 'Samosa', price: 80, desc: 'Crispy golden fried potato samosas', img: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=500&q=80' },
-            { id: '8', name: 'Mix Crisp Pakory (250g)', category: 'Pakory', price: 150, desc: 'Traditional spiced crispy onion & potato pakoras', img: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=500&q=80' },
-            { id: '9', name: 'Cold Drink 1.5L', category: 'Drinks', price: 180, desc: 'Chilled Pepsi / Coke / 7Up', img: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=500&q=80' }
-        ];
-
-        const categories = ['All', 'Burgers', 'Fish', 'Fries', 'Samosa', 'Roll', 'Pakory', 'Roll Paratha', 'Drinks'];
-        let foodItems = JSON.parse(localStorage.getItem('mughal_food_items')) || defaultItems;
-        let cart = [];
-        let activeCategory = 'All';
-        const ADMIN_PASS = '4321';
-
-        const categoryContainer = document.getElementById('categoryContainer');
-        const menuGrid = document.getElementById('menuGrid');
-        const itemCountTag = document.getElementById('itemCountTag');
-        const currentCategoryTitle = document.getElementById('currentCategoryTitle');
-
-        const openCartBtn = document.getElementById('openCartBtn');
-  const closeCartBtn = document.getElementById('closeCartBtn');
-        const closeCartOverlay = document.getElementById('closeCartOverlay');
-        const cartDrawer = document.getElementById('cartDrawer');
-        const cartContainer = document.getElementById('cartContainer');
-        const cartItemsList = document.getElementById('cartItemsList');
-        const cartBadge = document.getElementById('cartBadge');
-        const cartSubtotal = document.getElementById('cartSubtotal');
-        const cartTotal = document.getElementById('cartTotal');
-        const checkoutWhatsAppBtn = document.getElementById('checkoutWhatsAppBtn');
-
-        const openAdminModalBtn = document.getElementById('openAdminModalBtn');
-        const adminAuthModal = document.getElementById('adminAuthModal');
-        const adminAuthCard = document.getElementById('adminAuthCard');
-        const closeAdminAuthBtn = document.getElementById('closeAdminAuthBtn');
-        const verifyAdminPassBtn = document.getElementById('verifyAdminPassBtn');
-        const adminPassInput = document.getElementById('adminPassInput');
-        const adminAuthErr = document.getElementById('adminAuthErr');
-
-        const adminPanelModal = document.getElementById('adminPanelModal');
-        const closeAdminPanelBtn = document.getElementById('closeAdminPanelBtn');
-        const adminItemTableBody = document.getElementById('adminItemTableBody');
-        const addItemForm = document.getElementById('addItemForm');
-
         document.addEventListener('DOMContentLoaded', () => {
+            const defaultItems = [
+                { id: '1', name: 'Zinger Burger', category: 'Burgers', price: 380, desc: 'Crispy fried chicken thigh with spicy mayo & lettuce', img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80' },
+                { id: '2', name: 'Beef Smash Burger', category: 'Burgers', price: 550, desc: 'Double juicy beef patty topped with melted cheese', img: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=500&q=80' },
+                { id: '3', name: 'Crispy Fried Fish (500g)', category: 'Fish', price: 1200, desc: 'Fresh Lahori style spicy fried fish with tartar dip', img: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=500&q=80' },
+                { id: '4', name: 'Loaded Fries', category: 'Fries', price: 320, desc: 'Golden fries topped with melted cheese & jalapenos', img: 'https://images.unsplash.com/photo-1576107232684-1279f3908594?auto=format&fit=crop&w=500&q=80' },
+                { id: '5', name: 'Chicken Cheese Roll', category: 'Roll', price: 280, desc: 'Grilled chicken wrapped in crispy paratha', img: 'https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=500&q=80' },
+                { id: '6', name: 'Zinger Roll Paratha', category: 'Roll Paratha', price: 350, desc: 'Crispy zinger strip rolled with garlic sauce', img: 'https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=500&q=80' },
+                { id: '7', name: 'Aloo Samosa (Plate of 2)', category: 'Samosa', price: 80, desc: 'Crispy golden fried potato samosas', img: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=500&q=80' },
+                { id: '8', name: 'Mix Crisp Pakory (250g)', category: 'Pakory', price: 150, desc: 'Traditional spiced crispy onion & potato pakoras', img: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=500&q=80' },
+                { id: '9', name: 'Cold Drink 1.5L', category: 'Drinks', price: 180, desc: 'Chilled Pepsi / Coke / 7Up', img: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=500&q=80' }
+            ];
+
+            const categories = ['All', 'Burgers', 'Fish', 'Fries', 'Samosa', 'Roll', 'Pakory', 'Roll Paratha', 'Drinks'];
+            let foodItems = JSON.parse(localStorage.getItem('mughal_food_items')) || defaultItems;
+            let cart = [];
+            let activeCategory = 'All';
+            const ADMIN_PASS = '1234';
+
+            const categoryContainer = document.getElementById('categoryContainer');
+            const menuGrid = document.getElementById('menuGrid');
+            const itemCountTag = document.getElementById('itemCountTag');
+            const currentCategoryTitle = document.getElementById('currentCategoryTitle');
+
+            const openCartBtn = document.getElementById('openCartBtn');
+            const closeCartBtn = document.getElementById('closeCartBtn');
+            const closeCartOverlay = document.getElementById('closeCartOverlay');
+            const cartDrawer = document.getElementById('cartDrawer');
+            const cartContainer = document.getElementById('cartContainer');
+            const cartItemsList = document.getElementById('cartItemsList');
+            const cartBadge = document.getElementById('cartBadge');
+            const cartSubtotal = document.getElementById('cartSubtotal');
+            const cartTotal = document.getElementById('cartTotal');
+            const checkoutWhatsAppBtn = document.getElementById('checkoutWhatsAppBtn');
+
+            const openAdminModalBtn = document.getElementById('openAdminModalBtn');
+            const adminAuthModal = document.getElementById('adminAuthModal');
+            const adminAuthCard = document.getElementById('adminAuthCard');
+            const closeAdminAuthBtn = document.getElementById('closeAdminAuthBtn');
+            const verifyAdminPassBtn = document.getElementById('verifyAdminPassBtn');
+            const adminPassInput = document.getElementById('adminPassInput');
+            const adminAuthErr = document.getElementById('adminAuthErr');
+
+            const adminPanelModal = document.getElementById('adminPanelModal');
+            const closeAdminPanelBtn = document.getElementById('closeAdminPanelBtn');
+            const adminItemTableBody = document.getElementById('adminItemTableBody');
+            const addItemForm = document.getElementById('addItemForm');
+
             renderCategories();
             renderMenu();
             setupTheme();
-        });
 
-        function setupTheme() {
-            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-                document.getElementById('themeIcon').className = 'fa-solid fa-sun text-lg text-amber-400';
-            } else {
-                document.documentElement.classList.remove('dark');
-                document.getElementById('themeIcon').className = 'fa-solid fa-moon text-lg';
-            }
-        }
-
-        document.getElementById('themeToggleBtn').addEventListener('click', () => {
-            if (document.documentElement.classList.contains('dark')) {
-                document.documentElement.classList.remove('dark');
-                localStorage.theme = 'light';
-                document.getElementById('themeIcon').className = 'fa-solid fa-moon text-lg';
-            } else {
-                document.documentElement.classList.add('dark');
-                localStorage.theme = 'dark';
-                document.getElementById('themeIcon').className = 'fa-solid fa-sun text-lg text-amber-400';
-            }
-        });
-
-        function renderCategories() {
-            categoryContainer.innerHTML = categories.map(cat => `
-                <button onclick="selectCategory('${cat}')" class="px-5 py-2.5 rounded-2xl whitespace-nowrap text-xs font-extrabold transition-all duration-200 ${activeCategory === cat ? 'bg-orange-600 text-white shadow-lg shadow-orange-600/30 scale-105' : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-orange-500'}">
-                    ${cat}
-                </button>
-            `).join('');
-        }
-
-        window.selectCategory = function(cat) {
-            activeCategory = cat;
-            currentCategoryTitle.innerText = cat === 'All' ? 'All Items' : cat;
-            renderCategories();
-            renderMenu();
-        };
-
-        function renderMenu() {
-            const filtered = activeCategory === 'All' ? foodItems : foodItems.filter(i => i.category === activeCategory);
-            itemCountTag.innerText = `${filtered.length} Items`;
-
-            if (filtered.length === 0) {
-                menuGrid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-400"><p class="font-medium">No items found in this category.</p></div>`;
-                return;
+            function setupTheme() {
+                if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark');
+                    document.getElementById('themeIcon').className = 'fa-solid fa-sun text-lg text-amber-400';
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    document.getElementById('themeIcon').className = 'fa-solid fa-moon text-lg';
+                }
             }
 
-            menuGrid.innerHTML = filtered.map(item => `
-                <div class="group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl hover:border-orange-500/50 transition-all duration-300 flex flex-col">
-                    <div class="relative h-48 overflow-hidden bg-slate-100 dark:bg-slate-800">
-                        <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                        <span class="absolute top-3 right-3 bg-slate-900/80 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">${item.category}</span>
-                    </div>
-                    <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
-                        <div class="space-y-1">
-                            <h4 class="font-extrabold text-base text-slate-900 dark:text-white">${item.name}</h4>
-                            <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">${item.desc}</p>
-                        </div>
-                        <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800/80">
-                            <div>
-                                <span class="text-xs text-slate-400 block font-medium">Price</span>
-                                <span class="text-lg font-black text-orange-600 dark:text-orange-500">PKR ${item.price}</span>
-                            </div>
-                            <button onclick="addToCart('${item.id}')" class="px-4 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs shadow-md shadow-orange-600/20 transition flex items-center space-x-1 space-x-reverse">
-                                <i class="fa-solid fa-plus text-xs"></i>
-                                <span>Add to Cart</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
+            document.getElementById('themeToggleBtn').addEventListener('click', () => {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.theme = 'light';
+                    document.getElementById('themeIcon').className = 'fa-solid fa-moon text-lg';
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.theme = 'dark';
+                    document.getElementById('themeIcon').className = 'fa-solid fa-sun text-lg text-amber-400';
+                }
+            });
 
-        window.addToCart = function(id) {
-            const item = foodItems.find(i => i.id === id);
-            const exist = cart.find(c => c.id === id);
-            if (exist) { exist.qty++; } else { cart.push({ ...item, qty: 1 }); }
-            updateCartUI();
-            openCart();
-        };
-
-        function updateCartUI() {
-            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
-            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-            cartBadge.innerText = totalQty;
-            totalQty > 0 ? cartBadge.classList.remove('hidden') : cartBadge.classList.add('hidden');
-
-            cartSubtotal.innerText = `PKR ${totalPrice}`;
-            cartTotal.innerText = `PKR ${totalPrice}`;
-
-            if (cart.length === 0) {
-                cartItemsList.innerHTML = `<div class="py-16 text-center text-slate-400"><p class="font-medium text-sm">Your cart is empty.</p></div>`;
-                return;
+            function renderCategories() {
+                categoryContainer.innerHTML = categories.map(cat => `
+                    <button onclick="selectCategory('${cat}')" class="px-5 py-2.5 rounded-2xl whitespace-nowrap text-xs font-extrabold transition-all duration-200 ${activeCategory === cat ? 'bg-orange-600 text-white shadow-lg shadow-orange-600/30 scale-105' : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-orange-500'}">
+                        ${cat}
+                    </button>
+                `).join('');
             }
 
-            cartItemsList.innerHTML = cart.map(item => `
-                <div class="flex items-center justify-between p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-200/60 dark:border-slate-800">
-                    <div class="space-y-1">
-                        <h5 class="font-extrabold text-sm text-slate-900 dark:text-white">${item.name}</h5>
-                        <p class="text-xs text-orange-600 dark:text-orange-500 font-bold">PKR ${item.price * item.qty}</p>
-                    </div>
-                    <div class="flex items-center space-x-2 space-x-reverse bg-white dark:bg-slate-900 px-2 py-1 rounded-xl border border-slate-200 dark:border-slate-800">
-                        <button onclick="changeQty('${item.id}', -1)" class="w-6 h-6 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold text-xs flex items-center justify-center">-</button>
-                        <span class="text-xs font-extrabold px-1 text-slate-900 dark:text-white">${item.qty}</span>
-                        <button onclick="changeQty('${item.id}', 1)" class="w-6 h-6 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold text-xs flex items-center justify-center">+</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        window.changeQty = function(id, delta) {
-            const item = cart.find(c => c.id === id);
-            if (!item) return;
-            item.qty += delta;
-            if (item.qty <= 0) cart = cart.filter(c => c.id !== id);
-            updateCartUI();
-        };
-
-        function openCart() {
-            cartDrawer.classList.remove('pointer-events-none', 'opacity-0');
-            cartContainer.classList.remove('translate-x-full');
-        }
-
-        function closeCart() {
-            cartDrawer.classList.add('pointer-events-none', 'opacity-0');
-            cartContainer.classList.add('translate-x-full');
-        }
-
-        openCartBtn.addEventListener('click', openCart);
-        closeCartBtn.addEventListener('click', closeCart);
-        closeCartOverlay.addEventListener('click', closeCart);
-
-        checkoutWhatsAppBtn.addEventListener('click', () => {
-            if (cart.length === 0) return alert('Please add items to cart.');
-            const name = document.getElementById('custName').value.trim();
-            const phone = document.getElementById('custPhone').value.trim();
-            const address = document.getElementById('custAddress').value.trim();
-            if (!name || !phone || !address) return alert('تمام تفصیلات درج کریں۔');
-
-            let msg = `*NEW ORDER - MUGHAL FOODS*\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n📍 Address: ${address}\n\n*Items:*\n`;
-            cart.forEach((i, idx) => msg += `${idx + 1}. ${i.name} x ${i.qty} = PKR ${i.price * i.qty}\n`);
-            const total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
-            msg += `\n*Total:* PKR ${total}`;
-            window.open(`https://wa.me/923438800890?text=${encodeURIComponent(msg)}`, '_blank');
-        });
-
-        openAdminModalBtn.addEventListener('click', () => {
-            adminAuthModal.classList.remove('pointer-events-none', 'opacity-0');
-            adminAuthCard.classList.remove('scale-95');
-            adminPassInput.focus();
-        });
-
-        closeAdminAuthBtn.addEventListener('click', () => {
-            adminAuthModal.classList.add('pointer-events-none', 'opacity-0');
-            adminAuthCard.classList.add('scale-95');
-            adminPassInput.value = '';
-            adminAuthErr.classList.add('hidden');
-        });
-
-        verifyAdminPassBtn.addEventListener('click', () => {
-            if (adminPassInput.value === ADMIN_PASS) {
-                closeAdminAuthBtn.click();
-                renderAdminTable();
-                adminPanelModal.classList.remove('hidden');
-            } else {
-                adminAuthErr.classList.remove('hidden');
-            }
-        });
-
-        closeAdminPanelBtn.addEventListener('click', () => adminPanelModal.classList.add('hidden'));
-
-        function renderAdminTable() {
-            adminItemTableBody.innerHTML = foodItems.map(item => `
-                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
-                    <td class="p-4 font-bold text-slate-900 dark:text-white">${item.name}</td>
-                    <td class="p-4"><span class="px-2.5 py-1 bg-slate-200 dark:bg-slate-800 text-xs font-bold rounded-full">${item.category}</span></td>
-                    <td class="p-4 font-extrabold text-orange-600">
-                        <input type="number" value="${item.price}" onchange="updatePrice('${item.id}', this.value)" class="w-24 px-2 py-1 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm font-bold">
-                    </td>
-                    <td class="p-4 text-center">
-                        <button onclick="deleteItem('${item.id}')" class="w-8 h-8 rounded-lg bg-rose-500/10 text-rose-500 hover:bg-rose-500 hover:text-white transition flex items-center justify-center mx-auto">
-                            <i class="fa-solid fa-trash-can text-xs"></i>
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        window.updatePrice = function(id, newPrice) {
-            const item = foodItems.find(i => i.id === id);
-            if (item) {
-                item.price = parseFloat(newPrice) || 0;
-                localStorage.setItem('mughal_food_items', JSON.stringify(foodItems));
+            window.selectCategory = function(cat) {
+                activeCategory = cat;
+                currentCategoryTitle.innerText = cat === 'All' ? 'All Items' : cat;
+                renderCategories();
                 renderMenu();
-            }
-        };
-
-        window.deleteItem = function(id) {
-            if (confirm('Delete item?')) {
-                foodItems = foodItems.filter(i => i.id !== id);
-                localStorage.setItem('mughal_food_items', JSON.stringify(foodItems));
-                renderAdminTable();
-                renderMenu();
-            }
-        };
-
-        addItemForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const newItem = {
-                id: Date.now().toString(),
-                name: document.getElementById('newItemName').value.trim(),
-                category: document.getElementById('newItemCategory').value,
-                price: parseFloat(document.getElementById('newItemPrice').value) || 0,
-                img: document.getElementById('newItemImg').value.trim() || 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80',
-                desc: document.getElementById('newItemDesc').value.trim() || 'Delicious food item.'
             };
-            foodItems.push(newItem);
-            localStorage.setItem('mughal_food_items', JSON.stringify(foodItems));
-            renderAdminTable();
-            renderMenu();
-            addItemForm.reset();
+
+            function renderMenu() {
+                const filtered = activeCategory === 'All' ? foodItems : foodItems.filter(i => i.category === activeCategory);
+                itemCountTag.innerText = `${filtered.length} Items`;
+
+                if (filtered.length === 0) {
+                    menuGrid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-400"><p class="font-medium">No items found in this category.</p></div>`;
+                    return;
+                }
+
+                menuGrid.innerHTML = filtered.map(item => `
+                    <div class="group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl hover:border-orange-500/50 transition-all duration-300 flex flex-col">
+                        <div class="relative h-48 overflow-hidden bg-slate-100 dark:bg-slate-800">
+                            <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            <span class="absolute top-3 right-3 bg-slate-900/80 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">${item.category}</span>
+                        </div>
+                        <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                            <div class="space-y-1">
+                                <h4 class="font-extrabold text-base text-slate-900 dark:text-white">${item.name}</h4>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">${item.desc}</p>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800/80">
+                                <div>
+                                    <span class="text-xs text-slate-400 block font-medium">Price</span>
+                                    <span class="text-lg font-black text-orange-600 dark:text-orange-500">PKR ${item.price}</span>
+                                </div>
+                                <button onclick="window.addToCart('${item.id}')" class="px-4 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs shadow-md shadow-orange-600/20 transition flex items-center space-x-1 space-x-reverse">
+                                    <i class="fa-solid fa-plus text-xs"></i>
+                                    <span>Add to Cart</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                 }
+
+            window.addToCart = function(id) {
+                const item = foodItems.find(i => i.id === id);
+                const exist = cart.find(c => c.id === id);
+                if (exist) { exist.qty++; } else { cart.push({ ...item, qty: 1 }); }
+                updateCartUI();
+                openCart();
+            };
+
+            function updateCartUI() {
+                const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+                const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+                cartBadge.innerText = totalQty;
+                totalQty > 0 ? cartBadge.classList.remove('hidden') : cartBadge.classList.add('hidden');
+
+                cartSubtotal.innerText = `PKR ${totalPrice}`;
+                cartTotal.innerText = `PKR ${totalPrice}`;
+
+                if (cart.length === 0) {
+                    cartItemsList.innerHTML = `<div class="py-16 text-center text-slate-400"><p class="font-medium text-sm">Your cart is empty.</p></div>`;
+                    return;
+                }
+
+                cartItemsList.innerHTML = cart.map(item => `
+                    <div class="flex items-center justify-between p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-200/60 dark:border-slate-800">
+                        <div class="space-y-1">
+                            <h5 class="font-extrabold text-sm text-slate-900 dark:text-white">${item.name}</h5>
+                            <p class="text-xs text-orange-600 dark:text-orange-500 font-bold">PKR ${item.price * item.qty}</p>
+                        </div>
+                        <div class="flex items-center space-x-2 space-x-reverse bg-white dark:bg-slate-900 px-2 py-1 rounded-xl border border-slate-200 dark:border-slate-800">
+                            <button onclick="window.changeQty('${item.id}', -1)" class="w-6 h-6 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold text-xs flex items-center justify-center">-</button>
+                            <span class="text-xs font-extrabold px-1 text-slate-900 dark:text-white">${item.qty}</span>
+                            <button onclick="window.changeQty('${item.id}', 1)" class="w-6 h-6 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold text-xs flex items-center justify-center">+</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            window.changeQty = function(id, delta) {
+                const item = cart.find(c => c.id === id);
+                if (!item) return;
+                item.qty += delta;
+                if (item.qty <= 0) cart = cart.filter(c => c.id !== id);
+                updateCartUI();
+            };
+
+            function openCart() {
+                cartDrawer.classList.remove('pointer-events-none', 'opacity-0');
+                cartContainer.classList.remove('translate-x-full');
+            }
+
+            function closeCart() {
+                cartDrawer.classList.add('pointer-events-none', 'opacity-0');
+                cartContainer.classList.add('translate-x-full');
+            }
+
+            openCartBtn.addEventListener('click', openCart);
+            closeCartBtn.addEventListener('click', closeCart);
+            closeCartOverlay.addEventListener('click', closeCart);
+
+            checkoutWhatsAppBtn.addEventListener('click', () => {
+                if (cart.length === 0) return alert('Please add items to cart.');
+                const name = document.getElementById('custName').value.trim();
+                const phone = document.getElementById('custPhone').value.trim();
+                const address = document.getElementById('custAddress').value.trim();
+                if (!name || !phone || !address) return alert('تمام تفصیلات درج کریں۔');
+
+                let msg = `*NEW ORDER - MUGHAL FOODS*\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n📍 Address: ${address}\n\n*Items:*\n`;
+                cart.forEach((i, idx) => msg += `${idx + 1}. ${i.name} x ${i.qty} = PKR ${i.price * i.qty}\n`);
+                const total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+                msg += `\n*Total:* PKR ${total}`;
+                window.open(`https://wa.me/923438800890?text=${encodeURIComponent(msg)}`, '_blank');
+            });
+
+            openAdminModalBtn.addEventListener('click', () => {
+                adminAuthModal.classList.remove('pointer-events-none', 'opacity-0');
+                adminAuthCard.classList.remove('scale-95');
+                adminPassInput.focus();
+            });
+
+            closeAdminAuthBtn.addEventListener('click', () => {
+                adminAuthModal.classList.add('pointer-events-none', 'opacity-0');
+                adminAuthCard.classList.add('scale-95');
+                adminPassInput.value = '';
+                adminAuthErr.classList.add('hidden');
+            });
+
+            verifyAdminPassBtn.addEventListener('click', () => {
+                if (adminPassInput.value === ADMIN_PASS) {
+                    closeAdminAuthBtn.click();
+                    renderAdminTable();
+                    adminPanelModal.classList.remove('hidden');
+                } else {
+                    adminAuthErr.classList.remove('hidden');
+                }
+            });
+
+            closeAdminPanelBtn.addEventListener('click', () => adminPanelModal.classList.add('hidden'));
+
+            function renderAdminTable() {
+                adminItemTableBody.innerHTML = foodItems.map(item => `
+                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
+                        <td class="p-4 font-bold text-slate-900 dark:text-white">${item.name}</td>
+                        <td class="p-4"><span class="px-2.5 py-1 bg-slate-200 dark:bg-slate-800 text-xs font-bold rounded-full">${item.category}</span></td>
+                        <td class="p-4 font-extrabold text-orange-600">
+                            <input type="number" value="${item.price}" onchange="window.updatePrice('${item.id}', this.value)" class="w-24 px-2 py-1 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm font-bold">
+                        </td>
+                        <td class="p-4 text-center">
+                            <button onclick="window.deleteItem('${item.id}')" class="w-8 h-8 rounded-lg bg-rose-500/10 text-rose-500 hover:bg-rose-500 hover:text-white transition flex items-center justify-center mx-auto">
+                                <i class="fa-solid fa-trash-can text-xs"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            window.updatePrice = function(id, newPrice) {
+                const item = foodItems.find(i => i.id === id);
+                if (item) {
+                    item.price = parseFloat(newPrice) || 0;
+                    localStorage.setItem('mughal_food_items', JSON.stringify(foodItems));
+                    renderMenu();
+                }
+            };
+
+            window.deleteItem = function(id) {
+                if (confirm('Delete item?')) {
+                    foodItems = foodItems.filter(i => i.id !== id);
+                    localStorage.setItem('mughal_food_items', JSON.stringify(foodItems));
+                    renderAdminTable();
+                    renderMenu();
+                }
+            };
+
+            addItemForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const newItem = {
+                    id: Date.now().toString(),
+                    name: document.getElementById('newItemName').value.trim(),
+                    category: document.getElementById('newItemCategory').value,
+                    price: parseFloat(document.getElementById('newItemPrice').value) || 0,
+                    img: document.getElementById('newItemImg').value.trim() || 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80',
+                    desc: document.getElementById('newItemDesc').value.trim() || 'Delicious food item.'
+                };
+                foodItems.push(newItem);
+                localStorage.setItem('mughal_food_items', JSON.stringify(foodItems));
+                renderAdminTable();
+                renderMenu();
+                addItemForm.reset();
+            });
         });
     </script>
 </body>
