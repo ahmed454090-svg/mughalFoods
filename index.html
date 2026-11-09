@@ -12,13 +12,7 @@
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            50: '#fff7ed',
-                            100: '#ffedd5',
-                            500: '#f97316',
-                            600: '#ea580c',
-                            700: '#c2410c',
-                        }
+                        brand: { 50: '#fff7ed', 100: '#ffedd5', 500: '#f97316', 600: '#ea580c', 700: '#c2410c' }
                     }
                 }
             }
@@ -29,21 +23,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .glass-header {
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 9999px;
-        }
-        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #334155;
-        }
+        .glass-header { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; }
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors duration-300 min-h-screen flex flex-col">
@@ -62,19 +45,14 @@
             </div>
 
             <div class="flex items-center space-x-3 space-x-reverse">
-                <!-- Theme Switcher -->
                 <button id="themeToggleBtn" class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-orange-500 flex items-center justify-center transition">
                     <i id="themeIcon" class="fa-solid fa-moon text-lg"></i>
                 </button>
-
-                <!-- Cart Button -->
                 <button id="openCartBtn" class="relative px-4 h-10 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-semibold flex items-center space-x-2 space-x-reverse shadow-md shadow-orange-600/30 transition">
                     <i class="fa-solid fa-cart-shopping text-sm"></i>
                     <span>Cart</span>
                     <span id="cartBadge" class="bg-white text-orange-600 text-xs font-bold px-2 py-0.5 rounded-full ml-1 hidden">0</span>
                 </button>
-
-                <!-- Admin Auth Button -->
                 <button id="openAdminModalBtn" class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-orange-500 flex items-center justify-center transition">
                     <i class="fa-solid fa-user-shield text-lg"></i>
                 </button>
@@ -84,8 +62,6 @@
 
     <!-- Main Content -->
     <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-        
-        <!-- Hero Banner -->
         <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-orange-600 via-amber-600 to-orange-500 p-8 sm:p-12 text-white shadow-2xl">
             <div class="relative z-10 max-w-xl space-y-4">
                 <span class="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-bold tracking-wider uppercase">Crispy, Hot & Fresh</span>
@@ -95,23 +71,17 @@
             <i class="fa-solid fa-burger absolute -bottom-6 -right-6 text-9xl text-white/10 pointer-events-none transform -rotate-12"></i>
         </div>
 
-        <!-- Categories Slider / Nav -->
         <section class="space-y-4">
             <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100">Explore Menu Categories</h3>
-            <div id="categoryContainer" class="flex items-center space-x-3 space-x-reverse overflow-x-auto custom-scrollbar pb-2">
-                <!-- Injected via JS -->
-            </div>
+            <div id="categoryContainer" class="flex items-center space-x-3 space-x-reverse overflow-x-auto custom-scrollbar pb-2"></div>
         </section>
 
-        <!-- Food Menu Grid -->
         <section class="space-y-4">
             <div class="flex items-center justify-between">
                 <h3 id="currentCategoryTitle" class="text-xl font-extrabold text-slate-900 dark:text-slate-100">All Items</h3>
                 <span id="itemCountTag" class="text-xs font-semibold px-3 py-1 bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full">0 Items</span>
             </div>
-            <div id="menuGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                <!-- Injected via JS -->
-            </div>
+            <div id="menuGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
         </section>
     </main>
 
@@ -125,92 +95,62 @@
                         <i class="fa-solid fa-bag-shopping text-orange-500 text-xl"></i>
                         <h2 class="text-lg font-bold text-slate-900 dark:text-white">Your Order</h2>
                     </div>
-                    <button id="closeCartBtn" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-                        <i class="fa-solid fa-xmark text-xl"></i>
-                    </button>
+                    <button id="closeCartBtn" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-xl"><i class="fa-solid fa-xmark"></i></button>
                 </div>
-
-                <div id="cartItemsList" class="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar">
-                    <!-- Injected via JS -->
-                </div>
-
+                <div id="cartItemsList" class="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar"></div>
                 <div class="p-6 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 space-y-4">
                     <div class="space-y-2">
-                        <input type="text" id="custName" placeholder="Full Name (پورا نام)" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500">
-                        <input type="text" id="custPhone" placeholder="WhatsApp Number (موبائل نمبر)" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500">
-                        <textarea id="custAddress" rows="2" placeholder="Delivery Address (مکمل پتہ)" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 resize-none"></textarea>
+                        <input type="text" id="custName" placeholder="Full Name (پورا نام)" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm outline-none focus:ring-2 focus:ring-orange-500">
+                        <input type="text" id="custPhone" placeholder="WhatsApp Number (موبائل نمبر)" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm outline-none focus:ring-2 focus:ring-orange-500">
+                        <textarea id="custAddress" rows="2" placeholder="Delivery Address (مکمل پتہ)" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm outline-none focus:ring-2 focus:ring-orange-500 resize-none"></textarea>
                     </div>
-
                     <div class="pt-2 border-t border-slate-200 dark:border-slate-800 space-y-2">
-                        <div class="flex justify-between text-sm text-slate-500 dark:text-slate-400">
-                            <span>Subtotal</span>
-                            <span id="cartSubtotal">PKR 0</span>
-                        </div>
-                        <div class="flex justify-between text-sm text-slate-500 dark:text-slate-400">
-                            <span>Delivery Fee</span>
-                            <span class="text-emerald-500 font-semibold">FREE</span>
-                        </div>
-                        <div class="flex justify-between text-lg font-black text-slate-900 dark:text-white pt-2 border-t border-slate-200 dark:border-slate-800">
-                            <span>Total</span>
-                            <span id="cartTotal" class="text-orange-500">PKR 0</span>
-                        </div>
+                        <div class="flex justify-between text-sm text-slate-500"><span>Subtotal</span><span id="cartSubtotal">PKR 0</span></div>
+                        <div class="flex justify-between text-sm text-slate-500"><span>Delivery Fee</span><span class="text-emerald-500 font-semibold">FREE</span></div>
+                        <div class="flex justify-between text-lg font-black text-slate-900 dark:text-white pt-2 border-t"><span>Total</span><span id="cartTotal" class="text-orange-500">PKR 0</span></div>
                     </div>
-
                     <button id="checkoutWhatsAppBtn" class="w-full py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold flex items-center justify-center space-x-2 space-x-reverse shadow-lg shadow-emerald-600/30 transition">
-                        <i class="fa-brands fa-whatsapp text-xl"></i>
-                        <span>Confirm Order via WhatsApp</span>
+                        <i class="fa-brands fa-whatsapp text-xl"></i><span>Confirm Order via WhatsApp</span>
                     </button>
                 </div>
             </div>
         </div>
     </div>
-      <!-- Admin Authentication Modal -->
+
+    <!-- Admin Authentication Modal -->
     <div id="adminAuthModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md transition-opacity duration-300 opacity-0 pointer-events-none">
         <div class="w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden transform scale-95 transition-transform duration-300" id="adminAuthCard">
             <div class="p-8 space-y-6 text-center">
-                <div class="w-16 h-16 bg-orange-500/10 text-orange-500 rounded-2xl mx-auto flex items-center justify-center text-2xl font-black">
-                    <i class="fa-solid fa-lock"></i>
-                </div>
+                <div class="w-16 h-16 bg-orange-500/10 text-orange-500 rounded-2xl mx-auto flex items-center justify-center text-2xl font-black"><i class="fa-solid fa-lock"></i></div>
                 <div class="space-y-1">
                     <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white">Admin Authentication</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">Enter access key to manage menu prices and items</p>
+                    <p class="text-xs text-slate-500">Enter access key to manage menu prices</p>
                 </div>
-
                 <div class="space-y-3">
-                    <div class="relative">
-                        <input type="password" id="adminPassInput" placeholder="Enter Access Password" class="w-full px-4 py-3.5 text-center text-lg font-bold tracking-widest rounded-2xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500 transition">
-                    </div>
-                    <p id="adminAuthErr" class="text-xs text-rose-500 font-semibold hidden">Invalid Password. Please try again.</p>
+                    <input type="password" id="adminPassInput" placeholder="Enter Access Password" class="w-full px-4 py-3.5 text-center text-lg font-bold tracking-widest rounded-2xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-orange-500">
+                    <p id="adminAuthErr" class="text-xs text-rose-500 font-semibold hidden">Invalid Password.</p>
                 </div>
-
                 <div class="grid grid-cols-2 gap-3 pt-2">
-                    <button id="closeAdminAuthBtn" class="py-3 px-4 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition">Cancel</button>
-                    <button id="verifyAdminPassBtn" class="py-3 px-4 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-sm shadow-md shadow-orange-600/30 transition flex items-center justify-center">Verify Access</button>
+                    <button id="closeAdminAuthBtn" class="py-3 px-4 rounded-xl border border-slate-300 dark:border-slate-700 font-bold text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition">Cancel</button>
+                    <button id="verifyAdminPassBtn" class="py-3 px-4 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-sm shadow-md transition">Verify Access</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Admin Control Panel Modal -->
+     <!-- Admin Control Panel Modal -->
     <div id="adminPanelModal" class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-md hidden p-4 sm:p-6 lg:p-8">
         <div class="max-w-4xl mx-auto bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
             <div class="px-6 py-5 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
-                <div class="flex items-center space-x-3 space-x-reverse">
-                    <span class="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></span>
-                    <h3 class="text-xl font-extrabold text-slate-900 dark:text-white">Admin Management Dashboard</h3>
-                </div>
-                <button id="closeAdminPanelBtn" class="w-9 h-9 rounded-xl bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-300 hover:text-orange-500 flex items-center justify-center transition">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
+                <h3 class="text-xl font-extrabold text-slate-900 dark:text-white">Admin Management Dashboard</h3>
+                <button id="closeAdminPanelBtn" class="w-9 h-9 rounded-xl bg-slate-200 dark:bg-slate-700 text-slate-500 hover:text-orange-500 flex items-center justify-center transition"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
-
             <div class="p-6 sm:p-8 space-y-8">
-                <!-- Add New Item Form -->
                 <div class="space-y-4">
                     <h4 class="text-lg font-extrabold text-slate-900 dark:text-white">Add New Food Item</h4>
                     <form id="addItemForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <input type="text" id="newItemName" placeholder="Item Name (e.g., Zinger Supreme)" required class="px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-orange-500 outline-none">
-                        <select id="newItemCategory" required class="px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-orange-500 outline-none">
+                        <input type="text" id="newItemName" placeholder="Item Name" required class="px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm outline-none">
+                        <select id="newItemCategory" required class="px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm outline-none">
                             <option value="Burgers">Burgers</option>
                             <option value="Fish">Fish</option>
                             <option value="Fries">Fries</option>
@@ -220,29 +160,20 @@
                             <option value="Roll Paratha">Roll Paratha</option>
                             <option value="Drinks">Drinks</option>
                         </select>
-                        <input type="number" id="newItemPrice" placeholder="Price (PKR)" required class="px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-orange-500 outline-none">
-                        <input type="url" id="newItemImg" placeholder="Image URL (Unsplash or Direct Link)" class="px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-orange-500 outline-none">
-                        <textarea id="newItemDesc" rows="2" placeholder="Item Short Description" class="sm:col-span-2 px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-orange-500 outline-none resize-none"></textarea>
-                        <button type="submit" class="sm:col-span-2 py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-xl text-sm shadow-md transition">Add Item to Database</button>
+                        <input type="number" id="newItemPrice" placeholder="Price (PKR)" required class="px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm outline-none">
+                        <input type="url" id="newItemImg" placeholder="Image URL" class="px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm outline-none">
+                        <textarea id="newItemDesc" rows="2" placeholder="Description" class="sm:col-span-2 px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm outline-none resize-none"></textarea>
+                        <button type="submit" class="sm:col-span-2 py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-xl text-sm transition">Add Item</button>
                     </form>
                 </div>
-
-                <!-- Existing Items Table -->
                 <div class="space-y-4">
                     <h4 class="text-lg font-extrabold text-slate-900 dark:text-white">Manage & Edit Live Prices</h4>
                     <div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
                         <table class="w-full text-left border-collapse text-sm">
                             <thead class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
-                                <tr>
-                                    <th class="p-4">Item</th>
-                                    <th class="p-4">Category</th>
-                                    <th class="p-4">Price (PKR)</th>
-                                    <th class="p-4 text-center">Action</th>
-                                </tr>
+                                <tr><th class="p-4">Item</th><th class="p-4">Category</th><th class="p-4">Price (PKR)</th><th class="p-4 text-center">Action</th></tr>
                             </thead>
-                            <tbody id="adminItemTableBody" class="divide-y divide-slate-200 dark:divide-slate-800">
-                                <!-- Injected via JS -->
-                            </tbody>
+                            <tbody id="adminItemTableBody" class="divide-y divide-slate-200 dark:divide-slate-800"></tbody>
                         </table>
                     </div>
                 </div>
@@ -276,44 +207,136 @@
             const itemCountTag = document.getElementById('itemCountTag');
             const currentCategoryTitle = document.getElementById('currentCategoryTitle');
 
-            const openCartBtn = document.getElementById('openCartBtn');
-            const closeCartBtn = document.getElementById('closeCartBtn');
-            const closeCartOverlay = document.getElementById('closeCartOverlay');
-            const cartDrawer = document.getElementById('cartDrawer');
-            const cartContainer = document.getElementById('cartContainer');
-            const cartItemsList = document.getElementById('cartItemsList');
-            const cartBadge = document.getElementById('cartBadge');
-            const cartSubtotal = document.getElementById('cartSubtotal');
-            const cartTotal = document.getElementById('cartTotal');
-            const checkoutWhatsAppBtn = document.getElementById('checkoutWhatsAppBtn');
+            // Render Categories
+            function renderCategories() {
+                categoryContainer.innerHTML = categories.map(cat => `
+                    <button data-category="${cat}" class="cat-btn px-5 py-2.5 rounded-2xl whitespace-nowrap text-xs font-extrabold transition-all duration-200 ${activeCategory === cat ? 'bg-orange-600 text-white shadow-lg shadow-orange-600/30 scale-105' : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-orange-500'}">
+                        ${cat}
+                    </button>
+                `).join('');
 
-            const openAdminModalBtn = document.getElementById('openAdminModalBtn');
-            const adminAuthModal = document.getElementById('adminAuthModal');
-            const adminAuthCard = document.getElementById('adminAuthCard');
-            const closeAdminAuthBtn = document.getElementById('closeAdminAuthBtn');
-            const verifyAdminPassBtn = document.getElementById('verifyAdminPassBtn');
-            const adminPassInput = document.getElementById('adminPassInput');
-            const adminAuthErr = document.getElementById('adminAuthErr');
-
-            const adminPanelModal = document.getElementById('adminPanelModal');
-            const closeAdminPanelBtn = document.getElementById('closeAdminPanelBtn');
-            const adminItemTableBody = document.getElementById('adminItemTableBody');
-            const addItemForm = document.getElementById('addItemForm');
-
-            renderCategories();
-            renderMenu();
-            setupTheme();
-
-            function setupTheme() {
-                if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                    document.documentElement.classList.add('dark');
-                    document.getElementById('themeIcon').className = 'fa-solid fa-sun text-lg text-amber-400';
-                } else {
-                    document.documentElement.classList.remove('dark');
-                    document.getElementById('themeIcon').className = 'fa-solid fa-moon text-lg';
-                }
+                document.querySelectorAll('.cat-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        activeCategory = e.currentTarget.getAttribute('data-category');
+                        currentCategoryTitle.innerText = activeCategory === 'All' ? 'All Items' : activeCategory;
+                        renderCategories();
+                        renderMenu();
+                    });
+                });
             }
 
+            // Render Menu
+            function renderMenu() {
+                const filtered = activeCategory === 'All' ? foodItems : foodItems.filter(i => i.category === activeCategory);
+                itemCountTag.innerText = `${filtered.length} Items`;
+
+                if (filtered.length === 0) {
+                    menuGrid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-400"><p class="font-medium">No items found.</p></div>`;
+                    return;
+                }
+
+                menuGrid.innerHTML = filtered.map(item => `
+                    <div class="group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition flex flex-col">
+                        <div class="relative h-48 overflow-hidden bg-slate-100 dark:bg-slate-800">
+                            <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            <span class="absolute top-3 right-3 bg-slate-900/80 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">${item.category}</span>
+                        </div>
+                        <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                            <div class="space-y-1">
+                                <h4 class="font-extrabold text-base text-slate-900 dark:text-white">${item.name}</h4>
+                                <p class="text-xs text-slate-500 line-clamp-2">${item.desc}</p>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800">
+                                <div><span class="text-xs text-slate-400 block">Price</span><span class="text-lg font-black text-orange-600">PKR ${item.price}</span></div>
+                                <button data-id="${item.id}" class="add-cart-btn px-4 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs shadow-md transition flex items-center space-x-1 space-x-reverse">
+                                    <i class="fa-solid fa-plus text-xs"></i><span>Add to Cart</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                document.querySelectorAll('.add-cart-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.currentTarget.getAttribute('data-id');
+                        addToCart(id);
+                    });
+                });
+            }
+
+            function addToCart(id) {
+                const item = foodItems.find(i => i.id === id);
+                const exist = cart.find(c => c.id === id);
+                if (exist) { exist.qty++; } else { cart.push({ ...item, qty: 1 }); }
+                updateCartUI();
+                openCart();
+            }
+
+            function updateCartUI() {
+                const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+                const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+                const cartBadge = document.getElementById('cartBadge');
+                cartBadge.innerText = totalQty;
+                totalQty > 0 ? cartBadge.classList.remove('hidden') : cartBadge.classList.add('hidden');
+
+                document.getElementById('cartSubtotal').innerText = `PKR ${totalPrice}`;
+                document.getElementById('cartTotal').innerText = `PKR ${totalPrice}`;
+
+                const cartItemsList = document.getElementById('cartItemsList');
+                if (cart.length === 0) {
+                    cartItemsList.innerHTML = `<div class="py-16 text-center text-slate-400"><p class="text-sm">Your cart is empty.</p></div>`;
+                    return;
+                }
+
+                cartItemsList.innerHTML = cart.map(item => `
+                    <div class="flex items-center justify-between p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border">
+                        <div class="space-y-1">
+                            <h5 class="font-extrabold text-sm text-slate-900 dark:text-white">${item.name}</h5>
+                            <p class="text-xs text-orange-600 font-bold">PKR ${item.price * item.qty}</p>
+                        </div>
+                        <div class="flex items-center space-x-2 space-x-reverse bg-white dark:bg-slate-900 px-2 py-1 rounded-xl border">
+                            <button data-id="${item.id}" data-delta="-1" class="qty-btn w-6 h-6 rounded-lg bg-slate-100 dark:bg-slate-800 font-bold text-xs">-</button>
+                            <span class="text-xs font-extrabold px-1">${item.qty}</span>
+                            <button data-id="${item.id}" data-delta="1" class="qty-btn w-6 h-6 rounded-lg bg-slate-100 dark:bg-slate-800 font-bold text-xs">+</button>
+                        </div>
+                    </div>
+                `).join('');
+
+                document.querySelectorAll('.qty-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.target.getAttribute('data-id');
+                        const delta = parseInt(e.target.getAttribute('data-delta'));
+                        changeQty(id, delta);
+                    });
+                });
+            }
+
+            function changeQty(id, delta) {
+                const item = cart.find(c => c.id === id);
+                if (!item) return;
+                item.qty += delta;
+                if (item.qty <= 0) cart = cart.filter(c => c.id !== id);
+                updateCartUI();
+            }
+
+                     // Cart Drawer Controls
+            const cartDrawer = document.getElementById('cartDrawer');
+            const cartContainer = document.getElementById('cartContainer');
+
+            function openCart() {
+                cartDrawer.classList.remove('pointer-events-none', 'opacity-0');
+                cartContainer.classList.remove('translate-x-full');
+            }
+            function closeCart() {
+                cartDrawer.classList.add('pointer-events-none', 'opacity-0');
+                cartContainer.classList.add('translate-x-full');
+            }
+
+            document.getElementById('openCartBtn').addEventListener('click', openCart);
+            document.getElementById('closeCartBtn').addEventListener('click', closeCart);
+            document.getElementById('closeCartOverlay').addEventListener('click', closeCart);
+
+            // Theme Toggle
             document.getElementById('themeToggleBtn').addEventListener('click', () => {
                 if (document.documentElement.classList.contains('dark')) {
                     document.documentElement.classList.remove('dark');
@@ -326,116 +349,8 @@
                 }
             });
 
-            function renderCategories() {
-                categoryContainer.innerHTML = categories.map(cat => `
-                    <button onclick="selectCategory('${cat}')" class="px-5 py-2.5 rounded-2xl whitespace-nowrap text-xs font-extrabold transition-all duration-200 ${activeCategory === cat ? 'bg-orange-600 text-white shadow-lg shadow-orange-600/30 scale-105' : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-orange-500'}">
-                        ${cat}
-                    </button>
-                `).join('');
-            }
-
-            window.selectCategory = function(cat) {
-                activeCategory = cat;
-                currentCategoryTitle.innerText = cat === 'All' ? 'All Items' : cat;
-                renderCategories();
-                renderMenu();
-            };
-
-            function renderMenu() {
-                const filtered = activeCategory === 'All' ? foodItems : foodItems.filter(i => i.category === activeCategory);
-                itemCountTag.innerText = `${filtered.length} Items`;
-
-                if (filtered.length === 0) {
-                    menuGrid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-400"><p class="font-medium">No items found in this category.</p></div>`;
-                    return;
-                }
-
-                menuGrid.innerHTML = filtered.map(item => `
-                    <div class="group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl hover:border-orange-500/50 transition-all duration-300 flex flex-col">
-                        <div class="relative h-48 overflow-hidden bg-slate-100 dark:bg-slate-800">
-                            <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                            <span class="absolute top-3 right-3 bg-slate-900/80 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">${item.category}</span>
-                        </div>
-                        <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
-                            <div class="space-y-1">
-                                <h4 class="font-extrabold text-base text-slate-900 dark:text-white">${item.name}</h4>
-                                <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">${item.desc}</p>
-                            </div>
-                            <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800/80">
-                                <div>
-                                    <span class="text-xs text-slate-400 block font-medium">Price</span>
-                                    <span class="text-lg font-black text-orange-600 dark:text-orange-500">PKR ${item.price}</span>
-                                </div>
-                                <button onclick="window.addToCart('${item.id}')" class="px-4 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs shadow-md shadow-orange-600/20 transition flex items-center space-x-1 space-x-reverse">
-                                    <i class="fa-solid fa-plus text-xs"></i>
-                                    <span>Add to Cart</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
-                 }
-
-            window.addToCart = function(id) {
-                const item = foodItems.find(i => i.id === id);
-                const exist = cart.find(c => c.id === id);
-                if (exist) { exist.qty++; } else { cart.push({ ...item, qty: 1 }); }
-                updateCartUI();
-                openCart();
-            };
-
-            function updateCartUI() {
-                const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
-                const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-                cartBadge.innerText = totalQty;
-                totalQty > 0 ? cartBadge.classList.remove('hidden') : cartBadge.classList.add('hidden');
-
-                cartSubtotal.innerText = `PKR ${totalPrice}`;
-                cartTotal.innerText = `PKR ${totalPrice}`;
-
-                if (cart.length === 0) {
-                    cartItemsList.innerHTML = `<div class="py-16 text-center text-slate-400"><p class="font-medium text-sm">Your cart is empty.</p></div>`;
-                    return;
-                }
-
-                cartItemsList.innerHTML = cart.map(item => `
-                    <div class="flex items-center justify-between p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-200/60 dark:border-slate-800">
-                        <div class="space-y-1">
-                            <h5 class="font-extrabold text-sm text-slate-900 dark:text-white">${item.name}</h5>
-                            <p class="text-xs text-orange-600 dark:text-orange-500 font-bold">PKR ${item.price * item.qty}</p>
-                        </div>
-                        <div class="flex items-center space-x-2 space-x-reverse bg-white dark:bg-slate-900 px-2 py-1 rounded-xl border border-slate-200 dark:border-slate-800">
-                            <button onclick="window.changeQty('${item.id}', -1)" class="w-6 h-6 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold text-xs flex items-center justify-center">-</button>
-                            <span class="text-xs font-extrabold px-1 text-slate-900 dark:text-white">${item.qty}</span>
-                            <button onclick="window.changeQty('${item.id}', 1)" class="w-6 h-6 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold text-xs flex items-center justify-center">+</button>
-                        </div>
-                    </div>
-                `).join('');
-            }
-
-            window.changeQty = function(id, delta) {
-                const item = cart.find(c => c.id === id);
-                if (!item) return;
-                item.qty += delta;
-                if (item.qty <= 0) cart = cart.filter(c => c.id !== id);
-                updateCartUI();
-            };
-
-            function openCart() {
-                cartDrawer.classList.remove('pointer-events-none', 'opacity-0');
-                cartContainer.classList.remove('translate-x-full');
-            }
-
-            function closeCart() {
-                cartDrawer.classList.add('pointer-events-none', 'opacity-0');
-                cartContainer.classList.add('translate-x-full');
-            }
-
-            openCartBtn.addEventListener('click', openCart);
-            closeCartBtn.addEventListener('click', closeCart);
-            closeCartOverlay.addEventListener('click', closeCart);
-
-            checkoutWhatsAppBtn.addEventListener('click', () => {
+            // WhatsApp Checkout
+            document.getElementById('checkoutWhatsAppBtn').addEventListener('click', () => {
                 if (cart.length === 0) return alert('Please add items to cart.');
                 const name = document.getElementById('custName').value.trim();
                 const phone = document.getElementById('custPhone').value.trim();
@@ -449,22 +364,29 @@
                 window.open(`https://wa.me/923438800890?text=${encodeURIComponent(msg)}`, '_blank');
             });
 
-            openAdminModalBtn.addEventListener('click', () => {
+            // Admin Modals
+            const adminAuthModal = document.getElementById('adminAuthModal');
+            const adminAuthCard = document.getElementById('adminAuthCard');
+            const adminPanelModal = document.getElementById('adminPanelModal');
+            const adminPassInput = document.getElementById('adminPassInput');
+            const adminAuthErr = document.getElementById('adminAuthErr');
+
+            document.getElementById('openAdminModalBtn').addEventListener('click', () => {
                 adminAuthModal.classList.remove('pointer-events-none', 'opacity-0');
                 adminAuthCard.classList.remove('scale-95');
                 adminPassInput.focus();
             });
 
-            closeAdminAuthBtn.addEventListener('click', () => {
+            document.getElementById('closeAdminAuthBtn').addEventListener('click', () => {
                 adminAuthModal.classList.add('pointer-events-none', 'opacity-0');
                 adminAuthCard.classList.add('scale-95');
                 adminPassInput.value = '';
                 adminAuthErr.classList.add('hidden');
             });
 
-            verifyAdminPassBtn.addEventListener('click', () => {
+            document.getElementById('verifyAdminPassBtn').addEventListener('click', () => {
                 if (adminPassInput.value === ADMIN_PASS) {
-                    closeAdminAuthBtn.click();
+                    document.getElementById('closeAdminAuthBtn').click();
                     renderAdminTable();
                     adminPanelModal.classList.remove('hidden');
                 } else {
@@ -472,44 +394,48 @@
                 }
             });
 
-            closeAdminPanelBtn.addEventListener('click', () => adminPanelModal.classList.add('hidden'));
+            document.getElementById('closeAdminPanelBtn').addEventListener('click', () => {
+                adminPanelModal.classList.add('hidden');
+            });
 
             function renderAdminTable() {
-                adminItemTableBody.innerHTML = foodItems.map(item => `
-                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
-                        <td class="p-4 font-bold text-slate-900 dark:text-white">${item.name}</td>
-                        <td class="p-4"><span class="px-2.5 py-1 bg-slate-200 dark:bg-slate-800 text-xs font-bold rounded-full">${item.category}</span></td>
-                        <td class="p-4 font-extrabold text-orange-600">
-                            <input type="number" value="${item.price}" onchange="window.updatePrice('${item.id}', this.value)" class="w-24 px-2 py-1 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm font-bold">
-                        </td>
-                        <td class="p-4 text-center">
-                            <button onclick="window.deleteItem('${item.id}')" class="w-8 h-8 rounded-lg bg-rose-500/10 text-rose-500 hover:bg-rose-500 hover:text-white transition flex items-center justify-center mx-auto">
-                                <i class="fa-solid fa-trash-can text-xs"></i>
-                            </button>
-                        </td>
+                const tbody = document.getElementById('adminItemTableBody');
+                tbody.innerHTML = foodItems.map(item => `
+                    <tr>
+                        <td class="p-4 font-bold">${item.name}</td>
+                        <td class="p-4"><span class="px-2 py-1 bg-slate-200 dark:bg-slate-800 text-xs rounded">${item.category}</span></td>
+                        <td class="p-4"><input type="number" value="${item.price}" data-id="${item.id}" class="price-input w-24 px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 font-bold text-orange-600"></td>
+                        <td class="p-4 text-center"><button data-id="${item.id}" class="del-btn px-2.5 py-1 bg-rose-500/10 text-rose-500 rounded"><i class="fa-solid fa-trash-can"></i></button></td>
                     </tr>
                 `).join('');
+
+                tbody.querySelectorAll('.price-input').forEach(input => {
+                    input.addEventListener('change', (e) => {
+                        const id = e.target.getAttribute('data-id');
+                        const newPrice = parseFloat(e.target.value) || 0;
+                        const item = foodItems.find(i => i.id === id);
+                        if (item) {
+                            item.price = newPrice;
+                            localStorage.setItem('mughal_food_items', JSON.stringify(foodItems));
+                            renderMenu();
+                        }
+                    });
+                });
+
+                tbody.querySelectorAll('.del-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.currentTarget.getAttribute('data-id');
+                        if (confirm('Delete item?')) {
+                            foodItems = foodItems.filter(i => i.id !== id);
+                            localStorage.setItem('mughal_food_items', JSON.stringify(foodItems));
+                            renderAdminTable();
+                            renderMenu();
+                        }
+                    });
+                });
             }
 
-            window.updatePrice = function(id, newPrice) {
-                const item = foodItems.find(i => i.id === id);
-                if (item) {
-                    item.price = parseFloat(newPrice) || 0;
-                    localStorage.setItem('mughal_food_items', JSON.stringify(foodItems));
-                    renderMenu();
-                }
-            };
-
-            window.deleteItem = function(id) {
-                if (confirm('Delete item?')) {
-                    foodItems = foodItems.filter(i => i.id !== id);
-                    localStorage.setItem('mughal_food_items', JSON.stringify(foodItems));
-                    renderAdminTable();
-                    renderMenu();
-                }
-            };
-
-            addItemForm.addEventListener('submit', (e) => {
+            document.getElementById('addItemForm').addEventListener('submit', (e) => {
                 e.preventDefault();
                 const newItem = {
                     id: Date.now().toString(),
@@ -523,9 +449,12 @@
                 localStorage.setItem('mughal_food_items', JSON.stringify(foodItems));
                 renderAdminTable();
                 renderMenu();
-                addItemForm.reset();
+                e.target.reset();
             });
+
+            renderCategories();
+            renderMenu();
         });
     </script>
 </body>
-</html>
+</html>             
