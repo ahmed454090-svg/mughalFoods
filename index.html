@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mughal Foods - Fresh, Fast &amp; Delicious</title>
     
-    <!-- PWA & Mobile Web App Meta Tags -->
-    <meta name="theme-color" content="#0f172a">
-    <meta name="mobile-web-app-capable" content="yes">
+    <!-- PWA MANIFEST LINK FOR CUSTOM APP ICONS -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#f97316">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Mughal Foods">
-    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIk11Z2hhbCBGb29kcyBPcmRlcmluZyBBcHAiLAogICJzaG9ydF9uYW1lIjogIk11Z2hhbCBGb29kcyIsCiAgInN0YXJ0X3VybCI6ICIuIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMGYxNzJhIiwKICAidGhlbWVfY29sb3IiOiAjZmE3MzE2IiwKICAiaWNvbnMiOiBbCiAgICB7Ci      ICAgICAgInNyYyI6ICJodHRwczovL2ltYWdlcy51bnNwbGFzaC5jb20vcGhvdG8tMTUzNDQyMjI5ODM5MS1lNGY4YzE3MmRkZGI/YXV0bz1mb3JtYXQmZml0PWNyb3Amdz0xOTImcT04MCIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogICAgfQogIF0KfQ==">
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -39,19 +39,7 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col antialiased transition-colors duration-300 selection:bg-brand-orange selection:text-white">
-
-    <!-- PWA INSTALL PROMPT BAR -->
-    <div id="pwaBanner" class="hidden bg-gradient-to-r from-brand-orange to-brand-red text-white py-2.5 px-4 text-xs sm:text-sm font-bold flex items-center justify-between shadow-md">
-        <div class="flex items-center gap-2">
-            <i class="fa-solid fa-mobile-screen-button text-lg"></i>
-            <span id="pwaBannerText">Install Mughal Foods App on your phone for faster orders!</span>
-        </div>
-        <div class="flex items-center gap-2">
-            <button onclick="triggerPwaInstall()" class="px-3 py-1 bg-white text-brand-orange rounded-lg font-black text-xs shadow hover:bg-slate-100" id="pwaInstallBtnText">Install App</button>
-            <button onclick="closePwaBanner()" class="text-white/80 hover:text-white"><i class="fa-solid fa-xmark text-sm"></i></button>
-        </div>
-    </div>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col antialiased transition-colors duration-300 selection:bg-brand-orange selection:text-white pb-24 sm:pb-28">
 
     <!-- TOP NAVIGATION BAR -->
     <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-md">
@@ -63,7 +51,8 @@
                 </div>
                 <div>
                     <div class="flex items-center gap-2">
-                        <h1 class="text-xl sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white leading-none">MUGHAL<span class="text-brand-orange"> FOODS</span></h1>
+                        <h1 class="text-xl sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white leading-none" id="headerBrandTitle">MUGHAL<span class="text-brand-orange"> FOODS</span></h1>
+                        <!-- Store Status Badge -->
                         <span id="storeStatusBadgeHeader" class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
                             <span id="storeStatusDotHeader" class="w-2 h-2 rounded-full"></span>
                             <span id="storeStatusTextHeader">Checking...</span>
@@ -73,44 +62,32 @@
                 </div>
             </div>
 
-            <!-- Header Controls -->
+            <!-- Header Right Controls -->
             <div class="flex items-center gap-2 sm:gap-3">
                 <!-- Multi-Language Switcher -->
-                <button onclick="toggleLanguage()" class="px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-brand-orange text-xs font-black border border-slate-200 dark:border-slate-700 transition-all flex items-center gap-1.5" title="Switch Language">
-                    <i class="fa-solid fa-globe"></i>
-                    <span id="langLabel">Urdu / اردو</span>
+                <button onclick="toggleLanguage()" id="langToggleBtn" class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs border border-slate-200 dark:border-slate-700 transition-all">
+                    <i class="fa-solid fa-globe text-brand-orange"></i>
+                    <span id="langText">اردو</span>
                 </button>
 
-                <!-- Light / Dark Mode Toggle -->
+                <!-- Light / Dark Mode Toggle Switcher -->
                 <button onclick="toggleTheme()" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-all border border-slate-200 dark:border-slate-700" title="Toggle Theme">
                     <i id="themeIcon" class="fa-solid fa-moon text-lg"></i>
                 </button>
 
-                <!-- Audio Notification Toggle -->
-                <button onclick="toggleAudioNotifications()" id="audioToggleBtn" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-emerald-500 transition-all border border-slate-200 dark:border-slate-700" title="Toggle Sound">
-                    <i id="audioIcon" class="fa-solid fa-volume-high text-lg"></i>
-                </button>
-
-                <!-- Admin Dashboard Button -->
-                <button onclick="openAdminAuthModal()" id="adminToggleBtn" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-sm font-semibold transition-all">
-                    <i class="fa-solid fa-user-shield text-brand-orange"></i>
-                    <span class="hidden sm:inline" id="adminBtnText">Admin Panel</span>
-                </button>
-
-                <!-- Shopping Cart Button -->
-                <button onclick="toggleCartSidebar()" class="relative flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-brand-red to-brand-orange hover:opacity-95 text-white font-bold text-sm shadow-lg shadow-brand-red/20 transition-all active:scale-95">
-                    <i class="fa-solid fa-bag-shopping text-base"></i>
-                    <span class="hidden xs:inline" id="cartBtnText">Cart</span>
-                    <span id="cartBadge" class="absolute -top-2 -right-2 bg-brand-yellow text-slate-950 text-xs font-black w-6 h-6 rounded-full flex items-center justify-center border-2 border-slate-950 shadow">0</span>
+                <!-- PWA Install App Button -->
+                <button onclick="installPWA()" id="installAppBtn" class="hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md transition-all">
+                    <i class="fa-solid fa-download"></i>
+                    <span id="installAppText">Install App</span>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- STORE CLOSED BANNER -->
+     <!-- STORE CLOSED ANNOUNCEMENT BANNER -->
     <div id="storeClosedBanner" class="hidden bg-red-600 text-white font-bold text-center py-2.5 px-4 text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md">
         <i class="fa-solid fa-store-slash text-base animate-pulse"></i>
-        <span id="storeClosedText">We are currently CLOSED &amp; not accepting new orders right now. You can browse our menu!</span>
+        <span id="storeClosedMsg">We are currently CLOSED &amp; not accepting new orders right now. You can browse our menu!</span>
     </div>
 
     <!-- CUSTOMER VIEW SECTION -->
@@ -119,10 +96,10 @@
         <!-- Hero Promo Banner -->
         <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-slate-900 to-red-950 border border-slate-800 p-6 sm:p-10 mb-8 shadow-2xl text-white">
             <div class="relative z-10 max-w-xl">
-                <span class="inline-block px-3 py-1 bg-brand-orange/20 text-brand-orange text-xs font-bold rounded-full uppercase tracking-wider mb-3" id="heroTag">Special Mughal Offer</span>
-                <h2 class="text-3xl sm:text-5xl font-black leading-tight mb-3" id="heroTitle">Crispy Fried Fish &amp; Mughal Special Burgers!</h2>
-                <p class="text-slate-300 text-sm sm:text-base mb-6" id="heroDesc">Enjoy piping hot Pakory, Samosay, Roll Parathas &amp; Fresh Snacks delivered directly to your doorstep via Instant WhatsApp Order.</p>
-                <a href="#deals-section" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-orange hover:bg-orange-600 text-white font-bold transition-all shadow-lg shadow-brand-orange/30" id="heroBtn">
+                <span id="heroPromoBadge" class="inline-block px-3 py-1 bg-brand-orange/20 text-brand-orange text-xs font-bold rounded-full uppercase tracking-wider mb-3">Special Mughal Offer</span>
+                <h2 id="heroPromoTitle" class="text-3xl sm:text-5xl font-black leading-tight mb-3">Crispy Fried Fish &amp; Mughal Special Burgers!</h2>
+                <p id="heroPromoDesc" class="text-slate-300 text-sm sm:text-base mb-6">Enjoy piping hot Pakory, Samosay, Roll Parathas &amp; Fresh Snacks delivered directly to your doorstep via Instant WhatsApp Order.</p>
+                <a href="#deals-section" id="heroPromoBtn" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-orange hover:bg-orange-600 text-white font-bold transition-all shadow-lg shadow-brand-orange/30">
                     Explore Deals <i class="fa-solid fa-arrow-right"></i>
                 </a>
             </div>
@@ -131,24 +108,23 @@
             </div>
         </div>
 
-        <!-- LIVE ORDER TRACKER SECTION -->
+        <!-- LIVE ORDER TRACKING SECTION -->
         <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 mb-10 shadow-lg">
             <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-4">
                 <div>
-                    <h3 class="text-xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2" id="trackerTitle">
+                    <h3 id="trackerHeading" class="text-xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
                         <i class="fa-solid fa-truck-fast text-brand-orange"></i> Live Order Tracker
                     </h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400" id="trackerDesc">Track your current order status in real time</p>
+                    <p id="trackerSubheading" class="text-xs text-slate-500 dark:text-slate-400">Track your current order status in real time</p>
                 </div>
                 <div class="flex items-center gap-2 w-full md:w-auto">
                     <input type="text" id="trackInput" placeholder="Enter Order ID (e.g. MF-8421)" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-orange flex-1 md:w-56">
-                    <button onclick="trackOrder()" class="px-4 py-2 bg-slate-900 dark:bg-slate-800 hover:bg-brand-orange text-white text-xs font-bold rounded-xl transition-all shadow" id="trackBtn">
+                    <button onclick="trackOrder()" id="trackBtn" class="px-4 py-2 bg-slate-900 dark:bg-slate-800 hover:bg-brand-orange text-white text-xs font-bold rounded-xl transition-all shadow">
                         Track Status
                     </button>
                 </div>
             </div>
 
-              <!-- Track Result Steps -->
             <div id="trackResult" class="hidden pt-4 border-t border-slate-100 dark:border-slate-800">
                 <div class="flex justify-between items-center mb-3">
                     <span class="text-xs font-bold text-slate-700 dark:text-slate-300" id="trackOrderIdDisplay">Order #---</span>
@@ -167,27 +143,27 @@
         <div id="deals-section" class="mb-12">
             <div class="flex items-center justify-between mb-6">
                 <div>
-                    <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2" id="dealsTitle">
+                    <h3 id="dealsHeading" class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
                         <i class="fa-solid fa-fire text-brand-orange"></i> Special Combo Deals
                     </h3>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm" id="dealsSub">Exclusive promotional bundles with heavy discounts</p>
+                    <p id="dealsSubheading" class="text-slate-500 dark:text-slate-400 text-sm">Exclusive promotional bundles with heavy discounts</p>
                 </div>
             </div>
             <div id="dealsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </div>
 
-        <!-- MENU SECTION HEADER & CATEGORIES -->
+        <!-- MENU SECTION HEADER & CATEGORY FILTERS -->
         <div id="menu-section" class="mb-8">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                 <div>
-                    <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white" id="menuTitle">Mughal Foods Menu</h3>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm" id="menuSub">Select your favorite category to view items</p>
+                    <h3 id="menuHeading" class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">Mughal Foods Menu</h3>
+                    <p id="menuSubheading" class="text-slate-500 dark:text-slate-400 text-sm">Select your favorite category to view items</p>
                 </div>
             </div>
             <div class="flex items-center gap-2 sm:gap-3 overflow-x-auto pb-2" id="categoryContainer"></div>
         </div>
 
-        <!-- FOOD ITEMS GRID -->
+        <!-- Food Items Grid -->
         <div id="foodGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
     </main>
 
@@ -221,7 +197,6 @@
             </div>
         </div>
 
-        <!-- ADMIN TAB 1: ORDERS -->
         <div id="adminOrdersTab">
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
                 <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-md">
@@ -261,7 +236,6 @@
             </div>
         </div>
 
-        <!-- ADMIN TAB 2: INVENTORY -->
         <div id="adminInventoryTab" class="hidden space-y-6">
             <div class="flex justify-between items-center bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
                 <h3 class="font-bold text-lg text-slate-900 dark:text-white">Menu Item &amp; Deal Control Panel</h3>
@@ -272,6 +246,51 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="adminInventoryGrid"></div>
         </div>
     </section>
+
+     <!-- FIXED FREEZED BOTTOM FLOATING CONTROL BAR (ADMIN & CART BUTTONS) -->
+    <div class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-md bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-2 flex items-center justify-between gap-2">
+        <!-- Admin Dashboard Toggle Button -->
+        <button onclick="openAdminAuthModal()" id="adminToggleBtn" class="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-extrabold border border-slate-200 dark:border-slate-700 transition-all active:scale-95">
+            <i class="fa-solid fa-user-shield text-brand-orange text-base"></i>
+            <span id="adminBtnText">Admin Panel</span>
+        </button>
+
+        <!-- Shopping Cart Button -->
+        <button onclick="toggleCartSidebar()" class="flex-1 relative flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-brand-red to-brand-orange hover:opacity-95 text-white font-black text-xs shadow-lg shadow-brand-red/30 transition-all active:scale-95">
+            <i class="fa-solid fa-bag-shopping text-base"></i>
+            <span id="cartBtnText">View Cart</span>
+            <span id="cartBadge" class="bg-brand-yellow text-slate-950 text-xs font-black px-2 py-0.5 rounded-full border border-slate-950 shadow">0</span>
+        </button>
+    </div>
+
+    <!-- REVIEWS & RATING DISPLAY MODAL -->
+    <div id="reviewsModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm hidden">
+        <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 max-w-md w-full mx-4 shadow-2xl space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-3">
+                <h3 id="reviewsModalTitle" class="font-extrabold text-lg text-slate-900 dark:text-white">Item Reviews</h3>
+                <button onclick="closeReviewsModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div id="reviewsList" class="space-y-3 max-h-60 overflow-y-auto"></div>
+
+            <form id="addReviewForm" onsubmit="submitReview(event)" class="border-t border-slate-200 dark:border-slate-800 pt-3 space-y-2">
+                <input type="hidden" id="reviewItemId">
+                <div class="flex justify-between items-center">
+                    <label class="text-xs font-bold text-slate-500">Your Rating:</label>
+                    <div class="flex gap-1 text-amber-400 text-sm cursor-pointer" id="starRatingSelector">
+                        <i class="fa-solid fa-star" onclick="setRatingScore(1)"></i>
+                        <i class="fa-solid fa-star" onclick="setRatingScore(2)"></i>
+                        <i class="fa-solid fa-star" onclick="setRatingScore(3)"></i>
+                        <i class="fa-solid fa-star" onclick="setRatingScore(4)"></i>
+                        <i class="fa-solid fa-star" onclick="setRatingScore(5)"></i>
+                    </div>
+                </div>
+                <input type="text" id="reviewerName" placeholder="Your Name" required class="w-full px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs text-slate-900 dark:text-white border border-slate-300 dark:border-slate-700">
+                <textarea id="reviewerComment" rows="2" placeholder="Write your review..." required class="w-full px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs text-slate-900 dark:text-white border border-slate-300 dark:border-slate-700 resize-none"></textarea>
+                <button type="submit" class="w-full py-2 bg-brand-orange text-white font-bold text-xs rounded-xl shadow-md">Submit Review</button>
+            </form>
+        </div>
+    </div>
 
     <!-- ADMIN AUTHENTICATION MODAL -->
     <div id="adminAuthModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm hidden">
@@ -288,30 +307,6 @@
                 <button onclick="closeAdminAuthModal()" class="flex-1 py-2.5 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold rounded-xl">Cancel</button>
                 <button onclick="verifyAdminPassword()" class="flex-1 py-2.5 bg-brand-orange text-white text-xs font-bold rounded-xl shadow-md hover:bg-orange-600">Verify</button>
             </div>
-        </div>
-    </div>
-
-    <!-- REVIEWS MODAL -->
-    <div id="reviewsModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm hidden">
-        <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 max-w-md w-full mx-4 shadow-2xl space-y-4">
-            <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-3">
-                <h3 id="revModalTitle" class="font-extrabold text-lg text-slate-900 dark:text-white">Reviews &amp; Ratings</h3>
-                <button onclick="closeReviewsModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div id="revListContainer" class="space-y-3 max-h-48 overflow-y-auto pr-1"></div>
-            <form onsubmit="submitUserReview(event)" class="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800">
-                <div class="flex justify-between items-center">
-                    <span class="text-xs font-bold text-slate-400">Add Your Rating:</span>
-                    <select id="revStarSelect" class="bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs rounded-lg px-2 py-1 text-amber-500 font-bold">
-                        <option value="5">⭐⭐⭐⭐⭐ (5/5)</option>
-                        <option value="4">⭐⭐⭐⭐ (4/5)</option>
-                        <option value="3">⭐⭐⭐ (3/5)</option>
-                    </select>
-                </div>
-                <input type="text" id="revNameInput" required placeholder="Your Name" class="w-full px-3 py-1.5 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-xs text-slate-900 dark:text-white">
-                <textarea id="revCommentInput" required rows="2" placeholder="Write your review..." class="w-full px-3 py-1.5 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-xs text-slate-900 dark:text-white resize-none"></textarea>
-                <button type="submit" class="w-full py-2 bg-brand-orange text-white text-xs font-bold rounded-xl shadow-md">Submit Review</button>
-            </form>
         </div>
     </div>
 
@@ -375,7 +370,7 @@
         </div>
     </div>
 
-    <!-- SHOPPING CART SIDEBAR (OVERLAY) -->
+    <!-- SHOPPING CART SIDEBAR -->
     <div id="cartOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300" onclick="toggleCartSidebar()"></div>
     <aside id="cartSidebar" class="fixed top-0 right-0 h-full w-full sm:w-[440px] bg-white dark:bg-slate-900 z-50 transform translate-x-full transition-transform duration-300 flex flex-col shadow-2xl border-l border-slate-200 dark:border-slate-800">
         <div class="p-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50 dark:bg-slate-950">
@@ -383,7 +378,7 @@
                 <div class="w-9 h-9 rounded-xl bg-brand-orange/20 text-brand-orange flex items-center justify-center font-bold">
                     <i class="fa-solid fa-cart-shopping"></i>
                 </div>
-                <h3 class="text-lg font-bold text-slate-900 dark:text-white" id="cartTitle">Your Order</h3>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white" id="cartHeading">Your Order</h3>
             </div>
             <button onclick="toggleCartSidebar()" class="w-9 h-9 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-white flex items-center justify-center">
                 <i class="fa-solid fa-xmark text-lg"></i>
@@ -392,49 +387,33 @@
 
         <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-5 space-y-4"></div>
 
-        <div class="p-5 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 space-y-4">
+        <div class="p-5 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 space-y-3">
             
             <!-- MINIMUM ORDER LIMIT WARNING -->
-            <div id="minOrderWarning" class="p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl text-xs font-bold text-amber-500 flex items-center justify-between">
-                <span id="minOrderText">Minimum Order Limit: Rs. 500</span>
-                <span id="minOrderRem" class="text-brand-orange">Add Rs. 500 more</span>
+            <div id="minOrderWarning" class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-semibold flex items-center gap-2">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span id="minOrderText">Minimum order limit is Rs. 500. Add Rs. 500 more!</span>
             </div>
 
-            <div class="space-y-2 text-sm">
+            <div class="space-y-1.5 text-xs">
                 <div class="flex justify-between text-slate-500">
-                    <span id="lblSubtotal">Subtotal</span>
+                    <span>Subtotal</span>
                     <span id="cartSubtotal">Rs. 0</span>
                 </div>
                 <div class="flex justify-between text-slate-500">
-                    <span id="lblDelivery">Delivery Fee</span>
-                    <span class="text-emerald-500 font-medium">FREE</span>
+                    <span>Est. Delivery Time</span>
+                    <span id="cartEstTime" class="text-brand-orange font-bold">30-45 mins</span>
                 </div>
                 <div class="flex justify-between text-base font-extrabold text-slate-900 dark:text-white pt-2 border-t border-slate-200 dark:border-slate-800">
-                    <span id="lblTotal">Total Amount</span>
+                    <span>Total Amount</span>
                     <span id="cartTotal" class="text-brand-orange text-lg">Rs. 0</span>
                 </div>
             </div>
 
-             <!-- LOCATION & TIME ESTIMATOR -->
-            <div class="grid grid-cols-2 gap-2 text-xs">
-                <div>
-                    <label class="block font-bold text-slate-400 mb-1" id="lblLocation">Delivery Location</label>
-                    <select id="locSelect" onchange="updateEstTime()" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl px-2.5 py-2 text-slate-900 dark:text-white font-bold">
-                        <option value="Sherwan">Sherwan</option>
-                        <option value="Patheel">Patheel</option>
-                        <option value="Kharola">Kharola</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block font-bold text-slate-400 mb-1" id="lblTime">Est. Delivery Time</label>
-                    <div id="estTimeBox" class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-2.5 py-2 text-brand-orange font-black text-center">45-60 Mins</div>
-                </div>
-            </div>
-
-            <!-- PAYMENT METHOD -->
+            <!-- PAYMENT METHOD SELECTOR -->
             <div>
-                <label class="block text-xs font-bold text-slate-400 mb-1" id="lblPayment">Select Payment Method</label>
-                <select id="payMethod" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl px-3.5 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-brand-orange font-bold">
+                <label class="block text-xs font-bold text-slate-400 mb-1">Payment Method</label>
+                <select id="payMethod" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-orange font-bold">
                     <option value="COD">💵 Cash on Delivery (COD)</option>
                     <option value="JazzCash">📲 JazzCash (0343-8800890)</option>
                     <option value="EasyPaisa">📲 EasyPaisa (0343-8800890)</option>
@@ -442,172 +421,155 @@
                 </select>
             </div>
 
-            <div id="checkoutForm" class="space-y-3 pt-1">
-                <input type="text" id="custName" placeholder="Your Name *" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl px-3.5 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-brand-orange">
-                <input type="tel" id="custPhone" placeholder="WhatsApp Number *" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl px-3.5 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-brand-orange">
-                <textarea id="custAddress" rows="2" placeholder="Delivery Address *" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl px-3.5 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-brand-orange resize-none"></textarea>
+            <div id="checkoutForm" class="space-y-2 pt-1">
+                <input type="text" id="custName" placeholder="Your Name *" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-orange">
+                <input type="tel" id="custPhone" placeholder="WhatsApp Number *" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-orange">
+                <textarea id="custAddress" rows="2" placeholder="Street / House Address Details *" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-orange resize-none"></textarea>
             </div>
 
-            <button onclick="processOrder()" id="placeOrderBtn" class="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30 transition-all active:scale-98">
-                <i class="fa-brands fa-whatsapp text-lg"></i> <span id="btnSendOrder">Send Order via WhatsApp</span>
+            <button onclick="processOrder()" id="placeOrderBtn" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30 transition-all active:scale-98">
+                <i class="fa-brands fa-whatsapp text-base"></i> Send Order via WhatsApp
             </button>
         </div>
     </aside>
 
     <!-- TOAST NOTIFICATION -->
-    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-800 text-white border border-slate-700 px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3">
+    <div id="toast" class="fixed bottom-20 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-800 text-white border border-slate-700 px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3">
         <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
         <span id="toastMsg" class="text-sm font-semibold">Notification message</span>
     </div>
 
     <!-- APPLICATION JAVASCRIPT -->
     <script>
+        // DEFAULT MENU ITEMS & DEALS
         const DEFAULT_MENU = [
-            { id: 101, name: "Crispy Fried Fish", category: "Fish", price: 650, description: "Fresh spicy fried fish with mint dip.", image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80" },
-            { id: 201, name: "Plain Salted Fries", category: "Fries", price: 180, description: "Golden crispy fries with ketchup.", image: "https://images.unsplash.com/photo-1576107232684-1279f3908594?auto=format&fit=crop&w=600&q=80" },
-            { id: 203, name: "Loaded Cheese Fries", category: "Fries", price: 380, description: "Topped with melted cheese & jalapenos.", image: "https://images.unsplash.com/photo-1585109649139-366815a0d713?auto=format&fit=crop&w=600&q=80" },
-            { id: 301, name: "Potato Samosa (Plate 2)", category: "Samosa", price: 120, description: "Traditional spiced potato samosas.", image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80" },
-            { id: 601, name: "Zinger Roll Paratha", category: "Roll Paratha", price: 320, description: "Crispy zinger wrapped in paratha.", image: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=600&q=80" },
-            { id: 701, name: "Zinger Burger", category: "Burgers", price: 350, description: "Crispy chicken fillet with mayo & lettuce.", image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80" },
-            { id: 703, name: "Mughal Special Burger", category: "Burgers", price: 480, description: "Double patty overloaded with extra cheese.", image: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80" }
+            { id: 101, name: "Crispy Fried Fish", category: "Fish", price: 650, description: "Fresh spicy fried fish with mint dip.", image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80", rating: 4.9, ratingCount: 14 },
+            { id: 201, name: "Plain Salted Fries", category: "Fries", price: 180, description: "Golden crispy fries with ketchup.", image: "https://images.unsplash.com/photo-1576107232684-1279f3908594?auto=format&fit=crop&w=600&q=80", rating: 4.5, ratingCount: 8 },
+            { id: 203, name: "Loaded Cheese Fries", category: "Fries", price: 380, description: "Topped with melted cheese & jalapenos.", image: "https://images.unsplash.com/photo-1585109649139-366815a0d713?auto=format&fit=crop&w=600&q=80", rating: 4.8, ratingCount: 19 },
+            { id: 301, name: "Potato Samosa (Plate 2)", category: "Samosa", price: 120, description: "Traditional spiced potato samosas.", image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80", rating: 4.6, ratingCount: 11 },
+            { id: 601, name: "Zinger Roll Paratha", category: "Roll Paratha", price: 320, description: "Crispy zinger wrapped in paratha.", image: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=600&q=80", rating: 4.9, ratingCount: 25 },
+            { id: 701, name: "Zinger Burger", category: "Burgers", price: 350, description: "Crispy chicken fillet with mayo & lettuce.", image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80", rating: 4.7, ratingCount: 30 },
+            { id: 703, name: "Mughal Special Burger", category: "Burgers", price: 480, description: "Double patty overloaded with extra cheese.", image: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80", rating: 5.0, ratingCount: 42 }
         ];
 
         const DEFAULT_DEALS = [
-            { id: 901, name: "Mughal Mega Combo Deal", category: "Special Deal", price: 999, oldPrice: 1250, description: "2 Zinger Burgers + 1 Loaded Fries + 2 Cold Drinks", image: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80" },
-            { id: 902, name: "Fish & Chips Special Deal", category: "Special Deal", price: 799, oldPrice: 950, description: "Crispy Fried Fish + Masala Fries + Mint Margarita", image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80" }
+            { id: 901, name: "Mughal Mega Combo Deal", category: "Special Deal", price: 999, oldPrice: 1250, description: "2 Zinger Burgers + 1 Loaded Fries + 2 Cold Drinks", image: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80", rating: 5.0, ratingCount: 50 },
+            { id: 902, name: "Fish & Chips Special Deal", category: "Special Deal", price: 799, oldPrice: 950, description: "Crispy Fried Fish + Masala Fries + Mint Margarita", image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80", rating: 4.9, ratingCount: 22 }
         ];
 
-        const TRANSLATIONS = {
-            en: {
-                tagline: "Authentic Taste • Fast Delivery",
-                cart: "Cart",
-                heroTag: "Special Mughal Offer",
-                heroTitle: "Crispy Fried Fish & Mughal Special Burgers!",
-                heroDesc: "Enjoy piping hot Pakory, Samosay, Roll Parathas & Fresh Snacks delivered directly to your doorstep via Instant WhatsApp Order.",
-                heroBtn: "Explore Deals",
-                trackerTitle: "Live Order Tracker",
-                trackerDesc: "Track your current order status in real time",
-                trackBtn: "Track Status",
-                dealsTitle: "Special Combo Deals",
-                dealsSub: "Exclusive promotional bundles with heavy discounts",
-                menuTitle: "Mughal Foods Menu",
-                menuSub: "Select your favorite category to view items",
-                minOrderText: "Minimum Order Limit: Rs. 500",
-                lblSubtotal: "Subtotal",
-                lblDelivery: "Delivery Fee",
-                lblTotal: "Total Amount",
-                lblLocation: "Delivery Location",
-                lblTime: "Est. Delivery Time",
-                lblPayment: "Select Payment Method",
-                btnSendOrder: "Send Order via WhatsApp",
-                langLabel: "Urdu / اردو"
-            },
-            ur: {
-                tagline: "خالص ذائقہ • تیز ترین ڈیلیوری",
-                cart: "کارٹ",
-                heroTag: "مغل فوڈز کی خصوصی پیشکش",
-                heroTitle: "کرسپی فرائیڈ فِش اور مغل اسپیشل برگرز!",
-                heroDesc: "گرما گرم پکوڑے، سموسے، رول پراٹھا اور تازہ سنیکس اب ڈائریکٹ واٹس ایپ آرڈر کے ذریعے اپنے گھر منگوائیں۔",
-                heroBtn: "ڈیلز دیکھیں",
-                trackerTitle: "لائیو آرڈر ٹریکر",
-                trackerDesc: "اپنے آرڈر کی موجودہ صورتحال براہِ راست دیکھیں",
-                trackBtn: "ٹریک کریں",
-                dealsTitle: "خصوصی کمبو ڈیلز",
-                dealsSub: "بھاری ڈسکاؤنٹ کے ساتھ مغل فوڈز کے شاندار بنڈلز",
-                menuTitle: "مغل فوڈز مینو",
-                menuSub: "آئٹمز دیکھنے کے لیے اپنی پسندیدہ کیٹیگری منتخب کریں",
-                minOrderText: "کم از کم آرڈر کی حد: Rs. 500",
-                lblSubtotal: "کل رقم",
-                lblDelivery: "ڈیلیوری چارجز",
-                lblTotal: "مکمل بل",
-                lblLocation: "ڈیلیوری کی جگہ",
-                lblTime: "تخمینی وقت",
-                lblPayment: "ادائیگی کا طریقہ",
-                btnSendOrder: "واٹس ایپ پر آرڈر بھیجیں",
-                langLabel: "English"
-            }
+        // URDU TRANSLATIONS MAP
+        const URDU_TEXT = {
+            headerTagline: "اصلی ذائقہ • تیز ترین ڈیلیوری",
+            storeClosedMsg: "ہم فی الحال بند ہیں اور نئے آرڈرز قبول نہیں کر رہے ہیں۔ آپ ہمارا مینو دیکھ سکتے ہیں!",
+            heroPromoBadge: "مغل فوڈز کی خصوصی پیشکش",
+            heroPromoTitle: "کرسپی فرائیڈ مچھلی اور مغل اسپیشل برگر!",
+            heroPromoDesc: "گرم پکوڑے، سموسے، رول پراٹھے اور تازہ سنیکس کا لطف اٹھائیں۔ واٹس ایپ کے ذریعے فوراً آرڈر کریں۔",
+            heroPromoBtn: "ڈیلز دیکھیں",
+            trackerHeading: "لائیو آرڈر ٹریکر",
+            trackerSubheading: "اپنے جاری آرڈر کی صورتحال لائیو دیکھیں",
+            trackBtn: "ٹریک کریں",
+            dealsHeading: "خصوصی کومبو ڈیلز",
+            dealsSubheading: "بھاری ڈسکاؤنٹ کے ساتھ خصوصی پیکجز",
+            menuHeading: "مغل فوڈز مینو",
+            menuSubheading: "اپنی پسندیدہ کیٹیگری منتخب کریں",
+            cartHeading: "آپ کا آرڈر",
+            minOrderText: "کم از کم آرڈر کی حد 500 روپے ہے۔",
+            adminBtnText: "ایڈمن پینل",
+            cartBtnText: "کارٹ دیکھیں",
+            installAppText: "ایپ انسٹال کریں"
+        };
+
+        const ENG_TEXT = {
+            headerTagline: "Authentic Taste • Fast Delivery",
+            storeClosedMsg: "We are currently CLOSED & not accepting new orders right now. You can browse our menu!",
+            heroPromoBadge: "Special Mughal Offer",
+            heroPromoTitle: "Crispy Fried Fish & Mughal Special Burgers!",
+            heroPromoDesc: "Enjoy piping hot Pakory, Samosay, Roll Parathas & Fresh Snacks delivered directly to your doorstep via Instant WhatsApp Order.",
+            heroPromoBtn: "Explore Deals",
+            trackerHeading: "Live Order Tracker",
+            trackerSubheading: "Track your current order status in real time",
+            trackBtn: "Track Status",
+            dealsHeading: "Special Combo Deals",
+            dealsSubheading: "Exclusive promotional bundles with heavy discounts",
+            menuHeading: "Mughal Foods Menu",
+            menuSubheading: "Select your favorite category to view items",
+            cartHeading: "Your Order",
+            minOrderText: "Minimum order limit is Rs. 500.",
+            adminBtnText: "Admin Panel",
+            cartBtnText: "View Cart",
+            installAppText: "Install App"
         };
 
         // STATE MANAGERS
+        let currentLang = localStorage.getItem('mughal_lang') || 'EN';
         let menuData = JSON.parse(localStorage.getItem('mughal_menu_data')) || DEFAULT_MENU;
         let dealsData = JSON.parse(localStorage.getItem('mughal_deals_data')) || DEFAULT_DEALS;
         let orders = JSON.parse(localStorage.getItem('mughal_foods_orders')) || [];
-        let reviews = JSON.parse(localStorage.getItem('mughal_reviews_data')) || {};
+        let reviewsData = JSON.parse(localStorage.getItem('mughal_reviews_data')) || {};
         let isStoreOpen = JSON.parse(localStorage.getItem('mughal_store_open')) !== false;
-        let currentLang = localStorage.getItem('mughal_lang') || 'en';
         let categories = ["All", "Fish", "Fries", "Samosa", "Roll", "Pakory", "Roll Paratha", "Burgers", "Drinks"];
         let selectedCategory = "All";
         let cart = [];
         let isAdminAuthenticated = false;
         let activeCustomizingItem = null;
-        let activeReviewItemId = null;
-        let audioEnabled = true;
-        let deferredPwaPrompt = null;
+        let selectedRatingScore = 5;
+        let deferredPrompt = null;
 
-        // PWA PROMPT CAPTURE
+        // MULTI LANGUAGE TOGGLE
+        function toggleLanguage() {
+            currentLang = currentLang === 'EN' ? 'UR' : 'EN';
+            localStorage.setItem('mughal_lang', currentLang);
+            applyLanguageUI();
+        }
+
+        function applyLanguageUI() {
+            const isUrdu = currentLang === 'UR';
+            document.documentElement.dir = isUrdu ? 'rtl' : 'ltr';
+            document.getElementById('langText').textContent = isUrdu ? 'English' : 'اردو';
+
+            const dict = isUrdu ? URDU_TEXT : ENG_TEXT;
+            Object.keys(dict).forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = dict[id];
+            });
+        }
+
+        // PWA INSTALL APP LOGIC
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
-            deferredPwaPrompt = e;
-            document.getElementById('pwaBanner').classList.remove('hidden');
+            deferredPrompt = e;
+            const btn = document.getElementById('installAppBtn');
+            if (btn) btn.classList.remove('hidden');
         });
 
-        function triggerPwaInstall() {
-            if (deferredPwaPrompt) {
-                deferredPwaPrompt.prompt();
-                deferredPwaPrompt.userChoice.then((choiceResult) => {
+        function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
                     if (choiceResult.outcome === 'accepted') {
-                        showToast('App installed successfully!');
+                        showToast('Installing Mughal Foods App...');
                     }
-                    deferredPwaPrompt = null;
-                    document.getElementById('pwaBanner').classList.add('hidden');
+                    deferredPrompt = null;
                 });
             } else {
-                showToast('To install: Tap browser menu (...) and click "Add to Home screen"', 'error');
+                showToast('To install, tap browser menu & select "Add to Home Screen"');
             }
         }
 
-        function closePwaBanner() {
-            document.getElementById('pwaBanner').classList.add('hidden');
+        // SERVICE WORKER REGISTRATION
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                const swCode = `
+                    self.addEventListener('install', e => e.waitUntil(self.skipWaiting()));
+                    self.addEventListener('fetch', e => e.respondWith(fetch(e.request)));
+                `;
+                const blob = new Blob([swCode], { type: 'application/javascript' });
+                navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
+            });
         }
 
-        // LANGUAGE TOGGLE SYSTEM
-        function toggleLanguage() {
-            currentLang = currentLang === 'en' ? 'ur' : 'en';
-            localStorage.setItem('mughal_lang', currentLang);
-            applyLanguage();
-        }
-
-        function applyLanguage() {
-            const t = TRANSLATIONS[currentLang];
-            document.documentElement.dir = currentLang === 'ur' ? 'rtl' : 'ltr';
-
-            document.getElementById('headerTagline').textContent = t.tagline;
-            document.getElementById('cartBtnText').textContent = t.cart;
-            document.getElementById('heroTag').textContent = t.heroTag;
-            document.getElementById('heroTitle').textContent = t.heroTitle;
-            document.getElementById('heroDesc').textContent = t.heroDesc;
-            document.getElementById('heroBtn').innerHTML = `${t.heroBtn} <i class="fa-solid fa-arrow-right"></i>`;
-            document.getElementById('trackerTitle').innerHTML = `<i class="fa-solid fa-truck-fast text-brand-orange"></i> ${t.trackerTitle}`;
-            document.getElementById('trackerDesc').textContent = t.trackerDesc;
-            document.getElementById('trackBtn').textContent = t.trackBtn;
-            document.getElementById('dealsTitle').innerHTML = `<i class="fa-solid fa-fire text-brand-orange"></i> ${t.dealsTitle}`;
-            document.getElementById('dealsSub').textContent = t.dealsSub;
-            document.getElementById('menuTitle').textContent = t.menuTitle;
-            document.getElementById('menuSub').textContent = t.menuSub;
-            document.getElementById('minOrderText').textContent = t.minOrderText;
-            document.getElementById('lblSubtotal').textContent = t.lblSubtotal;
-            document.getElementById('lblDelivery').textContent = t.lblDelivery;
-            document.getElementById('lblTotal').textContent = t.lblTotal;
-            document.getElementById('lblLocation').textContent = t.lblLocation;
-            document.getElementById('lblTime').textContent = t.lblTime;
-            document.getElementById('lblPayment').textContent = t.lblPayment;
-            document.getElementById('btnSendOrder').textContent = t.btnSendOrder;
-            document.getElementById('langLabel').textContent = t.langLabel;
-        }
-
-        // AUDIO NOTIFICATION
+         // AUDIO NOTIFICATION BEEP
         function playNotificationSound() {
-            if (!audioEnabled) return;
             try {
                 const ctx = new (window.AudioContext || window.webkitAudioContext)();
                 const osc = ctx.createOscillator();
@@ -624,30 +586,17 @@
             } catch (e) {}
         }
 
-        function toggleAudioNotifications() {
-            audioEnabled = !audioEnabled;
-            const btn = document.getElementById('audioToggleBtn');
-            const icon = document.getElementById('audioIcon');
-            if (audioEnabled) {
-                btn.className = 'p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-emerald-500 transition-all border border-slate-200 dark:border-slate-700';
-                icon.className = 'fa-solid fa-volume-high text-lg';
-                showToast('Sound Notifications ON');
-            } else {
-                btn.className = 'p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-400 transition-all border border-slate-200 dark:border-slate-700';
-                icon.className = 'fa-solid fa-volume-xmark text-lg';
-                showToast('Sound Notifications OFF');
-            }
-        }
-
-        // STORE STATUS
+        // STORE OPEN / CLOSE STATUS CONTROLLER
         function updateStoreStatusUI() {
             const headerDot = document.getElementById('storeStatusDotHeader');
             const headerBadge = document.getElementById('storeStatusBadgeHeader');
             const headerText = document.getElementById('storeStatusTextHeader');
             const banner = document.getElementById('storeClosedBanner');
+            
             const adminBtn = document.getElementById('adminStoreStatusToggle');
             const adminDot = document.getElementById('adminStoreStatusDot');
             const adminText = document.getElementById('adminStoreStatusText');
+            const placeBtn = document.getElementById('placeOrderBtn');
 
             if (isStoreOpen) {
                 headerBadge.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider flex items-center gap-1.5 bg-emerald-500/10 text-emerald-500 border border-emerald-500/20';
@@ -660,6 +609,12 @@
                     adminDot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse';
                     adminText.textContent = 'OPEN';
                 }
+
+                if (placeBtn) {
+                    placeBtn.disabled = false;
+                    placeBtn.className = 'w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30 transition-all active:scale-98 cursor-pointer';
+                    placeBtn.innerHTML = `<i class="fa-brands fa-whatsapp text-base"></i> Send Order via WhatsApp`;
+                }
             } else {
                 headerBadge.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider flex items-center gap-1.5 bg-red-500/10 text-red-500 border border-red-500/20';
                 headerDot.className = 'w-2 h-2 rounded-full bg-red-500';
@@ -671,8 +626,14 @@
                     adminDot.className = 'w-2.5 h-2.5 rounded-full bg-red-500';
                     adminText.textContent = 'CLOSED';
                 }
+
+                if (placeBtn) {
+                    placeBtn.disabled = true;
+                    placeBtn.className = 'w-full py-3 rounded-xl bg-slate-400 dark:bg-slate-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow opacity-70 cursor-not-allowed';
+                    placeBtn.innerHTML = `<i class="fa-solid fa-store-slash text-base"></i> Store Closed (Orders Disabled)`;
+                }
             }
-                                }
+        }
 
         function toggleStoreStatus() {
             isStoreOpen = !isStoreOpen;
@@ -683,11 +644,69 @@
         }
 
         function updateEstTime() {
-            const loc = document.getElementById('locSelect').value;
-            const timeBox = document.getElementById('estTimeBox');
-            if (loc === 'Sherwan') timeBox.textContent = '45-60 Mins';
-            else if (loc === 'Patheel') timeBox.textContent = '30-45 Mins';
-            else if (loc === 'Kharola') timeBox.textContent = '30-45 Mins';
+            const select = document.getElementById('custLocation');
+            const time = select.options[select.selectedIndex].getAttribute('data-time');
+            document.getElementById('cartEstTime').textContent = time;
+        }
+
+        // REVIEWS MODAL SYSTEM
+        function openReviewsModal(itemId) {
+            const item = menuData.find(i => i.id === itemId) || dealsData.find(d => d.id === itemId);
+            if (!item) return;
+
+            document.getElementById('reviewItemId').value = itemId;
+            document.getElementById('reviewsModalTitle').textContent = `${item.name} Reviews`;
+
+            const list = document.getElementById('reviewsList');
+            const itemReviews = reviewsData[itemId] || [];
+
+            if (itemReviews.length === 0) {
+                list.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No customer reviews yet. Be the first!</p>`;
+            } else {
+                list.innerHTML = itemReviews.map(r => `
+                    <div class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-slate-900 dark:text-white">${r.name}</span>
+                            <div class="text-amber-400 text-[10px]">
+                                ${'★'.repeat(r.score)}${'☆'.repeat(5 - r.score)}
+                            </div>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300 text-[11px]">${r.comment}</p>
+                    </div>
+                `).join('');
+            }
+
+            document.getElementById('reviewsModal').classList.remove('hidden');
+        }
+
+        function closeReviewsModal() {
+            document.getElementById('reviewsModal').classList.add('hidden');
+        }
+
+        function setRatingScore(score) {
+            selectedRatingScore = score;
+            const stars = document.getElementById('starRatingSelector').children;
+            for (let i = 0; i < 5; i++) {
+                if (i < score) stars[i].className = 'fa-solid fa-star';
+                else stars[i].className = 'fa-regular fa-star';
+            }
+        }
+
+        function submitReview(e) {
+            e.preventDefault();
+            const itemId = document.getElementById('reviewItemId').value;
+            const name = document.getElementById('reviewerName').value.trim();
+            const comment = document.getElementById('reviewerComment').value.trim();
+
+            if (!reviewsData[itemId]) reviewsData[itemId] = [];
+            reviewsData[itemId].unshift({ name, comment, score: selectedRatingScore, date: new Date().toLocaleDateString() });
+
+            localStorage.setItem('mughal_reviews_data', JSON.stringify(reviewsData));
+            closeReviewsModal();
+            document.getElementById('addReviewForm').reset();
+            showToast('Review submitted. Thank you!');
+            renderFoodGrid();
+            renderDealsGrid();
         }
 
         function persistMenuState() {
@@ -719,6 +738,10 @@
                     <div class="flex-1 flex flex-col justify-between">
                         <div>
                             <h4 class="font-bold text-slate-900 dark:text-white text-base">${deal.name}</h4>
+                            <div class="flex items-center gap-1 text-amber-400 text-xs my-0.5 cursor-pointer" onclick="openReviewsModal(${deal.id})">
+                                <i class="fa-solid fa-star"></i>
+                                <span class="font-bold text-slate-700 dark:text-slate-300 text-[11px]">${deal.rating || 4.9} (${(reviewsData[deal.id] || []).length + (deal.ratingCount || 10)})</span>
+                            </div>
                             <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">${deal.description}</p>
                         </div>
                         <div class="flex items-center justify-between pt-2">
@@ -757,22 +780,19 @@
             const grid = document.getElementById('foodGrid');
             const items = selectedCategory === "All" ? menuData : menuData.filter(i => i.category === selectedCategory);
 
-            grid.innerHTML = items.map(item => {
-                const itemRevs = reviews[item.id] || [];
-                const avgRating = itemRevs.length ? (itemRevs.reduce((a,b)=>a+b.stars, 0)/itemRevs.length).toFixed(1) : "5.0";
-
-                return `
+            grid.innerHTML = items.map(item => `
                 <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col shadow-md">
                     <div class="relative h-44 overflow-hidden bg-slate-950">
                         <img src="${item.image}" class="w-full h-full object-cover">
                         <span class="absolute top-3 left-3 bg-slate-950/80 text-brand-orange text-xs font-bold px-3 py-1 rounded-full border border-slate-800">${item.category}</span>
-                        <button onclick="openReviewsModal(${item.id})" class="absolute bottom-3 right-3 bg-slate-950/80 backdrop-blur-md text-amber-400 text-xs font-black px-2.5 py-1 rounded-xl border border-slate-800 flex items-center gap-1">
-                            ⭐ ${avgRating} (${itemRevs.length})
-                        </button>
                     </div>
                     <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
                         <div>
                             <h4 class="font-bold text-base text-slate-900 dark:text-white">${item.name}</h4>
+                            <div class="flex items-center gap-1 text-amber-400 text-xs my-0.5 cursor-pointer" onclick="openReviewsModal(${item.id})">
+                                <i class="fa-solid fa-star"></i>
+                                <span class="font-bold text-slate-700 dark:text-slate-300 text-[11px]">${item.rating || 4.8} (${(reviewsData[item.id] || []).length + (item.ratingCount || 5)})</span>
+                            </div>
                             <p class="text-slate-500 dark:text-slate-400 text-xs line-clamp-2">${item.description}</p>
                         </div>
                         <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800">
@@ -788,59 +808,9 @@
                         </div>
                     </div>
                 </div>
-            `;}).join('');
+            `).join('');
         }
 
-        // REVIEWS MODAL
-        function openReviewsModal(itemId) {
-            activeReviewItemId = itemId;
-            const item = menuData.find(i => i.id === itemId);
-            document.getElementById('revModalTitle').textContent = `${item ? item.name : 'Item'} Reviews`;
-            renderReviewsList();
-            document.getElementById('reviewsModal').classList.remove('hidden');
-        }
-
-        function closeReviewsModal() {
-            document.getElementById('reviewsModal').classList.add('hidden');
-        }
-
-        function renderReviewsList() {
-            const listContainer = document.getElementById('revListContainer');
-            const itemRevs = reviews[activeReviewItemId] || [];
-
-            if (!itemRevs.length) {
-                listContainer.innerHTML = `<div class="text-center text-xs text-slate-400 py-4">No reviews yet. Be the first to review!</div>`;
-            } else {
-                listContainer.innerHTML = itemRevs.map(r => `
-                    <div class="p-3 bg-slate-100 dark:bg-slate-800 rounded-xl space-y-1">
-                        <div class="flex justify-between items-center text-xs">
-                            <span class="font-bold text-slate-900 dark:text-white">${r.name}</span>
-                            <span class="text-amber-500">⭐ ${r.stars}/5</span>
-                        </div>
-                        <p class="text-xs text-slate-500 dark:text-slate-300">${r.comment}</p>
-                    </div>
-                `).join('');
-            }
-        }
-
-        function submitUserReview(e) {
-            e.preventDefault();
-            const name = document.getElementById('revNameInput').value.trim();
-            const comment = document.getElementById('revCommentInput').value.trim();
-            const stars = parseInt(document.getElementById('revStarSelect').value);
-
-            if (!reviews[activeReviewItemId]) reviews[activeReviewItemId] = [];
-            reviews[activeReviewItemId].unshift({ name, comment, stars, date: new Date().toLocaleDateString() });
-
-            localStorage.setItem('mughal_reviews_data', JSON.stringify(reviews));
-            renderReviewsList();
-            renderFoodGrid();
-            document.getElementById('revNameInput').value = '';
-            document.getElementById('revCommentInput').value = '';
-            showToast('Review submitted successfully!');
-        }
-
-        // TRACKER
         function trackOrder() {
             const inputVal = document.getElementById('trackInput').value.trim().toUpperCase();
             if (!inputVal) return showToast('Please enter an Order ID', 'error');
@@ -869,10 +839,10 @@
                     el.className = 'p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-400 font-semibold';
                 }
             });
+
             playNotificationSound();
         }
 
-        // CUSTOMIZATION & CART SYSTEM
         function openCustomizeModal(itemId) {
             activeCustomizingItem = menuData.find(i => i.id === itemId);
             if (!activeCustomizingItem) return;
@@ -958,22 +928,22 @@
             const subtotalEl = document.getElementById('cartSubtotal');
             const totalEl = document.getElementById('cartTotal');
             const minWarn = document.getElementById('minOrderWarning');
-            const minRem = document.getElementById('minOrderRem');
 
             const totalCount = cart.reduce((sum, i) => sum + i.quantity, 0);
             const totalPrice = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
 
             badge.textContent = totalCount;
 
-            if (totalPrice < 500) {
+            // Minimum Limit Check Rs 500
+            if (totalPrice < 500 && cart.length > 0) {
                 minWarn.classList.remove('hidden');
-                minRem.textContent = `Add Rs. ${500 - totalPrice} more`;
+                document.getElementById('minOrderText').textContent = `Minimum order limit is Rs. 500. Add Rs. ${500 - totalPrice} more!`;
             } else {
                 minWarn.classList.add('hidden');
             }
 
             if (cart.length === 0) {
-                container.innerHTML = `<div class="text-center text-slate-400 py-12">Your cart is empty</div>`;
+                container.innerHTML = `<div class="text-center text-slate-400 py-12 text-xs">Your cart is empty</div>`;
             } else {
                 container.innerHTML = cart.map(item => `
                     <div class="bg-slate-100 dark:bg-slate-950 p-3 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3">
@@ -1004,19 +974,21 @@
             overlay.classList.toggle('pointer-events-none');
         }
 
-         // ORDER SUBMISSION
         function processOrder() {
-            if (!isStoreOpen) return showToast('Store is currently CLOSED!', 'error');
+            if (!isStoreOpen) {
+                return showToast('Store is currently CLOSED! We cannot process orders.', 'error');
+            }
 
-            const total = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
+            const totalPrice = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
+
             if (cart.length === 0) return showToast('Cart is empty', 'error');
-            if (total < 500) return showToast('Minimum order limit is Rs. 500', 'error');
+            if (totalPrice < 500) return showToast('Minimum order limit is Rs. 500', 'error');
 
             const name = document.getElementById('custName').value.trim();
             const phone = document.getElementById('custPhone').value.trim();
             const address = document.getElementById('custAddress').value.trim();
-            const location = document.getElementById('locSelect').value;
-            const estTime = document.getElementById('estTimeBox').textContent;
+            const location = document.getElementById('custLocation').value;
+            const estTime = document.getElementById('cartEstTime').textContent;
             const paymentMethod = document.getElementById('payMethod').value;
 
             if (!name || !phone || !address) return showToast('Please complete customer form', 'error');
@@ -1027,21 +999,23 @@
                 date: new Date().toLocaleString(), 
                 customer: { name, phone, address, location }, 
                 paymentMethod,
+                estTime,
                 items: [...cart], 
-                total, 
+                total: totalPrice, 
                 status: 'Pending' 
             };
 
             orders.unshift(orderObj);
             localStorage.setItem('mughal_foods_orders', JSON.stringify(orders));
+
             playNotificationSound();
 
-            let text = `*👑 MUGHAL FOODS ORDER [${orderId}]*\n\n*Name:* ${name}\n*Phone:* ${phone}\n*Location:* ${location} (Est: ${estTime})\n*Address:* ${address}\n*Payment Method:* ${paymentMethod}\n\n*Items:*\n`;
+            let text = `*👑 MUGHAL FOODS ORDER [${orderId}]*\n\n*Name:* ${name}\n*Phone:* ${phone}\n*Location:* ${location}\n*Address:* ${address}\n*Est. Delivery:* ${estTime}\n*Payment Method:* ${paymentMethod}\n\n*Items:*\n`;
             cart.forEach(i => {
                 text += `• ${i.name} (x${i.quantity}) - Rs. ${i.price * i.quantity}\n`;
                 if (i.customNotes) text += `   [${i.customNotes}]\n`;
             });
-            text += `\n*Total Amount:* Rs. ${total}`;
+            text += `\n*Total Amount:* Rs. ${totalPrice}`;
 
             window.open(`https://wa.me/923438800890?text=${encodeURIComponent(text)}`, '_blank');
 
@@ -1054,7 +1028,7 @@
             showToast(`Order #${orderId} Placed Successfully!`);
         }
 
-        // ADMIN PANEL
+        // ADMIN PANEL & AUTHENTICATION
         function openAdminAuthModal() {
             if (isAdminAuthenticated) switchView('admin');
             else document.getElementById('adminAuthModal').classList.remove('hidden');
@@ -1114,7 +1088,11 @@
             tbody.innerHTML = orders.map(o => `
                 <tr>
                     <td class="p-4 font-bold">${o.id}<br><span class="text-xs font-normal text-slate-400">${o.date}</span></td>
-                    <td class="p-4">${o.customer.name}<br><span class="text-xs text-slate-400">${o.customer.phone} (${o.customer.location || 'Sherwan'})</span></td>
+                    <td class="p-4">
+                        <div class="font-bold">${o.customer.name}</div>
+                        <div class="text-xs text-brand-orange font-bold">📍 ${o.customer.location || 'Patheel'}</div>
+                        <div class="text-xs text-slate-400">${o.customer.phone} - ${o.customer.address}</div>
+                    </td>
                     <td class="p-4 text-xs">
                         <span class="font-bold text-brand-orange">[Pay: ${o.paymentMethod || 'COD'}]</span>
                         ${o.items.map(i => `<div>• ${i.name} (x${i.quantity}) ${i.customNotes ? `<span class="text-slate-400">[${i.customNotes}]</span>` : ''}</div>`).join('')}
@@ -1147,7 +1125,9 @@
                 showToast(`Order ${orderId} updated to: ${newStatus}`);
 
                 const currentTrackVal = document.getElementById('trackInput').value.trim().toUpperCase();
-                if (currentTrackVal === orderId.toUpperCase()) trackOrder();
+                if (currentTrackVal === orderId.toUpperCase()) {
+                    trackOrder();
+                }
             }
         }
 
@@ -1165,6 +1145,7 @@
                             <p class="text-xs text-slate-400 truncate">${item.description}</p>
                         </div>
                     </div>
+                    
                     <div class="grid grid-cols-2 gap-2 text-xs">
                         <div>
                             <label class="block text-[10px] text-slate-400 font-bold mb-0.5">Price (Rs.)</label>
@@ -1175,6 +1156,7 @@
                             <input type="text" value="${item.image}" onchange="updateItemImageDirect(${item.id}, this.value)" class="w-full px-2 py-1 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg truncate">
                         </div>
                     </div>
+
                     <div class="flex justify-end gap-2 pt-1 border-t border-slate-100 dark:border-slate-800">
                         <button onclick="deleteItem(${item.id})" class="px-2 py-1 bg-red-500/10 text-red-500 text-xs font-bold rounded-lg"><i class="fa-solid fa-trash mr-1"></i> Delete</button>
                     </div>
@@ -1216,7 +1198,7 @@
 
         function closeItemFormModal() {
             document.getElementById('itemFormModal').classList.add('hidden');
-                    }
+        }
 
         function handleSaveItem(e) {
             e.preventDefault();
@@ -1226,7 +1208,8 @@
             const image = document.getElementById('inputItemImage').value;
             const description = document.getElementById('inputItemDesc').value;
 
-            const newItem = { id: Date.now(), name, category, price, image, description };
+            const newItem = { id: Date.now(), name, category, price, image, description, rating: 5.0, ratingCount: 1 };
+
             if (category === "Special Deal") dealsData.push(newItem);
             else menuData.push(newItem);
 
@@ -1250,22 +1233,9 @@
             setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 3000);
         }
 
-        // SERVICE WORKER REGISTRATION (PWA)
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                const swCode = `
-                    self.addEventListener('fetch', (e) => {
-                        e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
-                    });
-                `;
-                const blob = new Blob([swCode], { type: 'application/javascript' });
-                navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
-            });
-        }
-
         // INIT
         window.onload = function() {
-            applyLanguage();
+            applyLanguageUI();
             updateStoreStatusUI();
             updateEstTime();
             renderDealsGrid();
