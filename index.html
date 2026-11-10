@@ -1,487 +1,776 @@
 <!DOCTYPE html>
-<html lang="ur" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mughal Foods | Taste of Royalty & Freshness</title>
+    <title>Mughal Foods - Fresh, Fast & Delicious</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        brand: { 50: '#fff7ed', 100: '#ffedd5', 500: '#f97316', 600: '#ea580c', 700: '#c2410c' }
+                        brand: {
+                            red: '#dc2626',
+                            orange: '#f97316',
+                            yellow: '#eab308',
+                            emerald: '#10b981',
+                            dark: '#0f172a',
+                            card: '#1e293b'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
                     }
                 }
             }
         }
     </script>
-    <!-- FontAwesome & Google Fonts -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .glass-header { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
-        .dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; }
+        /* Custom scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f97316;
+        }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors duration-300 min-h-screen flex flex-col">
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col antialiased selection:bg-brand-orange selection:text-white">
 
-    <!-- Frozen / Sticky Top Bar -->
-    <header class="sticky top-0 z-40 glass-header bg-white/80 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800 shadow-sm">
+    <!-- TOP NAVIGATION BAR -->
+    <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-3 space-x-reverse">
-                <div class="w-12 h-12 bg-gradient-to-tr from-orange-600 to-amber-500 rounded-2xl flex items-center justify-center shadow-lg shadow-orange-500/20 text-white text-2xl font-black">
-                    M
+            <!-- Brand Logo -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('customer')">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-red to-brand-orange flex items-center justify-center text-white text-2xl font-black shadow-lg shadow-brand-red/30">
+                    <i class="fa-solid fa-utensils"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-orange-600 via-amber-500 to-orange-500 bg-clip-text text-transparent">MUGHAL FOODS</h1>
-                    <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Taste of Royalty & Freshness</p>
+                    <h1 class="text-2xl font-black tracking-tight text-white leading-none">MUGHAL<span class="text-brand-orange"> FOODS</span></h1>
+                    <p class="text-xs text-slate-400 font-medium">Authentic Taste • Fast Delivery</p>
                 </div>
             </div>
 
-            <div class="flex items-center space-x-3 space-x-reverse">
-                <!-- Theme Toggle Switcher -->
-                <button id="themeToggleBtn" class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-orange-500 flex items-center justify-center transition" title="Toggle Light/Dark Mode">
-                    <i id="themeIcon" class="fa-solid fa-moon text-lg"></i>
+            <!-- Header Right Controls -->
+            <div class="flex items-center gap-3 sm:gap-4">
+                <!-- Admin Dashboard Toggle Button -->
+                <button onclick="toggleAdminView()" id="adminToggleBtn" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 text-sm font-semibold transition-all">
+                    <i class="fa-solid fa-chart-line text-brand-yellow"></i>
+                    <span class="hidden sm:inline" id="adminBtnText">Admin Panel</span>
                 </button>
 
-                <!-- Cart Button -->
-                <button id="openCartBtn" class="relative px-4 h-10 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-semibold flex items-center space-x-2 space-x-reverse shadow-md shadow-orange-600/30 transition">
-                    <i class="fa-solid fa-cart-shopping text-sm"></i>
-                    <span>Cart</span>
-                    <span id="cartBadge" class="bg-white text-orange-600 text-xs font-bold px-2 py-0.5 rounded-full ml-1 hidden">0</span>
-                </button>
-
-                <!-- Admin Panel Button -->
-                <button id="openAdminModalBtn" class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-orange-500 flex items-center justify-center transition" title="Admin Panel">
-                    <i class="fa-solid fa-user-shield text-lg"></i>
+                <!-- Shopping Cart Button -->
+                <button onclick="toggleCartSidebar()" class="relative flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-brand-red to-brand-orange hover:opacity-95 text-white font-bold text-sm shadow-lg shadow-brand-red/20 transition-all active:scale-95">
+                    <i class="fa-solid fa-bag-shopping text-base"></i>
+                    <span class="hidden xs:inline">Cart</span>
+                    <span id="cartBadge" class="absolute -top-2 -right-2 bg-brand-yellow text-slate-950 text-xs font-black w-6 h-6 rounded-full flex items-center justify-center border-2 border-slate-950 shadow">0</span>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <!-- CUSTOMER VIEW SECTION -->
+    <main id="customerView" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 transition-opacity duration-300">
         
-        <!-- Mughal Foods Info Card -->
-        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-orange-600 via-amber-600 to-orange-500 p-8 sm:p-10 text-white shadow-2xl">
-            <div class="relative z-10 max-w-2xl space-y-3">
-                <span class="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-bold tracking-wider uppercase">Welcome to Mughal Foods</span>
-                <h2 class="text-2xl sm:text-4xl font-black leading-tight">Taste of Royalty & Freshness</h2>
-                <p class="text-orange-100 text-sm sm:text-base font-medium leading-relaxed">
-                    Experience authentic flavors crafted with premium ingredients and royal spices. From crispy fried fish and hot samosay to juicy burgers and refreshing drinks, we serve freshness you can trust every single day.
-                </p>
-                <div class="flex flex-wrap gap-4 pt-2 text-xs font-bold">
-                    <span class="bg-black/20 px-3 py-1.5 rounded-xl"><i class="fa-solid fa-check text-amber-300 mr-1.5"></i> 100% Halal & Fresh</span>
-                    <span class="bg-black/20 px-3 py-1.5 rounded-xl"><i class="fa-solid fa-motorcycle text-amber-300 mr-1.5"></i> Fast Home Delivery</span>
-                    <span class="bg-black/20 px-3 py-1.5 rounded-xl"><i class="fa-solid fa-star text-amber-300 mr-1.5"></i> Premium Quality</span>
-                </div>
+        <!-- Hero Promo Banner -->
+        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-slate-900 to-red-950/40 border border-slate-800 p-6 sm:p-10 mb-10 shadow-2xl">
+            <div class="relative z-10 max-w-xl">
+                <span class="inline-block px-3 py-1 bg-brand-orange/20 text-brand-orange text-xs font-bold rounded-full uppercase tracking-wider mb-3">Special Mughal Offer</span>
+                <h2 class="text-3xl sm:text-5xl font-black text-white leading-tight mb-3">Crispy Fried Fish & Mughal Special Burgers!</h2>
+                <p class="text-slate-400 text-sm sm:text-base mb-6">Enjoy piping hot Pakory, Samosay, Roll Parathas & Fresh Snacks delivered directly to your doorstep via Instant WhatsApp Order.</p>
+                <a href="#menu-section" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-orange hover:bg-orange-600 text-white font-bold transition-all shadow-lg shadow-brand-orange/30">
+                    Explore Menu <i class="fa-solid fa-arrow-right"></i>
+                </a>
             </div>
-            <i class="fa-solid fa-utensils absolute -bottom-6 -right-6 text-9xl text-white/10 pointer-events-none transform -rotate-12"></i>
+            <!-- Decorative Background Graphic -->
+            <div class="absolute -right-10 -bottom-10 opacity-10 sm:opacity-20 pointer-events-none text-brand-orange">
+                <i class="fa-solid fa-drumstick-bite text-[240px]"></i>
+            </div>
         </div>
 
-        <!-- Categories Filter Section -->
-        <section class="space-y-4">
-            <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100">Explore Categories</h3>
-            <div id="categoryContainer" class="flex items-center space-x-3 space-x-reverse overflow-x-auto custom-scrollbar pb-2">
-                <!-- Injected via JS -->
+        <!-- Menu Section Header & Category Filters -->
+        <div id="menu-section" class="mb-8">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <div>
+                    <h3 class="text-2xl sm:text-3xl font-extrabold text-white">Mughal Foods Menu</h3>
+                    <p class="text-slate-400 text-sm">Select your favorite category to view items</p>
+                </div>
             </div>
-        </section>
 
-        <!-- Explore Items Grid -->
-        <section class="space-y-4">
-            <div class="flex items-center justify-between">
-                <h3 id="currentCategoryTitle" class="text-xl font-extrabold text-slate-900 dark:text-slate-100">All Items</h3>
-                <span id="itemCountTag" class="text-xs font-semibold px-3 py-1 bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full">0 Items</span>
+            <!-- Categories Scrollable Bar -->
+            <div class="flex items-center gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-none" id="categoryContainer">
+                <!-- Categories populated by JS -->
             </div>
-            <div id="menuGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                <!-- Injected via JS -->
-            </div>
-        </section>
+        </div>
+
+        <!-- Food Items Grid -->
+        <div id="foodGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Dynamic Food Cards Inject Here -->
+        </div>
     </main>
-
-    <!-- Cart Drawer -->
-    <div id="cartDrawer" class="fixed inset-0 z-50 overflow-hidden pointer-events-none transition-opacity duration-300 opacity-0">
-        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm pointer-events-auto" id="closeCartOverlay"></div>
-        <div class="fixed inset-y-0 right-0 max-w-full flex pl-10 pointer-events-auto">
-            <div class="w-screen max-w-md bg-white dark:bg-slate-900 shadow-2xl flex flex-col transform transition-transform duration-300 translate-x-full" id="cartContainer">
-                <div class="px-6 py-6 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
-                    <div class="flex items-center space-x-2 space-x-reverse">
-                        <i class="fa-solid fa-bag-shopping text-orange-500 text-xl"></i>
-                        <h2 class="text-lg font-bold text-slate-900 dark:text-white">Your Order</h2>
-                    </div>
-                    <button id="closeCartBtn" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-xl"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-
-                <div id="cartItemsList" class="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar">
-                    <!-- Injected via JS -->
-                </div>
-
-                <div class="p-6 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 space-y-4">
-                    <div class="space-y-2">
-                        <input type="text" id="custName" placeholder="Full Name (پورا نام)" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm outline-none focus:ring-2 focus:ring-orange-500">
-                        <input type="text" id="custPhone" placeholder="WhatsApp Number (موبائل نمبر)" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm outline-none focus:ring-2 focus:ring-orange-500">
-                        <textarea id="custAddress" rows="2" placeholder="Delivery Address (مکمل پتہ)" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm outline-none focus:ring-2 focus:ring-orange-500 resize-none"></textarea>
-                    </div>
-
-                    <div class="pt-2 border-t border-slate-200 dark:border-slate-800 space-y-2">
-                        <div class="flex justify-between text-sm text-slate-500"><span>Subtotal</span><span id="cartSubtotal">PKR 0</span></div>
-                        <div class="flex justify-between text-sm text-slate-500"><span>Delivery Fee</span><span class="text-emerald-500 font-semibold">FREE</span></div>
-                        <div class="flex justify-between text-lg font-black text-slate-900 dark:text-white pt-2 border-t"><span>Total</span><span id="cartTotal" class="text-orange-500">PKR 0</span></div>
-                    </div>
-
-                    <button id="checkoutWhatsAppBtn" class="w-full py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold flex items-center justify-center space-x-2 space-x-reverse shadow-lg shadow-emerald-600/30 transition">
-                        <i class="fa-brands fa-whatsapp text-xl"></i>
-                        <span>Confirm Order via WhatsApp</span>
-                    </button>
-                </div>
+    <!-- ADMIN DASHBOARD SECTION (HIDDEN BY DEFAULT) -->
+    <section id="adminView" class="hidden flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-slate-800">
+            <div>
+                <h2 class="text-3xl font-black text-white flex items-center gap-3">
+                    <i class="fa-solid fa-chart-pie text-brand-orange"></i> Mughal Foods Admin
+                </h2>
+                <p class="text-slate-400 text-sm">Real-time local database orders log and daily revenue</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <button onclick="clearAllOrders()" class="px-4 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-bold rounded-xl border border-red-500/20 transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-trash-can"></i> Clear Log
+                </button>
             </div>
         </div>
-    </div>
-     <!-- Admin Authentication Modal -->
-    <div id="adminAuthModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md transition-opacity duration-300 opacity-0 pointer-events-none">
-        <div class="w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden transform scale-95 transition-transform duration-300" id="adminAuthCard">
-            <div class="p-8 space-y-6 text-center">
-                <div class="w-16 h-16 bg-orange-500/10 text-orange-500 rounded-2xl mx-auto flex items-center justify-center text-2xl font-black"><i class="fa-solid fa-lock"></i></div>
-                <div class="space-y-1">
-                    <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white">Admin Authentication</h3>
-                    <p class="text-xs text-slate-500">Enter access password to manage menu (Default: 1234)</p>
-                </div>
-                <div class="space-y-3">
-                    <input type="password" id="adminPassInput" placeholder="Enter Password" class="w-full px-4 py-3.5 text-center text-lg font-bold tracking-widest rounded-2xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-orange-500">
-                    <p id="adminAuthErr" class="text-xs text-rose-500 font-semibold hidden">Invalid Password. Please try again.</p>
-                </div>
-                <div class="grid grid-cols-2 gap-3 pt-2">
-                    <button id="closeAdminAuthBtn" class="py-3 px-4 rounded-xl border border-slate-300 dark:border-slate-700 font-bold text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition">Cancel</button>
-                    <button id="verifyAdminPassBtn" class="py-3 px-4 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-sm shadow-md transition">Verify Access</button>
-                </div>
+
+        <!-- Dashboard Stats Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+            <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-md">
+                <div class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-1">Total Orders</div>
+                <div class="text-3xl font-black text-white" id="statTotalOrders">0</div>
+            </div>
+            <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-md">
+                <div class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-1">Total Revenue</div>
+                <div class="text-3xl font-black text-brand-yellow" id="statTotalRevenue">Rs. 0</div>
+            </div>
+            <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-md">
+                <div class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-1">Pending Orders</div>
+                <div class="text-3xl font-black text-brand-orange" id="statPendingOrders">0</div>
             </div>
         </div>
-    </div>
 
-    <!-- Admin Control Panel Modal -->
-    <div id="adminPanelModal" class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-md hidden p-4 sm:p-6 lg:p-8">
-        <div class="max-w-4xl mx-auto bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
-            <div class="px-6 py-5 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
-                <h3 class="text-xl font-extrabold text-slate-900 dark:text-white">Admin Management Dashboard</h3>
-                <button id="closeAdminPanelBtn" class="w-9 h-9 rounded-xl bg-slate-200 dark:bg-slate-700 text-slate-500 hover:text-orange-500 flex items-center justify-center transition"><i class="fa-solid fa-xmark text-lg"></i></button>
+        <!-- Orders Table / List Container -->
+        <div class="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden shadow-xl">
+            <div class="p-5 border-b border-slate-800 flex items-center justify-between">
+                <h3 class="font-bold text-lg text-white">Customer Orders Log</h3>
+                <span class="text-xs bg-slate-800 text-slate-400 px-3 py-1 rounded-full border border-slate-700">Local DB Active</span>
             </div>
-            <div class="p-6 sm:p-8 space-y-8">
-                <!-- Add New Item Form -->
-                <div class="space-y-4">
-                    <h4 class="text-lg font-extrabold text-slate-900 dark:text-white">Add New Food Item</h4>
-                    <form id="addItemForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <input type="text" id="newItemName" placeholder="Item Name (e.g. Special Burger)" required class="px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm outline-none">
-                        <select id="newItemCategory" required class="px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm outline-none">
-                            <option value="Fish">Fish</option>
-                            <option value="Fries">Fries</option>
-                            <option value="Samosy">Samosy</option>
-                            <option value="Pakory">Pakory</option>
-                            <option value="Roll Paratha">Roll Paratha</option>
-                            <option value="Burgers">Burgers</option>
-                            <option value="Drinks">Drinks</option>
-                        </select>
-                        <input type="number" id="newItemPrice" placeholder="Price (PKR)" required class="px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm outline-none">
-                        <input type="url" id="newItemImg" placeholder="Image URL (Unsplash or Direct Link)" class="px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm outline-none">
-                        <textarea id="newItemDesc" rows="2" placeholder="Item Short Description" class="sm:col-span-2 px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm outline-none resize-none"></textarea>
-                        <button type="submit" class="sm:col-span-2 py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-xl text-sm transition">Add Item to Menu</button>
-                    </form>
-                </div>
-
-                <!-- Manage & Edit Items Table -->
-                <div class="space-y-4">
-                    <h4 class="text-lg font-extrabold text-slate-900 dark:text-white">Manage & Edit Live Prices / Delete Items</h4>
-                    <div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
-                        <table class="w-full text-left border-collapse text-sm">
-                            <thead class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
-                                <tr><th class="p-4">Item Name</th><th class="p-4">Category</th><th class="p-4">Price (PKR)</th><th class="p-4 text-center">Action</th></tr>
-                            </thead>
-                            <tbody id="adminItemTableBody" class="divide-y divide-slate-200 dark:divide-slate-800"></tbody>
-                        </table>
-                    </div>
-                </div>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm text-slate-300">
+                    <thead class="bg-slate-950/60 text-xs uppercase font-bold text-slate-400 border-b border-slate-800">
+                        <tr>
+                            <th class="p-4">Order ID & Date</th>
+                            <th class="p-4">Customer Details</th>
+                            <th class="p-4">Items Ordered</th>
+                            <th class="p-4">Total Amount</th>
+                            <th class="p-4">Status</th>
+                            <th class="p-4 text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminOrdersTable" class="divide-y divide-slate-800">
+                        <!-- Dynamic Order Rows -->
+                    </tbody>
+                </table>
+            </div>
+            <div id="emptyAdminLog" class="p-12 text-center text-slate-500 hidden">
+                <i class="fa-solid fa-clipboard-list text-4xl mb-3 block opacity-30"></i>
+                No orders registered in Mughal Foods yet.
             </div>
         </div>
+    </section>
+
+    <!-- SHOPPING CART SIDEBAR (OVERLAY) -->
+    <div id="cartOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300" onclick="toggleCartSidebar()"></div>
+    
+    <aside id="cartSidebar" class="fixed top-0 right-0 h-full w-full sm:w-[440px] bg-slate-900 z-50 transform translate-x-full transition-transform duration-300 flex flex-col shadow-2xl border-l border-slate-800">
+        <!-- Sidebar Header -->
+        <div class="p-5 border-b border-slate-800 flex items-center justify-between bg-slate-950">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-brand-orange/20 text-brand-orange flex items-center justify-center font-bold">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </div>
+                <h3 class="text-lg font-bold text-white">Your Order</h3>
+            </div>
+            <button onclick="toggleCartSidebar()" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <!-- Cart Items Scrollable List -->
+        <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-5 space-y-4">
+            <!-- Dynamic Cart Items -->
+        </div>
+
+        <!-- Cart Footer & Checkout Form -->
+        <div class="p-5 border-t border-slate-800 bg-slate-950 space-y-4">
+            <!-- Price Summary -->
+            <div class="space-y-2 text-sm">
+                <div class="flex justify-between text-slate-400">
+                    <span>Subtotal</span>
+                    <span id="cartSubtotal">Rs. 0</span>
+                </div>
+                <div class="flex justify-between text-slate-400">
+                    <span>Delivery Fee</span>
+                    <span class="text-emerald-400 font-medium">FREE</span>
+                </div>
+                <div class="flex justify-between text-base font-extrabold text-white pt-2 border-t border-slate-800">
+                    <span>Total Amount</span>
+                    <span id="cartTotal" class="text-brand-orange text-lg">Rs. 0</span>
+                </div>
+            </div>
+
+            <!-- Customer Details Form -->
+            <div id="checkoutForm" class="space-y-3 pt-2">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Your Name *</label>
+                    <input type="text" id="custName" placeholder="e.g. Ali Khan" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-brand-orange transition-colors">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">WhatsApp Mobile Number *</label>
+                    <input type="tel" id="custPhone" placeholder="03001234567" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-brand-orange transition-colors">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Delivery Address *</label>
+                    <textarea id="custAddress" rows="2" placeholder="House/Street/Area details..." class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-brand-orange transition-colors resize-none"></textarea>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="grid grid-cols-1 gap-2 pt-1">
+                <button onclick="processOrder()" class="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30 transition-all active:scale-98">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Send Order via WhatsApp
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- NOTIFICATION TOAST CONTAINER -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-800 text-white border border-slate-700 px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+        <span id="toastMsg" class="text-sm font-semibold">Notification message</span>
     </div>
 
-    <!-- Application Script -->
+    <!-- APPLICATION JAVASCRIPT -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const defaultItems = [
-                { id: '1', name: 'Crispy Zinger Burger', category: 'Burgers', price: 380, desc: 'Crispy fried chicken thigh with spicy mayo & lettuce', img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80' },
-                { id: '2', name: 'Mughal Special Fish (500g)', category: 'Fish', price: 1200, desc: 'Fresh Lahori style spicy fried fish with special chutney', img: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=500&q=80' },
-                { id: '3', name: 'Masala Loaded Fries', category: 'Fries', price: 320, desc: 'Golden crispy fries topped with melted cheese & spices', img: 'https://images.unsplash.com/photo-1576107232684-1279f3908594?auto=format&fit=crop&w=500&q=80' },
-                { id: '4', name: 'Crispy Aloo Samosy (Plate)', category: 'Samosy', price: 100, desc: 'Golden fried crispy potato samosas with mint sauce', img: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=500&q=80' },
-                { id: '5', name: 'Mix Crunchy Pakory (250g)', category: 'Pakory', price: 160, desc: 'Traditional spiced onion & potato pakoras', img: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=500&q=80' },
-                { id: '6', name: 'Chicken Zinger Roll Paratha', category: 'Roll Paratha', price: 350, desc: 'Crispy chicken strip wrapped in buttery paratha', img: 'https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=500&q=80' },
-                { id: '7', name: 'Cold Drink 1.5 Litre', category: 'Drinks', price: 180, desc: 'Chilled Pepsi / Coke / 7Up', img: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=500&q=80' }
-            ];
-
-            const categories = ['All', 'Fish', 'Fries', 'Samosy', 'Pakory', 'Roll Paratha', 'Burgers', 'Drinks'];
-            let foodItems = JSON.parse(localStorage.getItem('mughal_food_items')) || defaultItems;
-            let cart = [];
-            let activeCategory = 'All';
-            const ADMIN_PASS = '1234';
-
-            const categoryContainer = document.getElementById('categoryContainer');
-            const menuGrid = document.getElementById('menuGrid');
-            const itemCountTag = document.getElementById('itemCountTag');
-            const currentCategoryTitle = document.getElementById('currentCategoryTitle');
-
-            // Render Categories
-            function renderCategories() {
-                categoryContainer.innerHTML = categories.map(cat => `
-                    <button data-category="${cat}" class="cat-btn px-5 py-2.5 rounded-2xl whitespace-nowrap text-xs font-extrabold transition-all duration-200 ${activeCategory === cat ? 'bg-orange-600 text-white shadow-lg shadow-orange-600/30 scale-105' : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-orange-500'}">
-                        ${cat}
-                    </button>
-                `).join('');
-
-                document.querySelectorAll('.cat-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        activeCategory = e.currentTarget.getAttribute('data-category');
-                        currentCategoryTitle.innerText = activeCategory === 'All' ? 'All Items' : activeCategory;
-                        renderCategories();
-                        renderMenu();
-                    });
-                });
+        // --- MUGHAL FOODS DATA STATE ---
+        const MENU_DATA = [
+            // Fish Category
+            {
+                id: 101,
+                name: "Crispy Fried Fish (Per Plate)",
+                category: "Fish",
+                price: 650,
+                description: "Fresh marination spicy fried fish served with mint chutney & fries.",
+                image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 102,
+                name: "Fish Finger Basket",
+                category: "Fish",
+                price: 550,
+                description: "Boneless crispy fish fingers served with tartar sauce.",
+                image: "https://images.unsplash.com/photo-1580476262798-bddd9f4b7369?auto=format&fit=crop&w=600&q=80"
+            },
+            // Fries Category
+            {
+                id: 201,
+                name: "Plain Salted Fries",
+                category: "Fries",
+                price: 180,
+                description: "Golden crispy classic potato fries with ketchup.",
+                image: "https://images.unsplash.com/photo-1576107232684-1279f3908594?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 202,
+                name: "Masala French Fries",
+                category: "Fries",
+                price: 220,
+                description: "Hot french fries tossed in special spicy chat masala.",
+                image: "https://images.unsplash.com/photo-1630384060421-cb34d0dc8f19?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 203,
+                name: "Loaded Cheese Fries",
+                category: "Fries",
+                price: 380,
+                description: "Fries topped with melted cheese, jalapeños & garlic sauce.",
+                image: "https://images.unsplash.com/photo-1585109649139-366815a0d713?auto=format&fit=crop&w=600&q=80"
+            },
+            // Samosa Category
+            {
+                id: 301,
+                name: "Potato Samosa (Plate of 2)",
+                category: "Samosa",
+                price: 120,
+                description: "Crispy traditional potato samosas with green chutney.",
+                image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 302,
+                name: "Chicken Samosa (Plate of 2)",
+                category: "Samosa",
+                price: 180,
+                description: "Stuffed chicken mince samosas with rich herbs.",
+                image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80"
+            },
+            // Roll Category
+            {
+                id: 401,
+                name: "Chicken Spring Roll (2 Pcs)",
+                category: "Roll",
+                price: 150,
+                description: "Crunchy fried rolls filled with shredded chicken & veggies.",
+                image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 402,
+                name: "Vegetable Roll (2 Pcs)",
+                category: "Roll",
+                price: 120,
+                description: "Fresh crispy roll filled with spiced cabbage, carrots & capsicum.",
+                image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80"
+            },
+            // Pakory Category
+            {
+                id: 501,
+                name: "Mix Veg Pakory (250g)",
+                category: "Pakory",
+                price: 180,
+                description: "Traditional crunchy potato, onion & spinach pakoras.",
+                image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 502,
+                name: "Chicken Pakora (250g)",
+                category: "Pakory",
+                price: 320,
+                description: "Crispy battered chicken bites seasoned with traditional spices.",
+                image: "https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=600&q=80"
+            },
+            // Roll Paratha Category
+            {
+                id: 601,
+                name: "Zinger Roll Paratha",
+                category: "Roll Paratha",
+                price: 320,
+                description: "Crispy Zinger chicken strip wrapped in flaky paratha with mayo garlic.",
+                image: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 602,
+                name: "Chicken Mayo Garlic Roll",
+                category: "Roll Paratha",
+                price: 280,
+                description: "Juicy grilled chicken wrapped in paratha with garlic sauce.",
+                image: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 603,
+                name: "BBQ Kabab Roll Paratha",
+                category: "Roll Paratha",
+                price: 300,
+                description: "Smoky grilled seekh kabab with onion rings & mint sauce in paratha.",
+                image: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=600&q=80"
+            },
+            // Burgers Category
+            {
+                id: 701,
+                name: "Zinger Burger",
+                category: "Burgers",
+                price: 350,
+                description: "Crispy chicken fillet, mayo, and fresh lettuce in a toasted bun.",
+                image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 702,
+                name: "Beef Patty Burger",
+                category: "Burgers",
+                price: 420,
+                description: "Juicy beef patty with cheese, onions, & special sauce.",
+                image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 703,
+                name: "Mughal Special Burger",
+                category: "Burgers",
+                price: 480,
+                description: "Double patty overloaded with extra cheese & special Mughal dip.",
+                image: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80"
+            },
+            // Drinks Category
+            {
+                id: 801,
+                name: "Fresh Mint Margarita",
+                category: "Drinks",
+                price: 220,
+                description: "Chilled mint drink with lemon & crushed ice.",
+                image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 802,
+                name: "Soft Drink (345ml)",
+                category: "Drinks",
+                price: 90,
+                description: "Cold chilled soft drink bottle.",
+                image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 803,
+                name: "Mineral Water (500ml)",
+                category: "Drinks",
+                price: 60,
+                description: "Pure chilled drinking water.",
+                image: "https://images.unsplash.com/photo-1560023907-5f310c850239?auto=format&fit=crop&w=600&q=80"
             }
+        ];
 
-            // Render Menu Items
-            function renderMenu() {
-                const filtered = activeCategory === 'All' ? foodItems : foodItems.filter(i => i.category === activeCategory);
-                itemCountTag.innerText = `${filtered.length} Items`;
+        let categories = ["All", "Fish", "Fries", "Samosa", "Roll", "Pakory", "Roll Paratha", "Burgers", "Drinks"];
+        let selectedCategory = "All";
+        let cart = [];
+        let orders = JSON.parse(localStorage.getItem('mughal_foods_orders') || '[]');
 
-                if (filtered.length === 0) {
-                    menuGrid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-400"><p class="font-medium">No items found in this category.</p></div>`;
-                    return;
-                }
+        // --- RENDER MENU & CATEGORIES ---
+        function renderCategories() {
+            const container = document.getElementById('categoryContainer');
+            container.innerHTML = categories.map(cat => `
+                <button onclick="setCategory('${cat}')" 
+                        class="px-5 py-2.5 rounded-xl font-bold text-sm whitespace-nowrap transition-all ${
+                            selectedCategory === cat 
+                            ? 'bg-brand-orange text-white shadow-lg shadow-brand-orange/30' 
+                            : 'bg-slate-900 text-slate-400 hover:bg-slate-800 hover:text-white border border-slate-800'
+                        }">
+                    ${cat}
+                </button>
+            `).join('');
+        }
 
-                menuGrid.innerHTML = filtered.map(item => `
-                    <div class="group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition flex flex-col">
-                        <div class="relative h-48 overflow-hidden bg-slate-100 dark:bg-slate-800">
-                            <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                            <span class="absolute top-3 right-3 bg-slate-900/80 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">${item.category}</span>
-                        </div>
-                        <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
-                            <div class="space-y-1">
-                                <h4 class="font-extrabold text-base text-slate-900 dark:text-white">${item.name}</h4>
-                                <p class="text-xs text-slate-500 line-clamp-2">${item.desc}</p>
-                            </div>
-                            <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800">
-                                <div><span class="text-xs text-slate-400 block">Price</span><span class="text-lg font-black text-orange-600">PKR ${item.price}</span></div>
-                                <button data-id="${item.id}" class="add-cart-btn px-4 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs shadow-md transition flex items-center space-x-1 space-x-reverse">
-                                    <i class="fa-solid fa-plus text-xs"></i><span>Add to Cart</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
-
-                document.querySelectorAll('.add-cart-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const id = e.currentTarget.getAttribute('data-id');
-                        addToCart(id);
-                    });
-                });
-            }
-
-            function addToCart(id) {
-                const item = foodItems.find(i => i.id === id);
-                const exist = cart.find(c => c.id === id);
-                if (exist) { exist.qty++; } else { cart.push({ ...item, qty: 1 }); }
-                updateCartUI();
-                openCart();
-            }
-
-            function updateCartUI() {
-                const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
-                const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-                const cartBadge = document.getElementById('cartBadge');
-                cartBadge.innerText = totalQty;
-                totalQty > 0 ? cartBadge.classList.remove('hidden') : cartBadge.classList.add('hidden');
-
-                document.getElementById('cartSubtotal').innerText = `PKR ${totalPrice}`;
-                document.getElementById('cartTotal').innerText = `PKR ${totalPrice}`;
-
-                const cartItemsList = document.getElementById('cartItemsList');
-                if (cart.length === 0) {
-                    cartItemsList.innerHTML = `<div class="py-16 text-center text-slate-400"><p class="text-sm">Your cart is empty.</p></div>`;
-                    return;
-                }
-
-                cartItemsList.innerHTML = cart.map(item => `
-                    <div class="flex items-center justify-between p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border">
-                        <div class="space-y-1">
-                            <h5 class="font-extrabold text-sm text-slate-900 dark:text-white">${item.name}</h5>
-                            <p class="text-xs text-orange-600 font-bold">PKR ${item.price * item.qty}</p>
-                        </div>
-                        <div class="flex items-center space-x-2 space-x-reverse bg-white dark:bg-slate-900 px-2 py-1 rounded-xl border">
-                            <button data-id="${item.id}" data-delta="-1" class="qty-btn w-6 h-6 rounded-lg bg-slate-100 dark:bg-slate-800 font-bold text-xs">-</button>
-                            <span class="text-xs font-extrabold px-1">${item.qty}</span>
-                            <button data-id="${item.id}" data-delta="1" class="qty-btn w-6 h-6 rounded-lg bg-slate-100 dark:bg-slate-800 font-bold text-xs">+</button>
-                        </div>
-                    </div>
-                `).join('');
-
-                document.querySelectorAll('.qty-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const id = e.target.getAttribute('data-id');
-                        const delta = parseInt(e.target.getAttribute('data-delta'));
-                        changeQty(id, delta);
-                    });
-                });
-            }
-
-            function changeQty(id, delta) {
-                const item = cart.find(c => c.id === id);
-                if (!item) return;
-                item.qty += delta;
-                if (item.qty <= 0) cart = cart.filter(c => c.id !== id);
-                updateCartUI();
-            }
-
-            // Cart Drawer Controls
-            const cartDrawer = document.getElementById('cartDrawer');
-            const cartContainer = document.getElementById('cartContainer');
-
-            function openCart() {
-                cartDrawer.classList.remove('pointer-events-none', 'opacity-0');
-                cartContainer.classList.remove('translate-x-full');
-            }
-            function closeCart() {
-                cartDrawer.classList.add('pointer-events-none', 'opacity-0');
-                cartContainer.classList.add('translate-x-full');
-            }
-
-            document.getElementById('openCartBtn').addEventListener('click', openCart);
-            document.getElementById('closeCartBtn').addEventListener('click', closeCart);
-            document.getElementById('closeCartOverlay').addEventListener('click', closeCart);
-
-            // Theme Toggle
-            document.getElementById('themeToggleBtn').addEventListener('click', () => {
-                if (document.documentElement.classList.contains('dark')) {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.theme = 'light';
-                    document.getElementById('themeIcon').className = 'fa-solid fa-sun text-lg text-amber-400';
-                } else {
-                    document.documentElement.classList.add('dark');
-                    localStorage.theme = 'dark';
-                    document.getElementById('themeIcon').className = 'fa-solid fa-moon text-lg';
-                }
-            });
-
-            // WhatsApp Checkout
-            document.getElementById('checkoutWhatsAppBtn').addEventListener('click', () => {
-                if (cart.length === 0) return alert('Please add items to cart first.');
-                const name = document.getElementById('custName').value.trim();
-                const phone = document.getElementById('custPhone').value.trim();
-                const address = document.getElementById('custAddress').value.trim();
-                if (!name || !phone || !address) return alert('براہ کرم تمام خانے (نام، نمبر اور پتہ) پر کریں۔');
-
-                let msg = `*NEW ORDER - MUGHAL FOODS*\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n📍 Address: ${address}\n\n*Items:*\n`;
-                cart.forEach((i, idx) => msg += `${idx + 1}. ${i.name} x ${i.qty} = PKR ${i.price * i.qty}\n`);
-                const total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
-                msg += `\n*Total:* PKR ${total}\n*Delivery:* FREE`;
-                window.open(`https://wa.me/923438800890?text=${encodeURIComponent(msg)}`, '_blank');
-            });
-
-            // Admin Modals & Controls
-            const adminAuthModal = document.getElementById('adminAuthModal');
-            const adminAuthCard = document.getElementById('adminAuthCard');
-            const adminPanelModal = document.getElementById('adminPanelModal');
-            const adminPassInput = document.getElementById('adminPassInput');
-            const adminAuthErr = document.getElementById('adminAuthErr');
-
-            document.getElementById('openAdminModalBtn').addEventListener('click', () => {
-                adminAuthModal.classList.remove('pointer-events-none', 'opacity-0');
-                adminAuthCard.classList.remove('scale-95');
-                adminPassInput.focus();
-            });
-
-            document.getElementById('closeAdminAuthBtn').addEventListener('click', () => {
-                adminAuthModal.classList.add('pointer-events-none', 'opacity-0');
-                adminAuthCard.classList.add('scale-95');
-                adminPassInput.value = '';
-                adminAuthErr.classList.add('hidden');
-            });
-
-            document.getElementById('verifyAdminPassBtn').addEventListener('click', () => {
-                if (adminPassInput.value === ADMIN_PASS) {
-                    document.getElementById('closeAdminAuthBtn').click();
-                    renderAdminTable();
-                    adminPanelModal.classList.remove('hidden');
-                } else {
-                    adminAuthErr.classList.remove('hidden');
-                }
-            });
-
-            document.getElementById('closeAdminPanelBtn').addEventListener('click', () => {
-                adminPanelModal.classList.add('hidden');
-            });
-
-            function renderAdminTable() {
-                const tbody = document.getElementById('adminItemTableBody');
-                tbody.innerHTML = foodItems.map(item => `
-               <tr>
-                        <td class="p-4 font-bold">${item.name}</td>
-                        <td class="p-4"><span class="px-2 py-1 bg-slate-200 dark:bg-slate-800 text-xs rounded">${item.category}</span></td>
-                        <td class="p-4"><input type="number" value="${item.price}" data-id="${item.id}" class="price-input w-24 px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 font-bold text-orange-600 outline-none"></td>
-                        <td class="p-4 text-center"><button data-id="${item.id}" class="del-btn px-2.5 py-1 bg-rose-500/10 text-rose-500 rounded hover:bg-rose-500 hover:text-white transition"><i class="fa-solid fa-trash-can"></i></button></td>
-                    </tr>
-                `).join('');
-
-                tbody.querySelectorAll('.price-input').forEach(input => {
-                    input.addEventListener('change', (e) => {
-                        const id = e.target.getAttribute('data-id');
-                        const newPrice = parseFloat(e.target.value) || 0;
-                        const item = foodItems.find(i => i.id === id);
-                        if (item) {
-                            item.price = newPrice;
-                            localStorage.setItem('mughal_food_items', JSON.stringify(foodItems));
-                            renderMenu();
-                        }
-                    });
-                });
-
-                tbody.querySelectorAll('.del-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const id = e.currentTarget.getAttribute('data-id');
-                        if (confirm('Are you sure you want to delete this item?')) {
-                            foodItems = foodItems.filter(i => i.id !== id);
-                            localStorage.setItem('mughal_food_items', JSON.stringify(foodItems));
-                            renderAdminTable();
-                            renderMenu();
-                        }
-                    });
-                });
-            }
-
-            document.getElementById('addItemForm').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const newItem = {
-                    id: Date.now().toString(),
-                    name: document.getElementById('newItemName').value.trim(),
-                    category: document.getElementById('newItemCategory').value,
-                    price: parseFloat(document.getElementById('newItemPrice').value) || 0,
-                    img: document.getElementById('newItemImg').value.trim() || 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80',
-                    desc: document.getElementById('newItemDesc').value.trim() || 'Freshly prepared delicious item.'
-                };
-                foodItems.push(newItem);
-                localStorage.setItem('mughal_food_items', JSON.stringify(foodItems));
-                renderAdminTable();
-                renderMenu();
-                e.target.reset();
-                alert('New item added successfully!');
-            });
-
+        function setCategory(cat) {
+            selectedCategory = cat;
             renderCategories();
-            renderMenu();
-        });
+            renderFoodGrid();
+        }
+
+        function renderFoodGrid() {
+            const grid = document.getElementById('foodGrid');
+            const items = selectedCategory === "All" 
+                ? MENU_DATA 
+                : MENU_DATA.filter(item => item.category === selectedCategory);
+
+            grid.innerHTML = items.map(item => `
+                <div class="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden flex flex-col group hover:border-slate-700 transition-all duration-300 hover:shadow-xl hover:shadow-black/50">
+                    <div class="relative h-48 overflow-hidden bg-slate-950">
+                        <img src="${item.image}" alt="${item.name}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 bg-slate-950/80 backdrop-blur-md text-brand-orange text-xs font-bold px-3 py-1 rounded-full border border-slate-800">
+                            ${item.category}
+                        </span>
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h4 class="font-bold text-lg text-white mb-1 group-hover:text-brand-orange transition-colors">${item.name}</h4>
+                            <p class="text-slate-400 text-xs line-clamp-2 mb-4">${item.description}</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-3 border-t border-slate-800/80">
+                            <div>
+                                <span class="text-xs text-slate-500 block leading-none">Price</span>
+                                <span class="text-xl font-black text-white">Rs. ${item.price}</span>
+                            </div>
+                            <button onclick="addToCart(${item.id})" class="px-4 py-2 rounded-xl bg-brand-orange/10 hover:bg-brand-orange text-brand-orange hover:text-white font-bold text-xs border border-brand-orange/20 transition-all active:scale-95 flex items-center gap-1.5">
+                                <i class="fa-solid fa-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // --- CART LOGIC ---
+        function addToCart(itemId) {
+            const product = MENU_DATA.find(p => p.id === itemId);
+            const existing = cart.find(c => c.id === itemId);
+
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            updateCartUI();
+            showToast(`Added ${product.name} to cart`);
+        }
+
+        function updateCartQuantity(itemId, delta) {
+            const item = cart.find(c => c.id === itemId);
+            if (!item) return;
+
+            item.quantity += delta;
+            if (item.quantity <= 0) {
+                cart = cart.filter(c => c.id !== itemId);
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const badge = document.getElementById('cartBadge');
+            const container = document.getElementById('cartItemsContainer');
+            const subtotalEl = document.getElementById('cartSubtotal');
+            const totalEl = document.getElementById('cartTotal');
+
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            badge.textContent = totalCount;
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="h-full flex flex-col items-center justify-center text-center text-slate-500 py-12">
+                        <i class="fa-solid fa-basket-shopping text-5xl mb-3 opacity-30"></i>
+                        <p class="font-bold text-slate-400">Your cart is empty</p>
+                        <p class="text-xs">Add delicious items from Mughal Foods menu</p>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = cart.map(item => `
+                    <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800 flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-3">
+                            <img src="${item.image}" class="w-12 h-12 rounded-lg object-cover">
+                            <div>
+                                <h5 class="font-bold text-sm text-white line-clamp-1">${item.name}</h5>
+                                <span class="text-xs text-brand-orange font-semibold">Rs. ${item.price} × ${item.quantity}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 bg-slate-900 px-2 py-1 rounded-lg border border-slate-800">
+                            <button onclick="updateCartQuantity(${item.id}, -1)" class="w-6 h-6 text-slate-400 hover:text-white flex items-center justify-center text-xs">
+                                <i class="fa-solid fa-minus"></i>
+                            </button>
+                            <span class="text-xs font-bold text-white w-4 text-center">${item.quantity}</span>
+                            <button onclick="updateCartQuantity(${item.id}, 1)" class="w-6 h-6 text-slate-400 hover:text-white flex items-center justify-center text-xs">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            subtotalEl.textContent = `Rs. ${totalPrice}`;
+            totalEl.textContent = `Rs. ${totalPrice}`;
+        }
+
+        function toggleCartSidebar() {
+            const sidebar = document.getElementById('cartSidebar');
+            const overlay = document.getElementById('cartOverlay');
+
+            const isOpen = !sidebar.classList.contains('translate-x-full');
+
+            if (isOpen) {
+                sidebar.classList.add('translate-x-full');
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+            } else {
+                sidebar.classList.remove('translate-x-full');
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        // --- ORDER SUBMISSION & WHATSAPP ROUTING ---
+        function processOrder() {
+            if (cart.length === 0) {
+                showToast('Please add items to cart before submitting', 'error');
+                return;
+            }
+
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const address = document.getElementById('custAddress').value.trim();
+
+            if (!name || !phone || !address) {
+                showToast('Please fill all customer details', 'error');
+                return;
+            }
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const orderId = 'MF-' + Math.floor(1000 + Math.random() * 9000);
+            const orderDate = new Date().toLocaleString();
+
+            const orderObj = {
+                id: orderId,
+                date: orderDate,
+                customer: { name, phone, address },
+                items: [...cart],
+                total: total,
+                status: 'Pending'
+            };
+
+            // 1. Save to Local Database
+            orders.unshift(orderObj);
+            localStorage.setItem('mughal_foods_orders', JSON.stringify(orders));
+
+            // 2. Format WhatsApp Message
+            let text = `*👑 NEW MUGHAL FOODS ORDER [${orderId}]*\n\n`;
+            text += `*Customer Info:*\n`;
+            text += `• Name: ${name}\n`;
+            text += `• Phone: ${phone}\n`;
+            text += `• Address: ${address}\n\n`;
+            text += `*Items Ordered:*\n`;
+
+            cart.forEach(item => {
+                text += `• ${item.name} (x${item.quantity}) - Rs. ${item.price * item.quantity}\n`;
+            });
+
+            text += `\n*Total Amount:* Rs. ${total}\n`;
+            text += `*Payment:* Cash on Delivery\n`;
+
+            const encodedText = encodeURIComponent(text);
+            const vendorWhatsAppNumber = "923000000000"; // Replace with your real WhatsApp number
+            const whatsappUrl = `https://wa.me/${vendorWhatsAppNumber}?text=${encodedText}`;
+
+            // Reset state
+            cart = [];
+            updateCartUI();
+            toggleCartSidebar();
+            document.getElementById('custName').value = '';
+            document.getElementById('custPhone').value = '';
+            document.getElementById('custAddress').value = '';
+
+            showToast('Order recorded! Opening WhatsApp...');
+
+            // Open WhatsApp
+            setTimeout(() => {
+                window.open(whatsappUrl, '_blank');
+            }, 1000);
+
+            renderAdminDashboard();
+        }
+
+        // --- ADMIN DASHBOARD VIEWS & ACTIONS ---
+        function switchView(view) {
+            const customerView = document.getElementById('customerView');
+            const adminView = document.getElementById('adminView');
+            const adminBtnText = document.getElementById('adminBtnText');
+
+            if (view === 'admin') {
+                customerView.classList.add('hidden');
+                adminView.classList.remove('hidden');
+                adminBtnText.textContent = 'Back to Store';
+                renderAdminDashboard();
+            } else {
+                adminView.classList.add('hidden');
+                customerView.classList.remove('hidden');
+                adminBtnText.textContent = 'Admin Panel';
+            }
+        }
+
+        function toggleAdminView() {
+            const adminView = document.getElementById('adminView');
+            if (adminView.classList.contains('hidden')) {
+                switchView('admin');
+            } else {
+                switchView('customer');
+            }
+        }
+
+        function renderAdminDashboard() {
+            const tableBody = document.getElementById('adminOrdersTable');
+            const emptyLog = document.getElementById('emptyAdminLog');
+
+            // Stats
+            document.getElementById('statTotalOrders').textContent = orders.length;
+            const rev = orders.reduce((sum, o) => sum + o.total, 0);
+            document.getElementById('statTotalRevenue').textContent = `Rs. ${rev}`;
+            const pending = orders.filter(o => o.status === 'Pending').length;
+            document.getElementById('statPendingOrders').textContent = pending;
+
+            if (orders.length === 0) {
+                tableBody.innerHTML = '';
+                emptyLog.classList.remove('hidden');
+                return;
+                    }
+            emptyLog.classList.add('hidden');
+            tableBody.innerHTML = orders.map(order => `
+                <tr class="hover:bg-slate-800/50 transition-colors">
+                    <td class="p-4">
+                        <div class="font-bold text-white">${order.id}</div>
+                        <div class="text-xs text-slate-400">${order.date}</div>
+                    </td>
+                    <td class="p-4">
+                        <div class="font-semibold text-slate-200">${order.customer.name}</div>
+                        <div class="text-xs text-slate-400">${order.customer.phone}</div>
+                        <div class="text-xs text-slate-500 truncate max-w-xs">${order.customer.address}</div>
+                    </td>
+                    <td class="p-4 text-xs">
+                        ${order.items.map(i => `<div>• ${i.name} × ${i.quantity}</div>`).join('')}
+                    </td>
+                    <td class="p-4 font-extrabold text-brand-orange">Rs. ${order.total}</td>
+                    <td class="p-4">
+                        <span class="px-2.5 py-1 rounded-full text-xs font-bold ${
+                            order.status === 'Pending' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' :
+                            order.status === 'Preparing' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' :
+                            'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                        }">
+                            ${order.status}
+                        </span>
+                    </td>
+                    <td class="p-4 text-right space-x-1">
+                        <button onclick="updateOrderStatus('${order.id}', 'Preparing')" class="p-1.5 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 text-xs transition-colors" title="Mark Preparing">
+                            <i class="fa-solid fa-fire"></i>
+                        </button>
+                        <button onclick="updateOrderStatus('${order.id}', 'Completed')" class="p-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 text-xs transition-colors" title="Mark Completed">
+                            <i class="fa-solid fa-check"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function updateOrderStatus(orderId, status) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                order.status = status;
+                localStorage.setItem('mughal_foods_orders', JSON.stringify(orders));
+                renderAdminDashboard();
+                showToast(`Order ${orderId} updated to ${status}`);
+            }
+        }
+
+        function clearAllOrders() {
+            if (confirm("Are you sure you want to clear all order records from local database?")) {
+                orders = [];
+                localStorage.removeItem('mughal_foods_orders');
+                renderAdminDashboard();
+                showToast('Database reset successful');
+            }
+        }
+
+        // --- TOAST NOTIFICATIONS ---
+        function showToast(msg, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            const toastIcon = document.getElementById('toastIcon');
+
+            toastMsg.textContent = msg;
+            if (type === 'error') {
+                toastIcon.className = 'fa-solid fa-circle-exclamation text-red-400 text-lg';
+            } else {
+                toastIcon.className = 'fa-solid fa-circle-check text-emerald-400 text-lg';
+            }
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // --- INIT ---
+        window.onload = function() {
+            renderCategories();
+            renderFoodGrid();
+            updateCartUI();
+        };
     </script>
 </body>
 </html>
