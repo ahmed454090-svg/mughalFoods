@@ -1,25 +1,15 @@
-{
-  "short_name": "Mughal Foods",
-  "name": "Mughal Foods - Fresh, Fast & Delicious",
-  "icons": [
-    {
-      "src": "YOUR_ICON_URL_HERE_192x192.png",
-      "type": "image/png",
-      "sizes": "192x192",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "YOUR_ICON_URL_HERE_512x512.png",
-      "type": "image/png",
-      "sizes": "512x512",
-      "purpose": "any maskable"
-    }
-  ],
-  "start_url": "./index.html",
-  "background_color": "#0f172a",
-  "theme_color": "#f97316",
-  "display": "standalone",
-  "orientation": "portrait",
-  "scope": "./",
-  "description": "Order fresh fried fish, burgers, samosay and rolls online from Mughal Foods."
-}
+// manifest.json code (Isay update karein)
+"icons": [
+  {
+    "src": "https://i.imgur.com/7A7Y7Y4.png",
+    "type": "image/png",
+    "sizes": "192x192",
+    "purpose": "any maskable"
+  },
+  {
+    "src": "https://i.imgur.com/D4sT25L.png",
+    "type": "image/png",
+    "sizes": "512x512",
+    "purpose": "any maskable"
+  }
+]
