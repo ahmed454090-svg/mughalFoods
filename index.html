@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mughal Foods - Fresh, Fast &amp; Delicious</title>
+    
+    <!-- PWA & Mobile Web App Meta Tags -->
+    <meta name="theme-color" content="#0f172a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Mughal Foods">
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIk11Z2hhbCBGb29kcyBPcmRlcmluZyBBcHAiLAogICJzaG9ydF9uYW1lIjogIk11Z2hhbCBGb29kcyIsCiAgInN0YXJ0X3VybCI6ICIuIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMGYxNzJhIiwKICAidGhlbWVfY29sb3IiOiAjZmE3MzE2IiwKICAiaWNvbnMiOiBbCiAgICB7Ci      ICAgICAgInNyYyI6ICJodHRwczovL2ltYWdlcy51bnNwbGFzaC5jb20vcGhvdG8tMTUzNDQyMjI5ODM5MS1lNGY4YzE3MmRkZGI/YXV0bz1mb3JtYXQmZml0PWNyb3Amdz0xOTImcT04MCIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogICAgfQogIF0KfQ==">
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -33,6 +41,18 @@
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col antialiased transition-colors duration-300 selection:bg-brand-orange selection:text-white">
 
+    <!-- PWA INSTALL PROMPT BAR -->
+    <div id="pwaBanner" class="hidden bg-gradient-to-r from-brand-orange to-brand-red text-white py-2.5 px-4 text-xs sm:text-sm font-bold flex items-center justify-between shadow-md">
+        <div class="flex items-center gap-2">
+            <i class="fa-solid fa-mobile-screen-button text-lg"></i>
+            <span id="pwaBannerText">Install Mughal Foods App on your phone for faster orders!</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <button onclick="triggerPwaInstall()" class="px-3 py-1 bg-white text-brand-orange rounded-lg font-black text-xs shadow hover:bg-slate-100" id="pwaInstallBtnText">Install App</button>
+            <button onclick="closePwaBanner()" class="text-white/80 hover:text-white"><i class="fa-solid fa-xmark text-sm"></i></button>
+        </div>
+    </div>
+
     <!-- TOP NAVIGATION BAR -->
     <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
@@ -44,29 +64,34 @@
                 <div>
                     <div class="flex items-center gap-2">
                         <h1 class="text-xl sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white leading-none">MUGHAL<span class="text-brand-orange"> FOODS</span></h1>
-                        <!-- Store Status Badge -->
                         <span id="storeStatusBadgeHeader" class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
                             <span id="storeStatusDotHeader" class="w-2 h-2 rounded-full"></span>
                             <span id="storeStatusTextHeader">Checking...</span>
                         </span>
                     </div>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Authentic Taste • Fast Delivery</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 font-medium" id="headerTagline">Authentic Taste • Fast Delivery</p>
                 </div>
             </div>
 
-            <!-- Header Right Controls -->
-            <div class="flex items-center gap-2 sm:gap-4">
-                <!-- Light / Dark Mode Toggle Switcher -->
+            <!-- Header Controls -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <!-- Multi-Language Switcher -->
+                <button onclick="toggleLanguage()" class="px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-brand-orange text-xs font-black border border-slate-200 dark:border-slate-700 transition-all flex items-center gap-1.5" title="Switch Language">
+                    <i class="fa-solid fa-globe"></i>
+                    <span id="langLabel">Urdu / اردو</span>
+                </button>
+
+                <!-- Light / Dark Mode Toggle -->
                 <button onclick="toggleTheme()" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-all border border-slate-200 dark:border-slate-700" title="Toggle Theme">
                     <i id="themeIcon" class="fa-solid fa-moon text-lg"></i>
                 </button>
 
                 <!-- Audio Notification Toggle -->
-                <button onclick="toggleAudioNotifications()" id="audioToggleBtn" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-emerald-500 transition-all border border-slate-200 dark:border-slate-700" title="Toggle Order Sound">
+                <button onclick="toggleAudioNotifications()" id="audioToggleBtn" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-emerald-500 transition-all border border-slate-200 dark:border-slate-700" title="Toggle Sound">
                     <i id="audioIcon" class="fa-solid fa-volume-high text-lg"></i>
                 </button>
 
-                <!-- Admin Dashboard Toggle Button -->
+                <!-- Admin Dashboard Button -->
                 <button onclick="openAdminAuthModal()" id="adminToggleBtn" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-sm font-semibold transition-all">
                     <i class="fa-solid fa-user-shield text-brand-orange"></i>
                     <span class="hidden sm:inline" id="adminBtnText">Admin Panel</span>
@@ -75,17 +100,17 @@
                 <!-- Shopping Cart Button -->
                 <button onclick="toggleCartSidebar()" class="relative flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-brand-red to-brand-orange hover:opacity-95 text-white font-bold text-sm shadow-lg shadow-brand-red/20 transition-all active:scale-95">
                     <i class="fa-solid fa-bag-shopping text-base"></i>
-                    <span class="hidden xs:inline">Cart</span>
+                    <span class="hidden xs:inline" id="cartBtnText">Cart</span>
                     <span id="cartBadge" class="absolute -top-2 -right-2 bg-brand-yellow text-slate-950 text-xs font-black w-6 h-6 rounded-full flex items-center justify-center border-2 border-slate-950 shadow">0</span>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- STORE CLOSED ANNOUNCEMENT BANNER (Dynamic) -->
+    <!-- STORE CLOSED BANNER -->
     <div id="storeClosedBanner" class="hidden bg-red-600 text-white font-bold text-center py-2.5 px-4 text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md">
         <i class="fa-solid fa-store-slash text-base animate-pulse"></i>
-        <span>We are currently CLOSED &amp; not accepting new orders right now. You can browse our menu!</span>
+        <span id="storeClosedText">We are currently CLOSED &amp; not accepting new orders right now. You can browse our menu!</span>
     </div>
 
     <!-- CUSTOMER VIEW SECTION -->
@@ -94,10 +119,10 @@
         <!-- Hero Promo Banner -->
         <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-slate-900 to-red-950 border border-slate-800 p-6 sm:p-10 mb-8 shadow-2xl text-white">
             <div class="relative z-10 max-w-xl">
-                <span class="inline-block px-3 py-1 bg-brand-orange/20 text-brand-orange text-xs font-bold rounded-full uppercase tracking-wider mb-3">Special Mughal Offer</span>
-                <h2 class="text-3xl sm:text-5xl font-black leading-tight mb-3">Crispy Fried Fish &amp; Mughal Special Burgers!</h2>
-                <p class="text-slate-300 text-sm sm:text-base mb-6">Enjoy piping hot Pakory, Samosay, Roll Parathas &amp; Fresh Snacks delivered directly to your doorstep via Instant WhatsApp Order.</p>
-                <a href="#deals-section" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-orange hover:bg-orange-600 text-white font-bold transition-all shadow-lg shadow-brand-orange/30">
+                <span class="inline-block px-3 py-1 bg-brand-orange/20 text-brand-orange text-xs font-bold rounded-full uppercase tracking-wider mb-3" id="heroTag">Special Mughal Offer</span>
+                <h2 class="text-3xl sm:text-5xl font-black leading-tight mb-3" id="heroTitle">Crispy Fried Fish &amp; Mughal Special Burgers!</h2>
+                <p class="text-slate-300 text-sm sm:text-base mb-6" id="heroDesc">Enjoy piping hot Pakory, Samosay, Roll Parathas &amp; Fresh Snacks delivered directly to your doorstep via Instant WhatsApp Order.</p>
+                <a href="#deals-section" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-orange hover:bg-orange-600 text-white font-bold transition-all shadow-lg shadow-brand-orange/30" id="heroBtn">
                     Explore Deals <i class="fa-solid fa-arrow-right"></i>
                 </a>
             </div>
@@ -106,30 +131,29 @@
             </div>
         </div>
 
-        <!-- LIVE ORDER TRACKING SECTION -->
+        <!-- LIVE ORDER TRACKER SECTION -->
         <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 mb-10 shadow-lg">
             <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-4">
                 <div>
-                    <h3 class="text-xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                    <h3 class="text-xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2" id="trackerTitle">
                         <i class="fa-solid fa-truck-fast text-brand-orange"></i> Live Order Tracker
                     </h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">Track your current order status in real time</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400" id="trackerDesc">Track your current order status in real time</p>
                 </div>
                 <div class="flex items-center gap-2 w-full md:w-auto">
                     <input type="text" id="trackInput" placeholder="Enter Order ID (e.g. MF-8421)" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-orange flex-1 md:w-56">
-                    <button onclick="trackOrder()" class="px-4 py-2 bg-slate-900 dark:bg-slate-800 hover:bg-brand-orange text-white text-xs font-bold rounded-xl transition-all shadow">
+                    <button onclick="trackOrder()" class="px-4 py-2 bg-slate-900 dark:bg-slate-800 hover:bg-brand-orange text-white text-xs font-bold rounded-xl transition-all shadow" id="trackBtn">
                         Track Status
                     </button>
                 </div>
             </div>
 
-            <!-- Track Result Indicator -->
+              <!-- Track Result Steps -->
             <div id="trackResult" class="hidden pt-4 border-t border-slate-100 dark:border-slate-800">
                 <div class="flex justify-between items-center mb-3">
                     <span class="text-xs font-bold text-slate-700 dark:text-slate-300" id="trackOrderIdDisplay">Order #---</span>
                     <span class="text-xs font-black px-3 py-1 rounded-full bg-slate-200 dark:bg-slate-800 text-brand-orange" id="trackStatusBadge">Status</span>
                 </div>
-                <!-- Progress Stepper -->
                 <div class="grid grid-cols-4 gap-2 text-center text-[10px] sm:text-xs font-bold pt-2">
                     <div id="stepPending" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-400">1. Pending</div>
                     <div id="stepPreparing" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-400">2. Preparing 🔥</div>
@@ -143,39 +167,31 @@
         <div id="deals-section" class="mb-12">
             <div class="flex items-center justify-between mb-6">
                 <div>
-                    <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                    <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2" id="dealsTitle">
                         <i class="fa-solid fa-fire text-brand-orange"></i> Special Combo Deals
                     </h3>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm">Exclusive promotional bundles with heavy discounts</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm" id="dealsSub">Exclusive promotional bundles with heavy discounts</p>
                 </div>
             </div>
-            <div id="dealsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Dynamic Deals Injected Here -->
-            </div>
+            <div id="dealsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </div>
 
-        <!-- MENU SECTION HEADER & CATEGORY FILTERS -->
+        <!-- MENU SECTION HEADER & CATEGORIES -->
         <div id="menu-section" class="mb-8">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                 <div>
-                    <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">Mughal Foods Menu</h3>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm">Select your favorite category to view items</p>
+                    <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white" id="menuTitle">Mughal Foods Menu</h3>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm" id="menuSub">Select your favorite category to view items</p>
                 </div>
             </div>
-
-            <!-- Categories Scrollable Bar -->
-            <div class="flex items-center gap-2 sm:gap-3 overflow-x-auto pb-2" id="categoryContainer">
-                <!-- Categories populated by JS -->
-            </div>
+            <div class="flex items-center gap-2 sm:gap-3 overflow-x-auto pb-2" id="categoryContainer"></div>
         </div>
 
-        <!-- Food Items Grid -->
-        <div id="foodGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            <!-- Dynamic Food Cards Inject Here -->
-        </div>
-                        </main>
+        <!-- FOOD ITEMS GRID -->
+        <div id="foodGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+    </main>
 
-     <!-- ADMIN DASHBOARD SECTION -->
+    <!-- ADMIN DASHBOARD SECTION -->
     <section id="adminView" class="hidden flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-slate-200 dark:border-slate-800">
             <div>
@@ -186,7 +202,6 @@
             </div>
             
             <div class="flex flex-wrap items-center gap-3">
-                <!-- STORE OPEN/CLOSE TOGGLE CARD IN ADMIN -->
                 <div class="flex items-center gap-3 bg-white dark:bg-slate-900 px-4 py-2 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
                     <span class="text-xs font-extrabold text-slate-700 dark:text-slate-300">Store Status:</span>
                     <button onclick="toggleStoreStatus()" id="adminStoreStatusToggle" class="px-4 py-1.5 rounded-xl font-black text-xs transition-all flex items-center gap-2 shadow">
@@ -208,7 +223,6 @@
 
         <!-- ADMIN TAB 1: ORDERS -->
         <div id="adminOrdersTab">
-            <!-- Stats -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
                 <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-md">
                     <div class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-1">Total Orders</div>
@@ -224,7 +238,6 @@
                 </div>
             </div>
 
-            <!-- Orders Table -->
             <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-xl">
                 <div class="p-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
                     <h3 class="font-bold text-lg text-slate-900 dark:text-white">Customer Orders Log</h3>
@@ -248,7 +261,7 @@
             </div>
         </div>
 
-        <!-- ADMIN TAB 2: INVENTORY & EDIT ITEMS -->
+        <!-- ADMIN TAB 2: INVENTORY -->
         <div id="adminInventoryTab" class="hidden space-y-6">
             <div class="flex justify-between items-center bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
                 <h3 class="font-bold text-lg text-slate-900 dark:text-white">Menu Item &amp; Deal Control Panel</h3>
@@ -256,11 +269,7 @@
                     <i class="fa-solid fa-plus mr-1"></i> Add New Item
                 </button>
             </div>
-
-            <!-- Items Edit List -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="adminInventoryGrid">
-                <!-- Dynamic Items with Edit Forms Injected Here -->
-            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="adminInventoryGrid"></div>
         </div>
     </section>
 
@@ -282,6 +291,30 @@
         </div>
     </div>
 
+    <!-- REVIEWS MODAL -->
+    <div id="reviewsModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm hidden">
+        <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 max-w-md w-full mx-4 shadow-2xl space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-3">
+                <h3 id="revModalTitle" class="font-extrabold text-lg text-slate-900 dark:text-white">Reviews &amp; Ratings</h3>
+                <button onclick="closeReviewsModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="revListContainer" class="space-y-3 max-h-48 overflow-y-auto pr-1"></div>
+            <form onsubmit="submitUserReview(event)" class="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+                <div class="flex justify-between items-center">
+                    <span class="text-xs font-bold text-slate-400">Add Your Rating:</span>
+                    <select id="revStarSelect" class="bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs rounded-lg px-2 py-1 text-amber-500 font-bold">
+                        <option value="5">⭐⭐⭐⭐⭐ (5/5)</option>
+                        <option value="4">⭐⭐⭐⭐ (4/5)</option>
+                        <option value="3">⭐⭐⭐ (3/5)</option>
+                    </select>
+                </div>
+                <input type="text" id="revNameInput" required placeholder="Your Name" class="w-full px-3 py-1.5 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-xs text-slate-900 dark:text-white">
+                <textarea id="revCommentInput" required rows="2" placeholder="Write your review..." class="w-full px-3 py-1.5 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-xs text-slate-900 dark:text-white resize-none"></textarea>
+                <button type="submit" class="w-full py-2 bg-brand-orange text-white text-xs font-bold rounded-xl shadow-md">Submit Review</button>
+            </form>
+        </div>
+    </div>
+
     <!-- CUSTOMIZE ITEM MODAL -->
     <div id="customiseModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm hidden">
         <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 max-w-md w-full mx-4 shadow-2xl space-y-4">
@@ -289,9 +322,7 @@
                 <h3 id="custModalTitle" class="font-extrabold text-lg text-slate-900 dark:text-white">Customize Item</h3>
                 <button onclick="closeCustomizeModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div id="custModalContent" class="space-y-4">
-                <!-- Customization Options Injected dynamically -->
-            </div>
+            <div id="custModalContent" class="space-y-4"></div>
             <button onclick="confirmCustomizedAdd()" class="w-full py-3 rounded-xl bg-brand-orange text-white font-bold text-sm shadow-lg hover:bg-orange-600">
                 Add to Cart (<span id="custModalPrice">Rs. 0</span>)
             </button>
@@ -352,7 +383,7 @@
                 <div class="w-9 h-9 rounded-xl bg-brand-orange/20 text-brand-orange flex items-center justify-center font-bold">
                     <i class="fa-solid fa-cart-shopping"></i>
                 </div>
-                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Your Order</h3>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white" id="cartTitle">Your Order</h3>
             </div>
             <button onclick="toggleCartSidebar()" class="w-9 h-9 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-white flex items-center justify-center">
                 <i class="fa-solid fa-xmark text-lg"></i>
@@ -362,24 +393,47 @@
         <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-5 space-y-4"></div>
 
         <div class="p-5 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 space-y-4">
+            
+            <!-- MINIMUM ORDER LIMIT WARNING -->
+            <div id="minOrderWarning" class="p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl text-xs font-bold text-amber-500 flex items-center justify-between">
+                <span id="minOrderText">Minimum Order Limit: Rs. 500</span>
+                <span id="minOrderRem" class="text-brand-orange">Add Rs. 500 more</span>
+            </div>
+
             <div class="space-y-2 text-sm">
                 <div class="flex justify-between text-slate-500">
-                    <span>Subtotal</span>
+                    <span id="lblSubtotal">Subtotal</span>
                     <span id="cartSubtotal">Rs. 0</span>
                 </div>
                 <div class="flex justify-between text-slate-500">
-                    <span>Delivery Fee</span>
+                    <span id="lblDelivery">Delivery Fee</span>
                     <span class="text-emerald-500 font-medium">FREE</span>
                 </div>
                 <div class="flex justify-between text-base font-extrabold text-slate-900 dark:text-white pt-2 border-t border-slate-200 dark:border-slate-800">
-                    <span>Total Amount</span>
+                    <span id="lblTotal">Total Amount</span>
                     <span id="cartTotal" class="text-brand-orange text-lg">Rs. 0</span>
                 </div>
             </div>
 
-            <!-- PAYMENT METHOD SELECTOR -->
+             <!-- LOCATION & TIME ESTIMATOR -->
+            <div class="grid grid-cols-2 gap-2 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-400 mb-1" id="lblLocation">Delivery Location</label>
+                    <select id="locSelect" onchange="updateEstTime()" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl px-2.5 py-2 text-slate-900 dark:text-white font-bold">
+                        <option value="Sherwan">Sherwan</option>
+                        <option value="Patheel">Patheel</option>
+                        <option value="Kharola">Kharola</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-400 mb-1" id="lblTime">Est. Delivery Time</label>
+                    <div id="estTimeBox" class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-2.5 py-2 text-brand-orange font-black text-center">45-60 Mins</div>
+                </div>
+            </div>
+
+            <!-- PAYMENT METHOD -->
             <div>
-                <label class="block text-xs font-bold text-slate-400 mb-1">Select Payment Method</label>
+                <label class="block text-xs font-bold text-slate-400 mb-1" id="lblPayment">Select Payment Method</label>
                 <select id="payMethod" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl px-3.5 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-brand-orange font-bold">
                     <option value="COD">💵 Cash on Delivery (COD)</option>
                     <option value="JazzCash">📲 JazzCash (0343-8800890)</option>
@@ -395,7 +449,7 @@
             </div>
 
             <button onclick="processOrder()" id="placeOrderBtn" class="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30 transition-all active:scale-98">
-                <i class="fa-brands fa-whatsapp text-lg"></i> Send Order via WhatsApp
+                <i class="fa-brands fa-whatsapp text-lg"></i> <span id="btnSendOrder">Send Order via WhatsApp</span>
             </button>
         </div>
     </aside>
@@ -408,7 +462,6 @@
 
     <!-- APPLICATION JAVASCRIPT -->
     <script>
-        // DEFAULT MENU ITEMS & DEALS
         const DEFAULT_MENU = [
             { id: 101, name: "Crispy Fried Fish", category: "Fish", price: 650, description: "Fresh spicy fried fish with mint dip.", image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80" },
             { id: 201, name: "Plain Salted Fries", category: "Fries", price: 180, description: "Golden crispy fries with ketchup.", image: "https://images.unsplash.com/photo-1576107232684-1279f3908594?auto=format&fit=crop&w=600&q=80" },
@@ -424,19 +477,135 @@
             { id: 902, name: "Fish & Chips Special Deal", category: "Special Deal", price: 799, oldPrice: 950, description: "Crispy Fried Fish + Masala Fries + Mint Margarita", image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80" }
         ];
 
+        const TRANSLATIONS = {
+            en: {
+                tagline: "Authentic Taste • Fast Delivery",
+                cart: "Cart",
+                heroTag: "Special Mughal Offer",
+                heroTitle: "Crispy Fried Fish & Mughal Special Burgers!",
+                heroDesc: "Enjoy piping hot Pakory, Samosay, Roll Parathas & Fresh Snacks delivered directly to your doorstep via Instant WhatsApp Order.",
+                heroBtn: "Explore Deals",
+                trackerTitle: "Live Order Tracker",
+                trackerDesc: "Track your current order status in real time",
+                trackBtn: "Track Status",
+                dealsTitle: "Special Combo Deals",
+                dealsSub: "Exclusive promotional bundles with heavy discounts",
+                menuTitle: "Mughal Foods Menu",
+                menuSub: "Select your favorite category to view items",
+                minOrderText: "Minimum Order Limit: Rs. 500",
+                lblSubtotal: "Subtotal",
+                lblDelivery: "Delivery Fee",
+                lblTotal: "Total Amount",
+                lblLocation: "Delivery Location",
+                lblTime: "Est. Delivery Time",
+                lblPayment: "Select Payment Method",
+                btnSendOrder: "Send Order via WhatsApp",
+                langLabel: "Urdu / اردو"
+            },
+            ur: {
+                tagline: "خالص ذائقہ • تیز ترین ڈیلیوری",
+                cart: "کارٹ",
+                heroTag: "مغل فوڈز کی خصوصی پیشکش",
+                heroTitle: "کرسپی فرائیڈ فِش اور مغل اسپیشل برگرز!",
+                heroDesc: "گرما گرم پکوڑے، سموسے، رول پراٹھا اور تازہ سنیکس اب ڈائریکٹ واٹس ایپ آرڈر کے ذریعے اپنے گھر منگوائیں۔",
+                heroBtn: "ڈیلز دیکھیں",
+                trackerTitle: "لائیو آرڈر ٹریکر",
+                trackerDesc: "اپنے آرڈر کی موجودہ صورتحال براہِ راست دیکھیں",
+                trackBtn: "ٹریک کریں",
+                dealsTitle: "خصوصی کمبو ڈیلز",
+                dealsSub: "بھاری ڈسکاؤنٹ کے ساتھ مغل فوڈز کے شاندار بنڈلز",
+                menuTitle: "مغل فوڈز مینو",
+                menuSub: "آئٹمز دیکھنے کے لیے اپنی پسندیدہ کیٹیگری منتخب کریں",
+                minOrderText: "کم از کم آرڈر کی حد: Rs. 500",
+                lblSubtotal: "کل رقم",
+                lblDelivery: "ڈیلیوری چارجز",
+                lblTotal: "مکمل بل",
+                lblLocation: "ڈیلیوری کی جگہ",
+                lblTime: "تخمینی وقت",
+                lblPayment: "ادائیگی کا طریقہ",
+                btnSendOrder: "واٹس ایپ پر آرڈر بھیجیں",
+                langLabel: "English"
+            }
+        };
+
         // STATE MANAGERS
         let menuData = JSON.parse(localStorage.getItem('mughal_menu_data')) || DEFAULT_MENU;
         let dealsData = JSON.parse(localStorage.getItem('mughal_deals_data')) || DEFAULT_DEALS;
         let orders = JSON.parse(localStorage.getItem('mughal_foods_orders')) || [];
-        let isStoreOpen = JSON.parse(localStorage.getItem('mughal_store_open')) !== false; // Default true (OPEN)
+        let reviews = JSON.parse(localStorage.getItem('mughal_reviews_data')) || {};
+        let isStoreOpen = JSON.parse(localStorage.getItem('mughal_store_open')) !== false;
+        let currentLang = localStorage.getItem('mughal_lang') || 'en';
         let categories = ["All", "Fish", "Fries", "Samosa", "Roll", "Pakory", "Roll Paratha", "Burgers", "Drinks"];
         let selectedCategory = "All";
         let cart = [];
         let isAdminAuthenticated = false;
         let activeCustomizingItem = null;
+        let activeReviewItemId = null;
         let audioEnabled = true;
+        let deferredPwaPrompt = null;
 
-        // AUDIO NOTIFICATION BEEP
+        // PWA PROMPT CAPTURE
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPwaPrompt = e;
+            document.getElementById('pwaBanner').classList.remove('hidden');
+        });
+
+        function triggerPwaInstall() {
+            if (deferredPwaPrompt) {
+                deferredPwaPrompt.prompt();
+                deferredPwaPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        showToast('App installed successfully!');
+                    }
+                    deferredPwaPrompt = null;
+                    document.getElementById('pwaBanner').classList.add('hidden');
+                });
+            } else {
+                showToast('To install: Tap browser menu (...) and click "Add to Home screen"', 'error');
+            }
+        }
+
+        function closePwaBanner() {
+            document.getElementById('pwaBanner').classList.add('hidden');
+        }
+
+        // LANGUAGE TOGGLE SYSTEM
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'ur' : 'en';
+            localStorage.setItem('mughal_lang', currentLang);
+            applyLanguage();
+        }
+
+        function applyLanguage() {
+            const t = TRANSLATIONS[currentLang];
+            document.documentElement.dir = currentLang === 'ur' ? 'rtl' : 'ltr';
+
+            document.getElementById('headerTagline').textContent = t.tagline;
+            document.getElementById('cartBtnText').textContent = t.cart;
+            document.getElementById('heroTag').textContent = t.heroTag;
+            document.getElementById('heroTitle').textContent = t.heroTitle;
+            document.getElementById('heroDesc').textContent = t.heroDesc;
+            document.getElementById('heroBtn').innerHTML = `${t.heroBtn} <i class="fa-solid fa-arrow-right"></i>`;
+            document.getElementById('trackerTitle').innerHTML = `<i class="fa-solid fa-truck-fast text-brand-orange"></i> ${t.trackerTitle}`;
+            document.getElementById('trackerDesc').textContent = t.trackerDesc;
+            document.getElementById('trackBtn').textContent = t.trackBtn;
+            document.getElementById('dealsTitle').innerHTML = `<i class="fa-solid fa-fire text-brand-orange"></i> ${t.dealsTitle}`;
+            document.getElementById('dealsSub').textContent = t.dealsSub;
+            document.getElementById('menuTitle').textContent = t.menuTitle;
+            document.getElementById('menuSub').textContent = t.menuSub;
+            document.getElementById('minOrderText').textContent = t.minOrderText;
+            document.getElementById('lblSubtotal').textContent = t.lblSubtotal;
+            document.getElementById('lblDelivery').textContent = t.lblDelivery;
+            document.getElementById('lblTotal').textContent = t.lblTotal;
+            document.getElementById('lblLocation').textContent = t.lblLocation;
+            document.getElementById('lblTime').textContent = t.lblTime;
+            document.getElementById('lblPayment').textContent = t.lblPayment;
+            document.getElementById('btnSendOrder').textContent = t.btnSendOrder;
+            document.getElementById('langLabel').textContent = t.langLabel;
+        }
+
+        // AUDIO NOTIFICATION
         function playNotificationSound() {
             if (!audioEnabled) return;
             try {
@@ -452,9 +621,7 @@
                 gain.connect(ctx.destination);
                 osc.start();
                 osc.stop(ctx.currentTime + 0.25);
-            } catch (e) {
-                console.log('Audio Context restricted', e);
-            }
+            } catch (e) {}
         }
 
         function toggleAudioNotifications() {
@@ -472,58 +639,40 @@
             }
         }
 
-        // STORE OPEN / CLOSE STATUS CONTROLLER
+        // STORE STATUS
         function updateStoreStatusUI() {
             const headerDot = document.getElementById('storeStatusDotHeader');
             const headerBadge = document.getElementById('storeStatusBadgeHeader');
             const headerText = document.getElementById('storeStatusTextHeader');
             const banner = document.getElementById('storeClosedBanner');
-            
             const adminBtn = document.getElementById('adminStoreStatusToggle');
             const adminDot = document.getElementById('adminStoreStatusDot');
             const adminText = document.getElementById('adminStoreStatusText');
-            const placeBtn = document.getElementById('placeOrderBtn');
 
             if (isStoreOpen) {
-                // Header UI
                 headerBadge.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider flex items-center gap-1.5 bg-emerald-500/10 text-emerald-500 border border-emerald-500/20';
                 headerDot.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse';
                 headerText.textContent = 'OPEN';
                 banner.classList.add('hidden');
 
-                // Admin UI
                 if (adminBtn) {
                     adminBtn.className = 'px-4 py-1.5 rounded-xl font-black text-xs transition-all flex items-center gap-2 bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 shadow-sm';
                     adminDot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse';
                     adminText.textContent = 'OPEN';
                 }
-
-                if (placeBtn) {
-                    placeBtn.disabled = false;
-                    placeBtn.className = 'w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30 transition-all active:scale-98 cursor-pointer';
-                    placeBtn.innerHTML = `<i class="fa-brands fa-whatsapp text-lg"></i> Send Order via WhatsApp`;
-                }
             } else {
-                // Header UI
                 headerBadge.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider flex items-center gap-1.5 bg-red-500/10 text-red-500 border border-red-500/20';
                 headerDot.className = 'w-2 h-2 rounded-full bg-red-500';
                 headerText.textContent = 'CLOSED';
                 banner.classList.remove('hidden');
 
-                // Admin UI
                 if (adminBtn) {
                     adminBtn.className = 'px-4 py-1.5 rounded-xl font-black text-xs transition-all flex items-center gap-2 bg-red-500/10 text-red-500 border border-red-500/20 shadow-sm';
                     adminDot.className = 'w-2.5 h-2.5 rounded-full bg-red-500';
                     adminText.textContent = 'CLOSED';
                 }
-
-                if (placeBtn) {
-                    placeBtn.disabled = true;
-                    placeBtn.className = 'w-full py-3.5 rounded-xl bg-slate-400 dark:bg-slate-700 text-white font-bold text-sm flex items-center justify-center gap-2 shadow opacity-70 cursor-not-allowed';
-                    placeBtn.innerHTML = `<i class="fa-solid fa-store-slash text-base"></i> Store Closed (Orders Disabled)`;
-                }
             }
-        }
+                                }
 
         function toggleStoreStatus() {
             isStoreOpen = !isStoreOpen;
@@ -533,7 +682,14 @@
             showToast(`Store is now ${isStoreOpen ? 'OPEN for orders' : 'CLOSED'}`);
         }
 
-        // SAVE STATE LOCALSTORAGE
+        function updateEstTime() {
+            const loc = document.getElementById('locSelect').value;
+            const timeBox = document.getElementById('estTimeBox');
+            if (loc === 'Sherwan') timeBox.textContent = '45-60 Mins';
+            else if (loc === 'Patheel') timeBox.textContent = '30-45 Mins';
+            else if (loc === 'Kharola') timeBox.textContent = '30-45 Mins';
+        }
+
         function persistMenuState() {
             localStorage.setItem('mughal_menu_data', JSON.stringify(menuData));
             localStorage.setItem('mughal_deals_data', JSON.stringify(dealsData));
@@ -542,7 +698,6 @@
             renderAdminInventory();
         }
 
-        // DARK MODE TOGGLE
         function toggleTheme() {
             const html = document.documentElement;
             const icon = document.getElementById('themeIcon');
@@ -555,7 +710,6 @@
             }
         }
 
-        // RENDER DEALS & FOOD GRID
         function renderDealsGrid() {
             const grid = document.getElementById('dealsGrid');
             grid.innerHTML = dealsData.map(deal => `
@@ -603,11 +757,18 @@
             const grid = document.getElementById('foodGrid');
             const items = selectedCategory === "All" ? menuData : menuData.filter(i => i.category === selectedCategory);
 
-            grid.innerHTML = items.map(item => `
+            grid.innerHTML = items.map(item => {
+                const itemRevs = reviews[item.id] || [];
+                const avgRating = itemRevs.length ? (itemRevs.reduce((a,b)=>a+b.stars, 0)/itemRevs.length).toFixed(1) : "5.0";
+
+                return `
                 <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col shadow-md">
                     <div class="relative h-44 overflow-hidden bg-slate-950">
                         <img src="${item.image}" class="w-full h-full object-cover">
                         <span class="absolute top-3 left-3 bg-slate-950/80 text-brand-orange text-xs font-bold px-3 py-1 rounded-full border border-slate-800">${item.category}</span>
+                        <button onclick="openReviewsModal(${item.id})" class="absolute bottom-3 right-3 bg-slate-950/80 backdrop-blur-md text-amber-400 text-xs font-black px-2.5 py-1 rounded-xl border border-slate-800 flex items-center gap-1">
+                            ⭐ ${avgRating} (${itemRevs.length})
+                        </button>
                     </div>
                     <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
                         <div>
@@ -627,10 +788,59 @@
                         </div>
                     </div>
                 </div>
-            `).join('');
+            `;}).join('');
         }
 
-        // LIVE ORDER TRACKER SYSTEM
+        // REVIEWS MODAL
+        function openReviewsModal(itemId) {
+            activeReviewItemId = itemId;
+            const item = menuData.find(i => i.id === itemId);
+            document.getElementById('revModalTitle').textContent = `${item ? item.name : 'Item'} Reviews`;
+            renderReviewsList();
+            document.getElementById('reviewsModal').classList.remove('hidden');
+        }
+
+        function closeReviewsModal() {
+            document.getElementById('reviewsModal').classList.add('hidden');
+        }
+
+        function renderReviewsList() {
+            const listContainer = document.getElementById('revListContainer');
+            const itemRevs = reviews[activeReviewItemId] || [];
+
+            if (!itemRevs.length) {
+                listContainer.innerHTML = `<div class="text-center text-xs text-slate-400 py-4">No reviews yet. Be the first to review!</div>`;
+            } else {
+                listContainer.innerHTML = itemRevs.map(r => `
+                    <div class="p-3 bg-slate-100 dark:bg-slate-800 rounded-xl space-y-1">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="font-bold text-slate-900 dark:text-white">${r.name}</span>
+                            <span class="text-amber-500">⭐ ${r.stars}/5</span>
+                        </div>
+                        <p class="text-xs text-slate-500 dark:text-slate-300">${r.comment}</p>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function submitUserReview(e) {
+            e.preventDefault();
+            const name = document.getElementById('revNameInput').value.trim();
+            const comment = document.getElementById('revCommentInput').value.trim();
+            const stars = parseInt(document.getElementById('revStarSelect').value);
+
+            if (!reviews[activeReviewItemId]) reviews[activeReviewItemId] = [];
+            reviews[activeReviewItemId].unshift({ name, comment, stars, date: new Date().toLocaleDateString() });
+
+            localStorage.setItem('mughal_reviews_data', JSON.stringify(reviews));
+            renderReviewsList();
+            renderFoodGrid();
+            document.getElementById('revNameInput').value = '';
+            document.getElementById('revCommentInput').value = '';
+            showToast('Review submitted successfully!');
+        }
+
+        // TRACKER
         function trackOrder() {
             const inputVal = document.getElementById('trackInput').value.trim().toUpperCase();
             if (!inputVal) return showToast('Please enter an Order ID', 'error');
@@ -647,10 +857,8 @@
             document.getElementById('trackOrderIdDisplay').textContent = `Order #${foundOrder.id} (${foundOrder.date})`;
             document.getElementById('trackStatusBadge').textContent = foundOrder.status;
 
-            // Reset Steps UI
             const steps = ['Pending', 'Preparing', 'Out for Delivery', 'Completed'];
             const stepIds = ['stepPending', 'stepPreparing', 'stepOut', 'stepCompleted'];
-
             const activeIndex = steps.indexOf(foundOrder.status);
 
             stepIds.forEach((id, index) => {
@@ -661,7 +869,6 @@
                     el.className = 'p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-400 font-semibold';
                 }
             });
-
             playNotificationSound();
         }
 
@@ -690,7 +897,7 @@
                     </div>
                 </div>
                 <div>
-                 <label class="block text-xs font-bold text-slate-400 mb-2">Extra Add-ons</label>
+                    <label class="block text-xs font-bold text-slate-400 mb-2">Extra Add-ons</label>
                     <div class="space-y-2 text-xs">
                         <label class="flex justify-between items-center bg-slate-100 dark:bg-slate-800 p-2.5 rounded-xl cursor-pointer">
                             <span>Extra Cheese Slice</span>
@@ -750,11 +957,20 @@
             const container = document.getElementById('cartItemsContainer');
             const subtotalEl = document.getElementById('cartSubtotal');
             const totalEl = document.getElementById('cartTotal');
+            const minWarn = document.getElementById('minOrderWarning');
+            const minRem = document.getElementById('minOrderRem');
 
             const totalCount = cart.reduce((sum, i) => sum + i.quantity, 0);
             const totalPrice = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
 
             badge.textContent = totalCount;
+
+            if (totalPrice < 500) {
+                minWarn.classList.remove('hidden');
+                minRem.textContent = `Add Rs. ${500 - totalPrice} more`;
+            } else {
+                minWarn.classList.add('hidden');
+            }
 
             if (cart.length === 0) {
                 container.innerHTML = `<div class="text-center text-slate-400 py-12">Your cart is empty</div>`;
@@ -788,27 +1004,28 @@
             overlay.classList.toggle('pointer-events-none');
         }
 
-        // ORDER SUBMISSION TO WHATSAPP & LOCAL LOG
+         // ORDER SUBMISSION
         function processOrder() {
-            if (!isStoreOpen) {
-                return showToast('Store is currently CLOSED! We cannot process orders.', 'error');
-            }
+            if (!isStoreOpen) return showToast('Store is currently CLOSED!', 'error');
 
+            const total = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
             if (cart.length === 0) return showToast('Cart is empty', 'error');
+            if (total < 500) return showToast('Minimum order limit is Rs. 500', 'error');
 
             const name = document.getElementById('custName').value.trim();
             const phone = document.getElementById('custPhone').value.trim();
             const address = document.getElementById('custAddress').value.trim();
+            const location = document.getElementById('locSelect').value;
+            const estTime = document.getElementById('estTimeBox').textContent;
             const paymentMethod = document.getElementById('payMethod').value;
 
             if (!name || !phone || !address) return showToast('Please complete customer form', 'error');
 
-            const total = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
             const orderId = 'MF-' + Math.floor(1000 + Math.random() * 9000);
             const orderObj = { 
                 id: orderId, 
                 date: new Date().toLocaleString(), 
-                customer: { name, phone, address }, 
+                customer: { name, phone, address, location }, 
                 paymentMethod,
                 items: [...cart], 
                 total, 
@@ -817,10 +1034,9 @@
 
             orders.unshift(orderObj);
             localStorage.setItem('mughal_foods_orders', JSON.stringify(orders));
-
             playNotificationSound();
 
-            let text = `*👑 MUGHAL FOODS ORDER [${orderId}]*\n\n*Name:* ${name}\n*Phone:* ${phone}\n*Address:* ${address}\n*Payment Method:* ${paymentMethod}\n\n*Items:*\n`;
+            let text = `*👑 MUGHAL FOODS ORDER [${orderId}]*\n\n*Name:* ${name}\n*Phone:* ${phone}\n*Location:* ${location} (Est: ${estTime})\n*Address:* ${address}\n*Payment Method:* ${paymentMethod}\n\n*Items:*\n`;
             cart.forEach(i => {
                 text += `• ${i.name} (x${i.quantity}) - Rs. ${i.price * i.quantity}\n`;
                 if (i.customNotes) text += `   [${i.customNotes}]\n`;
@@ -829,7 +1045,6 @@
 
             window.open(`https://wa.me/923438800890?text=${encodeURIComponent(text)}`, '_blank');
 
-            // Set order ID in tracker for convenience
             document.getElementById('trackInput').value = orderId;
             trackOrder();
 
@@ -839,7 +1054,7 @@
             showToast(`Order #${orderId} Placed Successfully!`);
         }
 
-        // ADMIN PANEL & AUTHENTICATION
+        // ADMIN PANEL
         function openAdminAuthModal() {
             if (isAdminAuthenticated) switchView('admin');
             else document.getElementById('adminAuthModal').classList.remove('hidden');
@@ -899,7 +1114,7 @@
             tbody.innerHTML = orders.map(o => `
                 <tr>
                     <td class="p-4 font-bold">${o.id}<br><span class="text-xs font-normal text-slate-400">${o.date}</span></td>
-                    <td class="p-4">${o.customer.name}<br><span class="text-xs text-slate-400">${o.customer.phone}</span></td>
+                    <td class="p-4">${o.customer.name}<br><span class="text-xs text-slate-400">${o.customer.phone} (${o.customer.location || 'Sherwan'})</span></td>
                     <td class="p-4 text-xs">
                         <span class="font-bold text-brand-orange">[Pay: ${o.paymentMethod || 'COD'}]</span>
                         ${o.items.map(i => `<div>• ${i.name} (x${i.quantity}) ${i.customNotes ? `<span class="text-slate-400">[${i.customNotes}]</span>` : ''}</div>`).join('')}
@@ -931,15 +1146,11 @@
                 playNotificationSound();
                 showToast(`Order ${orderId} updated to: ${newStatus}`);
 
-                // Update live tracker if active
                 const currentTrackVal = document.getElementById('trackInput').value.trim().toUpperCase();
-                if (currentTrackVal === orderId.toUpperCase()) {
-                    trackOrder();
-                }
+                if (currentTrackVal === orderId.toUpperCase()) trackOrder();
             }
         }
 
-        // LIVE PRICE & IMAGE CONTROLS IN ADMIN
         function renderAdminInventory() {
             const grid = document.getElementById('adminInventoryGrid');
             const allItems = [...dealsData, ...menuData];
@@ -954,8 +1165,6 @@
                             <p class="text-xs text-slate-400 truncate">${item.description}</p>
                         </div>
                     </div>
-                    
-                    <!-- EDIT FIELDS -->
                     <div class="grid grid-cols-2 gap-2 text-xs">
                         <div>
                             <label class="block text-[10px] text-slate-400 font-bold mb-0.5">Price (Rs.)</label>
@@ -966,7 +1175,6 @@
                             <input type="text" value="${item.image}" onchange="updateItemImageDirect(${item.id}, this.value)" class="w-full px-2 py-1 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg truncate">
                         </div>
                     </div>
-
                     <div class="flex justify-end gap-2 pt-1 border-t border-slate-100 dark:border-slate-800">
                         <button onclick="deleteItem(${item.id})" class="px-2 py-1 bg-red-500/10 text-red-500 text-xs font-bold rounded-lg"><i class="fa-solid fa-trash mr-1"></i> Delete</button>
                     </div>
@@ -1008,7 +1216,7 @@
 
         function closeItemFormModal() {
             document.getElementById('itemFormModal').classList.add('hidden');
-        }
+                    }
 
         function handleSaveItem(e) {
             e.preventDefault();
@@ -1019,7 +1227,6 @@
             const description = document.getElementById('inputItemDesc').value;
 
             const newItem = { id: Date.now(), name, category, price, image, description };
-
             if (category === "Special Deal") dealsData.push(newItem);
             else menuData.push(newItem);
 
@@ -1043,9 +1250,24 @@
             setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 3000);
         }
 
+        // SERVICE WORKER REGISTRATION (PWA)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                const swCode = `
+                    self.addEventListener('fetch', (e) => {
+                        e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+                    });
+                `;
+                const blob = new Blob([swCode], { type: 'application/javascript' });
+                navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
+            });
+        }
+
         // INIT
         window.onload = function() {
+            applyLanguage();
             updateStoreStatusUI();
+            updateEstTime();
             renderDealsGrid();
             renderCategories();
             renderFoodGrid();
