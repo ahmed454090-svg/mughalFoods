@@ -39,7 +39,7 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col antialiased transition-colors duration-300 selection:bg-brand-orange selection:text-white pb-24 sm:pb-28">
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col antialiased transition-colors duration-300 selection:bg-brand-orange selection:text-white pb-28">
 
     <!-- TOP NAVIGATION BAR -->
     <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-md">
@@ -160,10 +160,11 @@
                     <p id="menuSubheading" class="text-slate-500 dark:text-slate-400 text-sm">Select your favorite category to view items</p>
                 </div>
             </div>
-            <div class="flex items-center gap-2 sm:gap-3 overflow-x-auto pb-2" id="categoryContainer"></div>
+            <!-- CATEGORIES SCROLLABLE BAR -->
+            <div class="flex items-center gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-none" id="categoryContainer"></div>
         </div>
 
-        <!-- Food Items Grid -->
+        <!-- FOOD ITEMS GRID -->
         <div id="foodGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
     </main>
 
@@ -203,11 +204,11 @@
                     <div class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-1">Total Orders</div>
                     <div class="text-3xl font-black text-slate-900 dark:text-white" id="statTotalOrders">0</div>
                 </div>
-                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-md">
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-md">
                     <div class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-1">Total Revenue</div>
                     <div class="text-3xl font-black text-brand-yellow" id="statTotalRevenue">Rs. 0</div>
                 </div>
-                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-md">
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-md">
                     <div class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-1">Pending Orders</div>
                     <div class="text-3xl font-black text-brand-orange" id="statPendingOrders">0</div>
                 </div>
@@ -236,7 +237,7 @@
             </div>
         </div>
 
-        <div id="adminInventoryTab" class="hidden space-y-6">
+         <div id="adminInventoryTab" class="hidden space-y-6">
             <div class="flex justify-between items-center bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
                 <h3 class="font-bold text-lg text-slate-900 dark:text-white">Menu Item &amp; Deal Control Panel</h3>
                 <button onclick="openAddItemModal()" class="px-4 py-2 bg-brand-orange text-white text-xs font-bold rounded-xl shadow-lg hover:bg-orange-600">
@@ -247,15 +248,13 @@
         </div>
     </section>
 
-     <!-- FIXED FREEZED BOTTOM FLOATING CONTROL BAR (ADMIN & CART BUTTONS) -->
+    <!-- FIXED FREEZED BOTTOM FLOATING CONTROL BAR -->
     <div class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-md bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-2 flex items-center justify-between gap-2">
-        <!-- Admin Dashboard Toggle Button -->
         <button onclick="openAdminAuthModal()" id="adminToggleBtn" class="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-extrabold border border-slate-200 dark:border-slate-700 transition-all active:scale-95">
             <i class="fa-solid fa-user-shield text-brand-orange text-base"></i>
             <span id="adminBtnText">Admin Panel</span>
         </button>
 
-        <!-- Shopping Cart Button -->
         <button onclick="toggleCartSidebar()" class="flex-1 relative flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-brand-red to-brand-orange hover:opacity-95 text-white font-black text-xs shadow-lg shadow-brand-red/30 transition-all active:scale-95">
             <i class="fa-solid fa-bag-shopping text-base"></i>
             <span id="cartBtnText">View Cart</span>
@@ -370,7 +369,7 @@
         </div>
     </div>
 
-    <!-- SHOPPING CART SIDEBAR -->
+     <!-- SHOPPING CART SIDEBAR -->
     <div id="cartOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300" onclick="toggleCartSidebar()"></div>
     <aside id="cartSidebar" class="fixed top-0 right-0 h-full w-full sm:w-[440px] bg-white dark:bg-slate-900 z-50 transform translate-x-full transition-transform duration-300 flex flex-col shadow-2xl border-l border-slate-200 dark:border-slate-800">
         <div class="p-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50 dark:bg-slate-950">
@@ -408,6 +407,16 @@
                     <span>Total Amount</span>
                     <span id="cartTotal" class="text-brand-orange text-lg">Rs. 0</span>
                 </div>
+            </div>
+
+            <!-- LOCATION & TIME ESTIMATOR DROPDOWN -->
+            <div>
+                <label class="block text-xs font-bold text-slate-400 mb-1">Select Delivery Location</label>
+                <select id="custLocation" onchange="updateEstTime()" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-brand-orange font-bold">
+                    <option value="Sherwan" data-time="45-60 mins">📍 Sherwan (45-60 mins)</option>
+                    <option value="Patheel" data-time="30-45 mins" selected>📍 Patheel (30-45 mins)</option>
+                    <option value="Kharola" data-time="30-45 mins">📍 Kharola (30-45 mins)</option>
+                </select>
             </div>
 
             <!-- PAYMENT METHOD SELECTOR -->
@@ -556,7 +565,6 @@
             }
         }
 
-        // SERVICE WORKER REGISTRATION
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 const swCode = `
@@ -568,7 +576,6 @@
             });
         }
 
-         // AUDIO NOTIFICATION BEEP
         function playNotificationSound() {
             try {
                 const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -586,7 +593,6 @@
             } catch (e) {}
         }
 
-        // STORE OPEN / CLOSE STATUS CONTROLLER
         function updateStoreStatusUI() {
             const headerDot = document.getElementById('storeStatusDotHeader');
             const headerBadge = document.getElementById('storeStatusBadgeHeader');
@@ -649,7 +655,6 @@
             document.getElementById('cartEstTime').textContent = time;
         }
 
-        // REVIEWS MODAL SYSTEM
         function openReviewsModal(itemId) {
             const item = menuData.find(i => i.id === itemId) || dealsData.find(d => d.id === itemId);
             if (!item) return;
@@ -809,7 +814,7 @@
                     </div>
                 </div>
             `).join('');
-        }
+                 }
 
         function trackOrder() {
             const inputVal = document.getElementById('trackInput').value.trim().toUpperCase();
@@ -934,7 +939,6 @@
 
             badge.textContent = totalCount;
 
-            // Minimum Limit Check Rs 500
             if (totalPrice < 500 && cart.length > 0) {
                 minWarn.classList.remove('hidden');
                 document.getElementById('minOrderText').textContent = `Minimum order limit is Rs. 500. Add Rs. ${500 - totalPrice} more!`;
@@ -1028,7 +1032,6 @@
             showToast(`Order #${orderId} Placed Successfully!`);
         }
 
-        // ADMIN PANEL & AUTHENTICATION
         function openAdminAuthModal() {
             if (isAdminAuthenticated) switchView('admin');
             else document.getElementById('adminAuthModal').classList.remove('hidden');
